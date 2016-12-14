@@ -1,31 +1,36 @@
-%h1 Listing games
+%section.container
 
-%table
-  %thead
-    %tr
-      %th Name
-      %th Description
-      %th Status
-      %th Difficulty
-      %th Age range
-      %th Score
-      %th
-      %th
-      %th
-      
-  %tbody
-    - @games.each do |game|
+  .row
+    .col-md-6
+      %h2 Games
+    .col-md-6{style:"text-align:right"}
+      = link_to 'New Game', new_game_path, class: "btn btn-primary"
+
+  %br
+  %br
+
+  %table.table.table-striped
+    %thead
       %tr
-        %td= game.name
-        %td= game.description
-        %td= game.status
-        %td= game.difficulty
-        %td= game.age_range
-        %td= game.score
-        %td= link_to 'Show', game
-        %td= link_to 'Edit', edit_game_path(game)
-        %td= link_to 'Destroy', game, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'New Game', new_game_path
+        %th Name
+        %th Description
+        %th Status
+        %th Difficulty
+        %th Age range
+        %th Score
+        %th
+        %th
+        %th
+        
+    %tbody
+      - @games.each do |game|
+        %tr
+          %td= game.name
+          %td= game.description
+          %td= game.status
+          %td= game.difficulty
+          %td= game.age_range
+          %td= game.score
+          %td= link_to 'Show', game
+          %td= link_to 'Edit', edit_game_path(game)
+          %td= link_to 'Destroy', game, :method => :delete, :data => { :confirm => 'Are you sure?' }

@@ -1,1 +1,0 @@
-json.array! @game_steps, partial: 'game_steps/game_step', as: :game_step

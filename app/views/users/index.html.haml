@@ -1,21 +1,26 @@
-%h1 Listing users
+%section.container
 
-%table
-  %thead
-    %tr
-      %th Name
-      %th
-      %th
-      %th
-      
-  %tbody
-    - @users.each do |user|
+  .row
+    .col-md-6
+      %h2 Users
+    .col-md-6{style:"text-align:right"}
+      = link_to 'New User', new_user_path, class: "btn btn-primary"
+
+  %br
+  %br
+
+  %table.table.table-striped
+    %thead
       %tr
-        %td= user.name
-        %td= link_to 'Show', user
-        %td= link_to 'Edit', edit_user_path(user)
-        %td= link_to 'Destroy', user, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'New User', new_user_path
+        %th Name
+        %th
+        %th
+        %th
+        
+    %tbody
+      - @users.each do |user|
+        %tr
+          %td= user.name
+          %td= link_to 'Show', user
+          %td= link_to 'Edit', edit_user_path(user)
+          %td= link_to 'Destroy', user, :method => :delete, :data => { :confirm => 'Are you sure?' }

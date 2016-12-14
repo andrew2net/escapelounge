@@ -1,5 +1,12 @@
-%h1 New user
+%section.container
 
-= render 'form'
+  .row
+    .col-md-6
+      %h2 New User
+    .col-md-6{style:"text-align:right"}
+      = link_to 'Cancel', users_path, class: "btn btn-primary"
 
-= link_to 'Back', users_path
+  %br
+  %br
+
+  = render 'form'

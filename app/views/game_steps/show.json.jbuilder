@@ -1,1 +1,0 @@
-json.partial! "game_steps/game_step", game_step: @game_step

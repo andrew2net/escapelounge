@@ -1,5 +1,12 @@
-%h1 New game
+%section.container
 
-= render 'form'
+  .row
+    .col-md-6
+      %h2 New Game
+    .col-md-6{style:"text-align:right"}
+      = link_to 'Cancel', games_path, class: "btn btn-primary"
 
-= link_to 'Back', games_path
+  %br
+  %br
+
+  = render 'form'
