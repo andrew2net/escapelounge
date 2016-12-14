@@ -1,0 +1,25 @@
+%h1 Listing hints
+
+%table
+  %thead
+    %tr
+      %th Description
+      %th Game step
+      %th Value
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @hints.each do |hint|
+      %tr
+        %td= hint.description
+        %td= hint.game_step_id
+        %td= hint.value
+        %td= link_to 'Show', hint
+        %td= link_to 'Edit', edit_hint_path(hint)
+        %td= link_to 'Destroy', hint, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Hint', new_hint_path

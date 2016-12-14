@@ -1,0 +1,19 @@
+= form_for @hint do |f|
+  - if @hint.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@hint.errors.count, "error")} prohibited this hint from being saved:"
+      %ul
+        - @hint.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :description
+    = f.text_field :description
+  .field
+    = f.label :game_step_id
+    = f.number_field :game_step_id
+  .field
+    = f.label :value
+    = f.number_field :value
+  .actions
+    = f.submit 'Save'

@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Description:
+  = @hint.description
+%p
+  %b Game step:
+  = @hint.game_step_id
+%p
+  %b Value:
+  = @hint.value
+
+= link_to 'Edit', edit_hint_path(@hint)
+\|
+= link_to 'Back', hints_path
