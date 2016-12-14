@@ -22,10 +22,16 @@
 
 %h3 Game Steps
 - @game.game_steps.each do |game_step|
+  %div{style:"background:lightblue"}
   %p= game_step.name
   %p= game_step.description
   %p= game_step.value
 
+  %h5
+    %b HINTS:
+    - game_step.hints.each do |hint|
+      %div{style:"background:lightpink"}
+        %p= hint.description
+        %p= hint.value
+
 = link_to 'Edit', edit_game_path(@game)
-\|
-= link_to 'Back', games_path
