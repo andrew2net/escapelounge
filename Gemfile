@@ -23,6 +23,8 @@ end
 gem 'pg'
 # Use devise for user authentication
 gem 'devise'
+# Use cocoon for dynamic nested forms
+gem "cocoon"
 
 
 # Use Puma as the app server
