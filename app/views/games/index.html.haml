@@ -14,23 +14,20 @@
       %tr
         %th Name
         %th Description
-        %th Status
+        %th # of Steps
         %th Difficulty
         %th Age range
-        %th Score
-        %th
-        %th
-        %th
+        %th Actions
         
     %tbody
       - @games.each do |game|
         %tr
           %td= game.name
           %td= game.description
-          %td= game.status
+          %td= game.game_steps.count
           %td= game.difficulty
           %td= game.age_range
-          %td= game.score
-          %td= link_to 'Show', game
-          %td= link_to 'Edit', edit_game_path(game)
-          %td= link_to 'Destroy', game, :method => :delete, :data => { :confirm => 'Are you sure?' }
+          %td
+            = link_to 'Show', game
+            = link_to 'Edit', edit_game_path(game)
+            = link_to 'Destroy', game, :method => :delete, :data => { :confirm => 'Are you sure?' }

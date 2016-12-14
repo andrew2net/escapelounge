@@ -19,6 +19,13 @@
   %b Score:
   = @game.score
 
+
+%h3 Game Steps
+- @game.game_steps.each do |game_step|
+  %p= game_step.name
+  %p= game_step.description
+  %p= game_step.value
+
 = link_to 'Edit', edit_game_path(@game)
 \|
 = link_to 'Back', games_path
