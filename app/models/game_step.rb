@@ -1,0 +1,2 @@
+class GameStep < ApplicationRecord
+end

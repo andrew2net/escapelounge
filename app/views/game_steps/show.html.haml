@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @game_step.name
+%p
+  %b Description:
+  = @game_step.description
+%p
+  %b Value:
+  = @game_step.value
+%p
+  %b Game:
+  = @game_step.game_id
+
+= link_to 'Edit', edit_game_step_path(@game_step)
+\|
+= link_to 'Back', game_steps_path
