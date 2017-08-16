@@ -7,6 +7,7 @@ class CreateGames < ActiveRecord::Migration[5.0]
       t.integer :difficulty
       t.integer :age_range
       t.integer :score
+      t.boolean :visible, default: false
 
       t.timestamps
     end

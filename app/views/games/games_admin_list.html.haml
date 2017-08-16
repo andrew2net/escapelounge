@@ -1,0 +1,54 @@
+#games-admin-list
+
+  .page-head
+    .container
+      .row
+        .col-md-10
+          %h4 All Games
+        .col-md-2
+          = link_to 'New Game', new_game_path, class: "btn btn-sm btn-primary"
+
+  %section
+    .container
+
+      / Nav tabs
+      %ul.nav.nav-tabs{:role => "tablist"}
+        %li.nav-item
+          %a.nav-link.active{"data-toggle" => "tab", :href => "#live-game", :role => "tab"} Live Games
+        %li.nav-item
+          %a.nav-link{"data-toggle" => "tab", :href => "#draft-game", :role => "tab"} Draft Games
+
+      / Tab panes
+      .tab-content
+        #live-game.tab-pane.active{:role => "tabpanel"}
+          .row
+            - @games.where(visible: true).each do |game|
+              = render 'games/game_card', game: game
+        #draft-game.tab-pane{:role => "tabpanel"}
+          .row
+            - @games.where(visible: false).each do |game|
+              = render 'games/game_card', game: game
+
+
+      -# %table.table.table-striped
+      -#   %thead
+      -#     %tr
+      -#       %th Name
+      -#       %th Description
+      -#       %th # of Steps
+      -#       %th Difficulty
+      -#       %th Age range
+      -#       %th Actions
+      -#
+      -#   %tbody
+      -#     - @games.each do |game|
+      -#       %tr
+      -#         %td= game.name
+      -#         %td= game.description
+      -#         %td= game.game_steps.count
+      -#         %td= game.difficulty
+      -#         %td= game.age_range
+      -#         %td
+      -#           = link_to 'Show', game
+      -#           = link_to 'Edit', edit_game_path(game)
+      -#           = link_to 'Destroy', game, :method => :delete, :data => { :confirm => 'Are you sure?' }

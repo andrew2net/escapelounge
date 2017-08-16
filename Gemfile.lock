@@ -244,6 +244,7 @@ DEPENDENCIES
   listen
   paperclip (~> 5.0.0)
   pg (~> 0.21.0)
+  popper_js (~> 1.11.1)
   pundit
   railroady
   rails (~> 5.1, >= 5.1.2)

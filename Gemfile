@@ -21,6 +21,9 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.1.0'
 end
 
+# bootstrap dependency
+gem 'popper_js', '~> 1.11.1'
+
 # Use coffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2', '>= 4.2.2'
 # Use uglifier as compressor for JavaScript assets

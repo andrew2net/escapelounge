@@ -1,26 +1,29 @@
-%section.container
+#users-list
 
-  .row
-    .col-md-6
-      %h2 Users
-    .col-md-6{style:"text-align:right"}
-      = link_to 'New User', new_user_path, class: "btn btn-primary"
+  .page-head
+    .container
+      .row
+        .col-md-10
+          %h4 All Users
+        .col-md-2
+          = link_to 'New User', new_user_path, class: "btn btn-sm btn-primary"
 
-  %br
-  %br
+  %section
+    .container
 
-  %table.table.table-striped
-    %thead
-      %tr
-        %th Name
-        %th
-        %th
-        %th
-        
-    %tbody
-      - @users.each do |user|
-        %tr
-          %td= user.name
-          %td= link_to 'Show', user
-          %td= link_to 'Edit', edit_user_path(user)
-          %td= link_to 'Destroy', user, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %table.table.table-striped
+        %thead
+          %tr
+            %th Name
+            %th Email
+            %th Actions
+
+        %tbody
+          - @users.each do |user|
+            %tr
+              %td= user.name
+              %td= user.email
+              %td
+                = link_to 'Show', user
+                = link_to 'Edit', edit_user_path(user)
+                = link_to 'Destroy', user, :method => :delete, :data => { :confirm => 'Are you sure?' }
