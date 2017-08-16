@@ -2,17 +2,9 @@
 %html
   %head
     %title Escape Lounge
-    %meta{charset: "utf-8"}/
-    %meta{content: "IE=edge", "http-equiv" => "X-UA-Compatible"}/
-    %meta{content: "width=device-width, initial-scale=1", name: "viewport"}/
-    %link{:type => "text/css", :rel => "stylesheet", :href => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"}
-
-    = stylesheet_link_tag 'application', media: 'all'
-    = javascript_include_tag 'application', 'data-turbolinks-track' => true
-    -# %script{:type => "text/javascript", :src => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"}
-
     = csrf_meta_tags
-  
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   %body
     #flash-display
       .container
@@ -20,6 +12,6 @@
           %div{:class => "alert alert-#{type == :notice ? "success" : type} fadeout", "data-dismiss" => "alert"}
             %button.close &times;
             .text-center= msg if msg.is_a?(String)
-
     = render 'layouts/header'
     = yield
+    -# = render 'layouts/footer'
