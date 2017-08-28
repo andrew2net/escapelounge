@@ -1,5 +1,5 @@
 .nested-fields
-  
+
   .form-group
     = f.label :name
     = f.text_field :name, class: "form-control"
@@ -10,11 +10,11 @@
     = f.label :value
     = f.number_field :value, class: "form-control"
 
-  %h3 Hints
-  #game_steps
-    = f.fields_for :hints do |hint|
-      = render 'hint_fields', f: hint
-    .links
-      = link_to_add_association 'add hint', f, :hints
-  
+  -# %h3 Hints
+  -# #game_steps
+  -#   = f.fields_for :hints do |hint|
+  -#     = render 'hint_fields', f: hint
+  -#   .links
+  -#     = link_to_add_association 'add hint', f, :hints
+
   = link_to_remove_association "remove game step", f, class: "btn btn-danger"
