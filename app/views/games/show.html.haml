@@ -1,37 +1,39 @@
-%p#notice= notice
+#game-show
+  .page-head
+    .container
+      .row
+        .col-md-10
+          %h4= @game.name
+        .col-md-2
+          = link_to 'Edit', edit_game_path(@game), class: "btn btn-sm btn-primary"
 
-%p
-  %b Name:
-  = @game.name
-%p
-  %b Description:
-  = @game.description
-%p
-  %b Status:
-  = @game.status
-%p
-  %b Difficulty:
-  = @game.difficulty
-%p
-  %b Age range:
-  = @game.age_range
-%p
-  %b Score:
-  = @game.score
+  %section
+    .container
+
+      %p#notice= notice
+
+      %p
+        %b Description:
+        = @game.description
+      %p
+        %b Difficulty:
+        = @game.difficulty
+      %p
+        %b Age range:
+        = @game.age_range
+      %p
+        %b Score:
+        = @game.score
 
 
-%h3 Game Steps
-- @game.game_steps.each do |game_step|
-  %div{style:"background:lightblue"}
-  %p= game_step.name
-  %p= game_step.description
-  %p= game_step.value
+      - @game.game_steps.each do |step|
+        .step-container
+          %h4= step.name
+          %p= step.description
+          %span.step-value= "#{step.value} pts"
 
-  %h5
-    %b HINTS:
-    - game_step.hints.each do |hint|
-      %div{style:"background:lightpink"}
-        %p= hint.description
-        %p= hint.value
-
-= link_to 'Edit', edit_game_path(@game)
+          -# TODO: put hints into a button that triggers a modal and removes points from total score
+          - step.hints.each do |hint|
+            .hint-container
+              %p= hint.description
+              %span.hint-value= "#{hint.value} pts"

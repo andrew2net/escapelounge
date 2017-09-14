@@ -1,33 +1,35 @@
-= form_for @game do |f|
-  - if @game.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@game.errors.count, "error")} prohibited this game from being saved:"
-      %ul
-        - @game.errors.full_messages.each do |msg|
-          %li= msg
+.auth-container
 
-  .form-group
-    = f.label :name
-    = f.text_field :name, class: "form-control"
-  .form-group
-    = f.label :description
-    = f.text_area :description, class: "form-control"
-  .form-group
-    = f.label :difficulty
-    = f.select :difficulty, Game.difficulties.to_a.map { |w| [w[0], w[0]] }, {}, class: 'form-control'
-  .form-group
-    = f.label :age_range
-    = f.select :age_range, Game.age_ranges.to_a.map { |w| [w[0], w[0]] }, {}, class: 'form-control'
-  .form-group
-    = f.label :score
-    = f.number_field :score, class: "form-control"
+  = form_for @game do |f|
+    - if @game.errors.any?
+      #error_explanation
+        %h2= "#{pluralize(@game.errors.count, "error")} prohibited this game from being saved:"
+        %ul
+          - @game.errors.full_messages.each do |msg|
+            %li= msg
 
-  %h3 Game Steps
-  #game_steps
-    = f.fields_for :game_steps do |game_step|
-      = render 'game_step_fields', f: game_step
-    .links
-      = link_to_add_association 'add game step', f, :game_steps
-  
-  .actions
-    = f.submit 'Save', class: "btn btn-primary"
+    .form-group
+      = f.label :name
+      = f.text_field :name, class: "form-control"
+    .form-group
+      = f.label :description
+      = f.text_area :description, class: "form-control"
+    .form-group
+      = f.label :difficulty
+      = f.select :difficulty, Game.difficulties.to_a.map { |w| [w[0], w[0]] }, {}, class: 'form-control'
+    .form-group
+      = f.label :age_range
+      = f.select :age_range, Game.age_ranges.to_a.map { |w| [w[0], w[0]] }, {}, class: 'form-control'
+    .form-group
+      = f.label :max_score
+      = f.number_field :score, class: "form-control"
+
+    %h3 Game Steps
+    #game_steps
+      = f.fields_for :game_steps do |game_step|
+        = render 'game_step_fields', f: game_step
+      .links
+        = link_to_add_association 'add game step', f, :game_steps
+
+    .actions
+      = f.submit 'Save', class: "btn btn-primary"

@@ -7,5 +7,6 @@ Rails.application.routes.draw do
   resources :hints
   resources :game_steps
   resources :games
+  get '/games_admin', to: 'games#games_admin_list'
   resources :users
 end

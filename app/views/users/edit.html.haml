@@ -1,12 +1,13 @@
-%section.container
+#user-edit
+  .page-head
+    .container
+      .row
+        .col-md-10
+          %h4 Edit User
+        .col-md-2
+          = link_to 'Cancel', users_path, class: "btn btn-sm btn-primary"
 
-  .row
-    .col-md-6
-      %h2 Edit User
-    .col-md-6{style:"text-align:right"}
-      = link_to 'Cancel', users_path, class: "btn btn-primary"
+  %section
+    .container
 
-  %br
-  %br
-
-  = render 'form'
+      = render 'form'
