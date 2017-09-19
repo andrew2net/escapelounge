@@ -57,7 +57,7 @@ class GameStepsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def game_step_params
-      params.require(:game_step).permit(:name, :description, :value, :game_id,
+      params.require(:game_step).permit(:name, :description, :game_id,
                                         hints_attributes: [:id, :description, :value, :game_step_id, :_destroy])
     end
 end

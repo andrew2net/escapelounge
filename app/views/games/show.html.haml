@@ -16,14 +16,17 @@
         %b Description:
         = @game.description
       %p
+        %b Short Description:
+        = @game.short_description
+      %p
         %b Difficulty:
         = @game.difficulty
       %p
         %b Age range:
         = @game.age_range
       %p
-        %b Score:
-        = @game.score
+        %b Max Time Alloted:
+        = @game.time_length
 
 
       - @game.game_steps.each do |step|

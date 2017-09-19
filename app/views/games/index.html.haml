@@ -14,7 +14,7 @@
         %thead
           %tr
             %th Name
-            %th Description
+            %th Short Description
             %th # of Steps
             %th Difficulty
             %th Age range
@@ -24,7 +24,7 @@
           - @games.each do |game|
             %tr
               %td= game.name
-              %td= game.description
+              %td= game.short_description
               %td= game.game_steps.count
               %td= game.difficulty
               %td= game.age_range
