@@ -5,4 +5,7 @@ class GameStep < ApplicationRecord
   has_many :hints, dependent: :destroy
   accepts_nested_attributes_for :hints, reject_if: :all_blank, allow_destroy: true
 
+  has_many :game_step_solutions, dependent: :destroy
+  accepts_nested_attributes_for :game_step_solutions, reject_if: :all_blank, allow_destroy: true
+
 end

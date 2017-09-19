@@ -33,10 +33,16 @@
         .step-container
           %h4= step.name
           %p= step.description
-          %span.step-value= "#{step.value} pts"
 
+          %h5 Hints
           -# TODO: put hints into a button that triggers a modal and removes points from total score
           - step.hints.each do |hint|
             .hint-container
               %p= hint.description
               %span.hint-value= "#{hint.value} pts"
+
+          %hr
+          %h5 Solutions
+          - step.game_step_solutions.each do |game_step_solution|
+            .hint-container
+              %p= game_step_solution.solution

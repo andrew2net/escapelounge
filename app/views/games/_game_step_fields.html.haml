@@ -7,11 +7,16 @@
     = f.label :description
     = f.text_area :description, class: "form-control"
 
-  %h3 Hints
   #game_steps
+    %h3 Hints
     = f.fields_for :hints do |hint|
       = render 'hint_fields', f: hint
     .links
       = link_to_add_association 'add hint', f, :hints
+    %h3 Solutions
+    = f.fields_for :game_step_solutions do |game_step_solution|
+      = render 'game_step_solution_fields', f: game_step_solution
+    .links
+      = link_to_add_association 'add solution', f, :game_step_solutions
 
   = link_to_remove_association "remove game step", f, class: "btn btn-danger"

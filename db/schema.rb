@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161214032913) do
+ActiveRecord::Schema.define(version: 20170919145115) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "game_step_solutions", force: :cascade do |t|
+    t.bigint "game_step_id"
+    t.string "solution"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_step_id"], name: "index_game_step_solutions_on_game_step_id"
+  end
 
   create_table "game_steps", id: :serial, force: :cascade do |t|
     t.string "name"
@@ -70,4 +78,5 @@ ActiveRecord::Schema.define(version: 20161214032913) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "game_step_solutions", "game_steps"
 end

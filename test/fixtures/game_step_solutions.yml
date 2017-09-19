@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  game_step: one
+  solution: MyString
+
+two:
+  game_step: two
+  solution: MyString
