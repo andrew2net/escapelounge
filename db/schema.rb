@@ -18,7 +18,6 @@ ActiveRecord::Schema.define(version: 20161214032913) do
   create_table "game_steps", id: :serial, force: :cascade do |t|
     t.string "name"
     t.string "description"
-    t.integer "value"
     t.integer "game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -27,10 +26,11 @@ ActiveRecord::Schema.define(version: 20161214032913) do
   create_table "games", id: :serial, force: :cascade do |t|
     t.string "name"
     t.string "description"
+    t.string "short_description"
     t.integer "status"
     t.integer "difficulty"
     t.integer "age_range"
-    t.integer "score"
+    t.time "time_length"
     t.boolean "visible", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
