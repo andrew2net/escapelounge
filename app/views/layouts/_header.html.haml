@@ -1,23 +1,27 @@
-%nav.navbar
+%nav.navbar.navbar-expand-md
   = link_to "Escape Lounge", root_path, class: "navbar-brand"
-  %ul.nav.navbar-nav
+  %button.navbar-toggler{"aria-controls" => "navbarSupportedContent", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarSupportedContent", "data-toggle" => "collapse", :type => "button"}
+    %span.navbar-toggler-icon
 
-    - if current_user && current_user.admin
-      %li.nav-item
-        = link_to 'Games Admin', games_admin_path, class: "nav-link"
+  #navbarSupportedContent.collapse.navbar-collapse
+    %ul.nav.navbar-nav.ml-auto
 
-    - if current_user
-      %li.nav-item
-        = link_to 'Games', games_path, class: "nav-link"
-      %li.nav-item.dropdown
-        %a#navbarDropdownMenuLink.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "http://example.com"}
-          = current_user.email
-        .dropdown-menu{"aria-labelledby" => "navbarDropdownMenuLink"}
-          = link_to "Settings", edit_user_registration_path(current_user), class: "dropdown-item"
-          = link_to "Logout", destroy_user_session_path, method: :delete, class: "dropdown-item"
+      - if current_user && current_user.admin
+        %li.nav-item
+          = link_to 'Games Admin', games_admin_path, class: "nav-link"
 
-    - else
-      %li.nav-item
-        = link_to "Sign Up", new_user_registration_path, class: "nav-link"
-      %li.nav-item
-        = link_to "Log In", new_user_session_path, class: "nav-link"
+      - if current_user
+        %li.nav-item
+          = link_to 'Games', games_path, class: "nav-link"
+        %li.nav-item.dropdown
+          %a#navbarDropdownMenuLink.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "http://example.com"}
+            = current_user.email
+          .dropdown-menu{"aria-labelledby" => "navbarDropdownMenuLink"}
+            = link_to "Settings", edit_user_registration_path(current_user), class: "dropdown-item"
+            = link_to "Logout", destroy_user_session_path, method: :delete, class: "dropdown-item"
+
+      - else
+        %li.nav-item
+          = link_to "Sign Up", new_user_registration_path, class: "nav-link"
+        %li.nav-item
+          = link_to "Log In", new_user_session_path, class: "nav-link"
