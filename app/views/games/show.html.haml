@@ -4,32 +4,41 @@
       .row
         .col-md-10
           %h4= @game.name
-        .col-md-2
-          = link_to 'Edit', edit_game_path(@game), class: "btn btn-sm btn-primary"
+        -if current_user && current_user.admin
+          .col-md-2
+            = link_to 'Edit', edit_game_path(@game), class: "btn btn-sm btn-primary"
 
   %section
     .container
+      .row
+        .col-md-10
 
-      %p#notice= notice
+          %p#notice= notice
 
-      %p
-        %b Description:
-        = @game.description
-      %p
-        %b Short Description:
-        = @game.short_description
-      %p
-        %b Difficulty:
-        = @game.difficulty
-      %p
-        %b Age range:
-        = @game.age_range
-      %p
-        %b Max Time Alloted:
-        = @game.time_length
+          %p
+            %b Description:
+            = @game.description
+          %p
+            %b Short Description:
+            = @game.short_description
+          %p
+            %b Difficulty:
+            = @game.difficulty
+          %p
+            %b Age range:
+            = @game.age_range
+          %p
+            %b Max Time Alloted:
+            = @game.time_length
+
+        .col-md-2
+          - if current_user && current_user.game_id && current_user.game_id == @game.id
+            Timer
+          - else
+            = link_to 'Start game', game_start_url(@game), class: 'btn btn-primary', method: :post
 
 
-      - @game.game_steps.each do |step|
+      -# - @game.game_steps.each do |step|
         .step-container
           %h4= step.name
           %p= step.description

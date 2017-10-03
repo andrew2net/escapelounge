@@ -43,7 +43,6 @@ gem 'friendly_id', '~> 5.1.0'
 gem 'cocoon', '~> 1.2', '>= 1.2.10'
 
 
-
 #### Back End Gems
 
 # Use jbuilder to build JSON APIs

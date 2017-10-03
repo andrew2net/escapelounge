@@ -5,6 +5,7 @@ class GamesController < ApplicationController
     @games = Game.visible
   end
 
+  # POST /games/table
   def table
     @games = Game.visible.where filter_params
     render partial: 'table_body'
@@ -15,6 +16,10 @@ class GamesController < ApplicationController
   end
 
   def show
+  end
+
+  def start
+
   end
 
   def new

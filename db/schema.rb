@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170919145115) do
+ActiveRecord::Schema.define(version: 20171003162346) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,10 +38,10 @@ ActiveRecord::Schema.define(version: 20170919145115) do
     t.integer "status"
     t.integer "difficulty"
     t.integer "age_range"
-    t.time "time_length"
     t.boolean "visible", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "time_length"
   end
 
   create_table "hints", id: :serial, force: :cascade do |t|
@@ -74,9 +74,13 @@ ActiveRecord::Schema.define(version: 20170919145115) do
     t.datetime "last_sign_in_at"
     t.inet "current_sign_in_ip"
     t.inet "last_sign_in_ip"
+    t.bigint "game_id"
+    t.datetime "game_start_at"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["game_id"], name: "index_users_on_game_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "game_step_solutions", "game_steps"
+  add_foreign_key "users", "games"
 end

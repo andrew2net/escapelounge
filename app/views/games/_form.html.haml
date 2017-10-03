@@ -25,7 +25,7 @@
       = f.select :age_range, Game.age_ranges.to_a.map { |w| [w[0], w[0]] }, {}, class: 'form-control'
     .form-group
       %label TIme allotted to complete the game
-      = f.time_field :time_length, class: "form-control"
+      = f.text_field :time_length, class: "form-control"
 
     %h3 Game Steps
     #game_steps

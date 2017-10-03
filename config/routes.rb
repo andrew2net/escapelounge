@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :game_steps
   resources :games do
     post :table, on: :collection
+    post :start
   end
   get '/games_admin', to: 'games#games_admin_list'
   resources :users
