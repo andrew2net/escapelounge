@@ -16,19 +16,14 @@
             %th Name
             %th Short Description
             %th # of Steps
-            %th Difficulty
-            %th Age range
+            %th
+              Difficulty
+              = select_tag :difficulty_filter, options_for_select(Game.difficulties),
+                class: 'form-control', include_blank: true
+            %th
+              Age range
+              = select_tag :age_filter, options_for_select(Game.age_ranges),
+                class: 'form-control', include_blank: true
             %th Actions
 
-        %tbody
-          - @games.each do |game|
-            %tr
-              %td= game.name
-              %td= game.short_description
-              %td= game.game_steps.count
-              %td= game.difficulty
-              %td= game.age_range
-              %td
-                = link_to 'Show', game
-                = link_to 'Edit', edit_game_path(game)
-                = link_to 'Destroy', game, :method => :delete, :data => { :confirm => 'Are you sure?' }
+        %tbody= render partial: 'table_body'

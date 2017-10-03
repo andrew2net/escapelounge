@@ -11,4 +11,5 @@ class Game < ApplicationRecord
 
   # enum status: []  --  should status be an enumerated list?
 
+  scope :visible, -> { where(visible: true) }
 end

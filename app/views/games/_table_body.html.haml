@@ -1,0 +1,11 @@
+- @games.each do |game|
+  %tr
+    %td= game.name
+    %td= game.short_description
+    %td= game.game_steps.count
+    %td= game.difficulty
+    %td= game.age_range
+    %td
+      = link_to 'Show', game
+      = link_to 'Edit', edit_game_path(game)
+      = link_to 'Destroy', game, :method => :delete, :data => { :confirm => 'Are you sure?' }

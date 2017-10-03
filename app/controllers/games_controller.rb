@@ -2,7 +2,12 @@ class GamesController < ApplicationController
   before_action :set_game, only: [:show, :edit, :update, :destroy]
 
   def index
-    @games = Game.where(visible: true)
+    @games = Game.visible
+  end
+
+  def table
+    @games = Game.visible.where filter_params
+    render partial: 'table_body'
   end
 
   def games_admin_list
@@ -67,5 +72,9 @@ class GamesController < ApplicationController
                                       game_step_solutions_attributes: [:id, :solution, :game_step_id, :_destroy],
                                     ]
                                     )
+    end
+
+    def filter_params
+      params.require(:filter).permit(:difficulty, :age_range).select { |_k, v| !v.blank? }
     end
 end

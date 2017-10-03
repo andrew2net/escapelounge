@@ -2,6 +2,7 @@
 
 one:
   name: MyString
+  email: test@email.net
 
 two:
   name: MyString
