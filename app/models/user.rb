@@ -14,7 +14,7 @@ class User < ApplicationRecord
 
   def check_started_game
     if game_start_at && !pause_at
-      time = DateTime.now + timezone_offset.minutes
+      time = DateTime.now #+ timezone_offset.minutes
       minutes = ((time - game_start_at.to_datetime) * 24 * 60).to_i
       if minutes >= game.time_length
         self.game_start_at = nil

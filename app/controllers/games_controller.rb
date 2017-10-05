@@ -32,7 +32,7 @@ class GamesController < ApplicationController
       current_user.timezone_offset = params[:timezone_offset].to_i + Time.zone.utc_offset / 60
       current_user.save
       render json: {
-        stop_at: current_user.game_start_at + (game.time_length - current_user.timezone_offset).minutes
+        stop_at: current_user.game_start_at + game.time_length.minutes
       }
     else
       render json: { started: false }

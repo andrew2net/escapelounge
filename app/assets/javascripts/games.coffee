@@ -45,6 +45,8 @@ $ ->
     start: (timeLength)->
       this.secondsRemain = timeLength if timeLength
       if this.secondsRemain > 0
+        resumeGameBtn.hide()
+        pauseGameBtn.show()
         this.show()
         _self = this
         this.interval = setInterval ->
@@ -57,10 +59,10 @@ $ ->
 
     pause: (pauseAt)->
       this.secondsRemain = pauseAt if pauseAt
+      pauseGameBtn.hide()
+      resumeGameBtn.show()
       this.show()
       clearInterval this.interval
-
-    resume: ->
 
   seconds = (stopAt)-> Math.ceil (new Date(stopAt) - new Date) / 1000
 
@@ -87,14 +89,10 @@ $ ->
   pauseGameBtn.click (event)->
     event.preventDefault()
     timer.pause()
-    pauseGameBtn.hide()
-    resumeGameBtn.show()
     $.post event.target.href, { seconds_remain: timer.secondsRemain }
 
   # Resume game.
   resumeGameBtn.click (event)->
     event.preventDefault()
     timer.start()
-    resumeGameBtn.hide()
-    pauseGameBtn.show()
     $.post event.target.href, { start_at: new Date }

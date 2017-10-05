@@ -12,5 +12,7 @@ class Game < ApplicationRecord
 
   # enum status: []  --  should status be an enumerated list?
 
+  validates :time_length, presence: true
+
   scope :visible, -> { where(visible: true) }
 end
