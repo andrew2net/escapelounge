@@ -32,8 +32,16 @@
             = @game.time_length
 
         .col-md-2
-          %h2#timer{style: "#{@show_timer ? '' : 'display:none'}", class: 'text-danger',
-            data: {stop_at: "#{@stop_at}"}}
+
+          %div#container-timer{ style: "#{@show_timer ? '' : 'display:none'}" }
+            -# Timer
+            %h2#display-timer{ class: 'text-danger', data: {stop_at: "#{@stop_at}",
+              pause_at: "#{current_user.pause_at}"}}
+            = link_to 'Pause game', game_pause_url(@game), id: 'pause-game-btn',
+              class: 'btn btn-primary', style: "#{current_user.pause_at ? 'display:none' : ''}"
+            = link_to 'Resume game', game_resume_url(@game), id: 'resume-game-btn',
+              class: 'btn btn-primary', style: "#{current_user.pause_at ? '' : 'display:none'}"
+
           = link_to 'Start game', game_start_url(@game), id: 'start-game-btn',
             class: "btn btn-primary", style: "#{@show_button ? '' : 'display:none'}"
 

@@ -15,45 +15,86 @@ $ ->
   ageParam.change getTable
 
   startGameBtn = $('#start-game-btn')
-  timer = $('#timer')
+  pauseGameBtn = $('#pause-game-btn')
+  resumeGameBtn = $('#resume-game-btn')
 
-  # Return remaning time in format MM:ss
-  minSec = (stopAt)->
-    timeDiff = Math.ceil (stopAt - new Date) / 1000
-    minutes = Math.floor(timeDiff / 60)
-    seconds = Math.round((timeDiff % 60) / 1)
-    "#{minutes.toString().padStart(2, '0')}:#{seconds.toString().padStart(2, '0')}"
+  timer =
+    interval: null
+    display: $('#display-timer')
+    container: $('#container-timer')
+    secondsRemain: 0
 
-  timerInterval = null
-  stopTimer = ->
-    timer.hide()
-    startGameBtn.show()
-    clearInterval timerInterval
+    # Return remaning time in format MM:ss
+    minSec: ->
+      minutes = Math.floor(this.secondsRemain / 60)
+      seconds = Math.round((this.secondsRemain % 60) / 1)
+      "#{minutes.toString().padStart(2, '0')}:#{seconds.toString().padStart(2, '0')}"
 
-  # Show timer.
-  startTimer = (stopAt)->
-    stopAt = new Date stopAt
-    startGameBtn.hide()
-    timer.show()
-    timer.html minSec stopAt
-    timerInterval = setInterval ->
-      if new Date > stopAt
-        stopTimer()
-      else
-        timer.html minSec stopAt
-    , 1000
+    # Hide and stop timer.
+    stop: ->
+      this.container.hide()
+      startGameBtn.show()
+      clearInterval this.interval
 
-  if stopAt = timer.attr('data-stop-at')
-    startTimer stopAt
+    show: ->
+      startGameBtn.hide()
+      this.container.show()
+      this.display.html this.minSec()
+
+    # Show and start timer.
+    start: (timeLength)->
+      this.secondsRemain = timeLength if timeLength
+      if this.secondsRemain > 0
+        this.show()
+        _self = this
+        this.interval = setInterval ->
+          if _self.secondsRemain > 0
+            _self.secondsRemain--
+            _self.display.html _self.minSec()
+          else
+            _self.stop()
+        , 1000
+
+    pause: (pauseAt)->
+      this.secondsRemain = pauseAt if pauseAt
+      this.show()
+      clearInterval this.interval
+
+    resume: ->
+
+  seconds = (stopAt)-> Math.ceil (new Date(stopAt) - new Date) / 1000
+
+  # When timer started before the page loaded then continue conutdowning.
+  if stopAt = timer.display.attr('data-stop-at')
+    if pauseAt = timer.display.attr('data-pause-at')
+      timer.pause(pauseAt)
+    else
+      timer.start seconds(stopAt)
 
   # Starting game.
   startGameBtn.click (event)->
     event.preventDefault()
     startAt = new Date
     timeZoneOffset = startAt.getTimezoneOffset()
-    $.post "#{window.location}/start", {
+    $.post event.target.href, {
       start_at: startAt
       timezone_offset: timeZoneOffset
     }, (response)->
       if response.stop_at
-        startTimer response.stop_at
+        timer.start seconds(response.stop_at)
+
+  # Pause game
+  pauseGameBtn.click (event)->
+    event.preventDefault()
+    timer.pause()
+    pauseGameBtn.hide()
+    resumeGameBtn.show()
+    $.post event.target.href, { seconds_remain: timer.secondsRemain }
+
+  # Resume game.
+  resumeGameBtn.click (event)->
+    event.preventDefault()
+    timer.start()
+    resumeGameBtn.hide()
+    pauseGameBtn.show()
+    $.post event.target.href, { start_at: new Date }

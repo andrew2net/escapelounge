@@ -29,14 +29,30 @@ class GamesController < ApplicationController
       current_user.game = game
       current_user.game_start_at = params[:start_at]
       # relative time offset in minutes
-      current_user.timezone_offset = params[:timezone_offset].to_i + Time.new.utc_offset / 60
+      current_user.timezone_offset = params[:timezone_offset].to_i + Time.zone.utc_offset / 60
       current_user.save
       render json: {
-        stop_at: current_user.game_start_at + game.time_length.minutes
+        stop_at: current_user.game_start_at + (game.time_length - current_user.timezone_offset).minutes
       }
     else
       render json: { started: false }
     end
+  end
+
+  def pause
+    if current_user && !current_user.game_id.nil?
+      current_user.update pause_at: params[:seconds_remain]
+    end
+    head :ok
+  end
+
+  def resume
+    if current_user && !current_user.pause_at.nil?
+      passed_seconds = current_user.game.time_length * 60 - current_user.pause_at
+      start_at = DateTime.parse(params[:start_at]) - passed_seconds.seconds
+      current_user.update game_start_at: start_at, pause_at: nil
+    end
+    head :ok
   end
 
   def step
