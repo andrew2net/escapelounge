@@ -32,7 +32,7 @@ class GamesController < ApplicationController
       current_user.timezone_offset = params[:timezone_offset].to_i + Time.zone.utc_offset / 60
       current_user.save
       render json: {
-        stop_at: current_user.game_start_at + game.time_length.minutes
+        stop_at: current_user.game_start_at + game.time_length.to_i.minutes
       }
     else
       render json: { started: false }
@@ -48,7 +48,7 @@ class GamesController < ApplicationController
 
   def resume
     if current_user && !current_user.pause_at.nil?
-      passed_seconds = current_user.game.time_length * 60 - current_user.pause_at
+      passed_seconds = current_user.game.time_length.to_i * 60 - current_user.pause_at
       start_at = DateTime.parse(params[:start_at]) - passed_seconds.seconds
       current_user.update game_start_at: start_at, pause_at: nil
     end
@@ -108,7 +108,8 @@ class GamesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def game_params
-      params.require(:game).permit(:name, :description, :short_description, :status, :difficulty, :age_range, :time_length,
+      params.require(:game).permit(:name, :description, :short_description, :status, :difficulty, :age_range,
+                                    :time_length, :instructions,
                                     game_steps_attributes: [:id, :name, :description, :game_id, :_destroy,
                                       hints_attributes: [:id, :description, :value, :game_step_id, :_destroy],
                                       game_step_solutions_attributes: [:id, :solution, :game_step_id, :_destroy],

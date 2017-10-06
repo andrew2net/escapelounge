@@ -41,7 +41,9 @@ gem "paperclip", "~> 5.0.0"
 gem 'friendly_id', '~> 5.1.0'
 # Use cocoon for nested forms
 gem 'cocoon', '~> 1.2', '>= 1.2.10'
-
+# A PDF generation plugin for Ruby on Rails
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
 
 #### Back End Gems
 

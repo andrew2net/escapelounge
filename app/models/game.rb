@@ -1,4 +1,5 @@
 class Game < ApplicationRecord
+  before_save :generate_instructions
 
   has_many :user_games, dependent: :destroy
   has_many :users, through: :user_games
@@ -14,5 +15,19 @@ class Game < ApplicationRecord
 
   validates :time_length, presence: true
 
+  has_attached_file :instructions_pdf
+  validates_attachment :instructions_pdf, content_type: { content_type: "application/pdf" }
+
   scope :visible, -> { where(visible: true) }
+
+  private
+
+  # Generate PDF instructions and attach to the game.
+  def generate_instructions
+    file = "#{Dir.mktmpdir}/#{name.parameterize.underscore}_instructions.pdf"
+    html = ApplicationController.render partial: "games/game_instructions", locals: { game: self }
+    pdf = WickedPdf.new.pdf_from_string(html)
+    File.open(file, "wb") { |f| f << pdf }
+    self.instructions_pdf = File.open file
+  end
 end

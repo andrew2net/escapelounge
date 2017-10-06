@@ -18,6 +18,9 @@
       = f.label :short_description
       = f.text_area :short_description, class: "form-control"
     .form-group
+      = f.label :instructions
+      = f.text_area :instructions, class: "form-control"
+    .form-group
       = f.label :difficulty
       = f.select :difficulty, Game.difficulties.to_a.map { |w| [w[0], w[0]] }, {}, class: 'form-control'
     .form-group

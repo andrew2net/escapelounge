@@ -30,6 +30,11 @@
           %p
             %b Max Time Alloted:
             = @game.time_length
+          %p
+            %b Steps:
+            = @game.game_steps.count
+          %p
+            %b= link_to 'Instructions', @game.instructions_pdf.url
 
         .col-md-2
 

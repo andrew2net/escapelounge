@@ -12,6 +12,7 @@ class User < ApplicationRecord
 
   private
 
+  # Check if last stared game is expired.
   def check_started_game
     if game_start_at && !pause_at
       time = DateTime.now #+ timezone_offset.minutes

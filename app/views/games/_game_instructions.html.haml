@@ -1,0 +1,12 @@
+%h1= game.name
+
+%h2 Instructions
+
+%p= game.instructions
+
+%h2 Steps
+
+- game.game_steps.each do |step|
+  %h3= step.name
+
+  %p= step.description
