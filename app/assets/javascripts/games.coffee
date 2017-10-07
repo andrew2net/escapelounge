@@ -68,7 +68,7 @@ $ ->
 
   # When timer started before the page loaded then continue conutdowning.
   if stopAt = timer.display.attr('data-stop-at')
-    if pauseAt = timer.display.attr('data-pause-at')
+    if pauseAt = timer.display.attr('data-paused-at')
       timer.pause(pauseAt)
     else
       timer.start seconds(stopAt)
@@ -88,6 +88,7 @@ $ ->
   # Pause game
   pauseGameBtn.click (event)->
     event.preventDefault()
+    resumeGameBtn.removeClass 'disabled'
     timer.pause()
     $.post event.target.href, { seconds_remain: timer.secondsRemain }
 

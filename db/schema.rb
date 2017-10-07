@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171006094552) do
+ActiveRecord::Schema.define(version: 20171006161439) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,9 @@ ActiveRecord::Schema.define(version: 20171006094552) do
     t.integer "game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "started_at", null: false
+    t.integer "paused_at"
+    t.datetime "finished_at"
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
@@ -79,15 +82,9 @@ ActiveRecord::Schema.define(version: 20171006094552) do
     t.datetime "last_sign_in_at"
     t.inet "current_sign_in_ip"
     t.inet "last_sign_in_ip"
-    t.bigint "game_id"
-    t.datetime "game_start_at"
-    t.integer "pause_at"
-    t.integer "timezone_offset", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["game_id"], name: "index_users_on_game_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "game_step_solutions", "game_steps"
-  add_foreign_key "users", "games"
 end

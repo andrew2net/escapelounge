@@ -16,23 +16,31 @@ class GamesController < ApplicationController
   end
 
   def show
-    @show_button = !(current_user && current_user.game_id)
-    @show_timer = current_user && current_user.game_id && current_user.game_id == @game.id
+    # This need for finishing expired game.
+    current_user && current_user.user_games.running.map { |e| e }
+    # True if there is running game.
+    @running = current_user && current_user.user_games.running.any?
+    # If the game running or paused read UserGame.
+    user_game = current_user && current_user.user_games.find_by(game_id: @game.id, finished_at: nil)
+    @show_timer = !user_game.nil?
     if @show_timer
-      @stop_at = (current_user.game_start_at + current_user.game.time_length.minutes).httpdate
+      # Time when the game should stop.
+      @stop_at = (user_game.started_at + user_game.game.time_length.minutes).httpdate
+      @paused_at = user_game.paused_at
     end
   end
 
   def start
-    if current_user && current_user.game_id.nil?
+    user_game = !current_user.nil? && current_user.user_games.paused.find_by(game_id: params[:game_id])
+    if !user_game && !current_user.user_games.running.any?
       game = Game.find params[:game_id]
-      current_user.game = game
-      current_user.game_start_at = params[:start_at]
+      user_game = UserGame.new(user_id: current_user.id, game_id: game.id)
+      user_game.started_at = params[:start_at]
       # relative time offset in minutes
-      current_user.timezone_offset = params[:timezone_offset].to_i + Time.zone.utc_offset / 60
-      current_user.save
+      # current_user.timezone_offset = params[:timezone_offset].to_i + Time.zone.utc_offset / 60
+      user_game.save
       render json: {
-        stop_at: current_user.game_start_at + game.time_length.to_i.minutes
+        stop_at: user_game.started_at + game.time_length.to_i.minutes
       }
     else
       render json: { started: false }
@@ -40,17 +48,17 @@ class GamesController < ApplicationController
   end
 
   def pause
-    if current_user && !current_user.game_id.nil?
-      current_user.update pause_at: params[:seconds_remain]
-    end
+    user_game = !current_user.nil? && current_user.user_games.running.find_by(game_id: params[:game_id])
+    user_game.update paused_at: params[:seconds_remain] if user_game
     head :ok
   end
 
   def resume
-    if current_user && !current_user.pause_at.nil?
-      passed_seconds = current_user.game.time_length.to_i * 60 - current_user.pause_at
-      start_at = DateTime.parse(params[:start_at]) - passed_seconds.seconds
-      current_user.update game_start_at: start_at, pause_at: nil
+    user_game = !current_user.nil? && current_user.user_games.paused.find_by(game_id: params[:game_id])
+    if user_game && !current_user.user_games.running.any?
+      passed_seconds = user_game.game.time_length.to_i * 60 - user_game.paused_at
+      started_at = DateTime.parse(params[:start_at]) - passed_seconds.seconds
+      user_game.update started_at: started_at, paused_at: nil
     end
     head :ok
   end
