@@ -17,7 +17,7 @@ class GameStepsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create game_step" do
     assert_difference('GameStep.count') do
-      post game_steps_url, params: { game_step: { description: @game_step.description, game_id: @game_step.game_id, name: @game_step.name, value: @game_step.value } }
+      post game_steps_url, params: { game_step: { description: @game_step.description, game_id: @game_step.game_id, name: @game_step.name } }
     end
 
     assert_redirected_to game_step_url(GameStep.last)
@@ -34,7 +34,7 @@ class GameStepsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update game_step" do
-    patch game_step_url(@game_step), params: { game_step: { description: @game_step.description, game_id: @game_step.game_id, name: @game_step.name, value: @game_step.value } }
+    patch game_step_url(@game_step), params: { game_step: { description: @game_step.description, game_id: @game_step.game_id, name: @game_step.name } }
     assert_redirected_to game_step_url(@game_step)
   end
 

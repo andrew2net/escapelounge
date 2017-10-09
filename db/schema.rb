@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171008115619) do
+ActiveRecord::Schema.define(version: 20171009200754) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,7 +29,6 @@ ActiveRecord::Schema.define(version: 20171008115619) do
     t.integer "game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "value"
   end
 
   create_table "games", id: :serial, force: :cascade do |t|
@@ -48,7 +47,6 @@ ActiveRecord::Schema.define(version: 20171008115619) do
     t.string "instructions_pdf_content_type"
     t.integer "instructions_pdf_file_size"
     t.datetime "instructions_pdf_updated_at"
-    t.integer "score"
   end
 
   create_table "hints", id: :serial, force: :cascade do |t|
@@ -57,6 +55,15 @@ ActiveRecord::Schema.define(version: 20171008115619) do
     t.integer "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "step_answers", force: :cascade do |t|
+    t.bigint "game_step_id", null: false
+    t.bigint "user_game_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_step_id"], name: "index_step_answers_on_game_step_id"
+    t.index ["user_game_id"], name: "index_step_answers_on_user_game_id"
   end
 
   create_table "user_games", id: :serial, force: :cascade do |t|
@@ -89,4 +96,6 @@ ActiveRecord::Schema.define(version: 20171008115619) do
   end
 
   add_foreign_key "game_step_solutions", "game_steps"
+  add_foreign_key "step_answers", "game_steps"
+  add_foreign_key "step_answers", "user_games"
 end

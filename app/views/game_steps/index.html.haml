@@ -5,18 +5,18 @@
     %tr
       %th Name
       %th Description
-      %th Value
+      -# %th Value
       %th Game
       %th
       %th
       %th
-      
+
   %tbody
     - @game_steps.each do |game_step|
       %tr
         %td= game_step.name
         %td= game_step.description
-        %td= game_step.value
+        -# %td= game_step.value
         %td= game_step.game_id
         %td= link_to 'Show', game_step
         %td= link_to 'Edit', edit_game_step_path(game_step)

@@ -3,6 +3,7 @@ class UserGame < ApplicationRecord
 
   belongs_to :user
   belongs_to :game
+  has_many :step_answers
 
   scope :running, -> { where(paused_at: nil, finished_at: nil) }
   scope :paused, -> { where.not(paused_at: nil).where(finished_at: nil) }

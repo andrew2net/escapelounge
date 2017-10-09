@@ -3,11 +3,9 @@
 one:
   name: MyString
   description: MyString
-  value: 1
   game_id: 1
 
 two:
   name: MyString
   description: MyString
-  value: 1
   game_id: 1

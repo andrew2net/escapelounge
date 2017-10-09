@@ -75,15 +75,16 @@ $ ->
 
   # Starting game.
   startGameBtn.click (event)->
-    event.preventDefault()
+    # event.preventDefault()
     startAt = new Date
-    timeZoneOffset = startAt.getTimezoneOffset()
-    $.post event.target.href, {
-      start_at: startAt
-      timezone_offset: timeZoneOffset
-    }, (response)->
-      if response.stop_at
-        timer.start seconds(response.stop_at)
+    event.target.href += "?start_at=#{new Date}"
+    # timeZoneOffset = startAt.getTimezoneOffset()
+    # $.post event.target.href, {
+      # start_at: startAt
+      # timezone_offset: timeZoneOffset
+    # }, (response)->
+    #   if response.stop_at
+    #     timer.start seconds(response.stop_at)
 
   # Pause game
   pauseGameBtn.click (event)->

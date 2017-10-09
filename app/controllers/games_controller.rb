@@ -15,6 +15,7 @@ class GamesController < ApplicationController
     @games = Game.all
   end
 
+  # GET /games/:id
   def show
     # This need for finishing expired game.
     current_user && current_user.user_games.running.map { |e| e }
@@ -30,29 +31,31 @@ class GamesController < ApplicationController
     end
   end
 
+  # POST /games/:game_id/start
   def start
     user_game = !current_user.nil? && current_user.user_games.paused.find_by(game_id: params[:game_id])
     if !user_game && !current_user.user_games.running.any?
       game = Game.find params[:game_id]
       user_game = UserGame.new(user_id: current_user.id, game_id: game.id)
       user_game.started_at = params[:start_at]
-      # relative time offset in minutes
-      # current_user.timezone_offset = params[:timezone_offset].to_i + Time.zone.utc_offset / 60
       user_game.save
-      render json: {
-        stop_at: user_game.started_at + game.time_length.to_i.minutes
-      }
+      redirect_to game_steps_flow_url(game)
+      # render json: {
+      #   stop_at: user_game.started_at + game.time_length.to_i.minutes
+      # }
     else
-      render json: { started: false }
+      head :ok
     end
   end
 
+  # POST /games/:game_id/pause
   def pause
     user_game = !current_user.nil? && current_user.user_games.running.find_by(game_id: params[:game_id])
     user_game.update paused_at: params[:seconds_remain] if user_game
     head :ok
   end
 
+  # POST /games/:game_id/resume
   def resume
     user_game = !current_user.nil? && current_user.user_games.paused.find_by(game_id: params[:game_id])
     if user_game && !current_user.user_games.running.any?
@@ -63,8 +66,15 @@ class GamesController < ApplicationController
     head :ok
   end
 
-  def step
+  # GET /games/:game_is/steps_flow(/:step_id)
+  def steps_flow
     @game = Game.find params[:game_id]
+    if params[:step_id]
+      @step = @game.game_steps.not_answered.find params[:step_id]
+      @step = @game.game_steps.not_answered.last unless @step
+    else
+      @step = @game.game_steps.not_answered.first
+    end
   end
 
   def new
