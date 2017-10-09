@@ -42,6 +42,7 @@
             -# Timer
             %h2#display-timer{ class: 'text-danger', data: {stop_at: "#{@stop_at}",
               paused_at: "#{@paused_at}"}}
+
             = link_to 'Pause game', game_pause_url(@game), id: 'pause-game-btn',
               class: 'btn btn-primary', style: "#{@paused_at ? 'display:none' : ''}"
 
@@ -50,7 +51,7 @@
               style: "#{@paused_at ? '' : 'display:none'}"
 
           = link_to 'Start game', game_start_url(@game), id: 'start-game-btn',
-            class: "btn btn-primary", style: "#{!@running ? '' : 'display:none'}"
+            class: "btn btn-primary", style: "#{@running || @paused_at ? 'display:none' : ''}"
 
 
       -# - @game.game_steps.each do |step|

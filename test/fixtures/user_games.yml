@@ -1,9 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  user_id: 1
-  game_id: 1
+  user: one
+  game: one
+  started_at: <%= DateTime.now %>
 
 two:
-  user_id: 1
-  game_id: 1
+  user: two
+  game: two
+  started_at: <%= DateTime.now %>

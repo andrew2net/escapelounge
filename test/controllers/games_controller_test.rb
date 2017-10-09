@@ -1,13 +1,29 @@
 require 'test_helper'
 
 class GamesControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
   setup do
     @game = games(:one)
+    @user = users :one
   end
 
   test "should get index" do
     get games_url
     assert_response :success
+  end
+
+  test "should return only games with difficulty 1" do
+    post table_games_url, params: { filter: { difficulty: 1 } }, xhr: true
+    assert_select 'tr' do |element|
+      assert_select element, 'td:nth-child(4)', '2 (easy)'
+    end
+  end
+
+  test "should return only games with age_range 1" do
+    post table_games_url, params: { filter: { age_range: 1 } }, xhr: true
+    assert_select 'tr' do |element|
+      assert_select element, 'td:nth-child(5)', 'ages 10 - 14'
+    end
   end
 
   test "should get new" do
@@ -17,15 +33,40 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create game" do
     assert_difference('Game.count') do
-      post games_url, params: { game: { age_range: @game.age_range, description: @game.description, difficulty: @game.difficulty, name: @game.name, score: @game.score, status: @game.status } }
+      post games_url, params: { game: { age_range: @game.age_range, description: @game.description, difficulty: @game.difficulty, name: @game.name, score: @game.score, status: @game.status, time_length: @game.time_length } }
     end
 
     assert_redirected_to game_url(Game.last)
   end
 
-  test "should show game" do
+  test "should show running game" do
+    sign_in @user
     get game_url(@game)
     assert_response :success
+    assert_select '#container-timer[style=""]'
+    assert_select '#pause-game-btn[style=""]', 1
+    assert_select '#resume-game-btn[style*="display:none"]'
+    assert_select '#start-game-btn[style*="display:none"]', 'Start game'
+  end
+
+  test "should show paused game" do
+    sign_in @user
+    @user.user_games.find_by(game_id: @game.id).update(paused_at: 1)
+    get game_url @game
+    assert_response :success
+    assert_select '#container-timer[style=""]'
+    assert_select '#pause-game-btn[style*="display:none"]'
+    assert_select '#resume-game-btn[style*=""]'
+    assert_select '#start-game-btn[style*="display:none"]', 'Start game'
+  end
+
+  test "should show stoped game" do
+    sign_in @user
+    @user.user_games.find_by(game_id: @game.id).update(finished_at: DateTime.now)
+    get game_url @game
+    assert_response :success
+    assert_select '#container-timer[style*="display:none"]'
+    assert_select '#start-game-btn[style=""]', 'Start game'
   end
 
   test "should get edit" do
@@ -34,7 +75,7 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update game" do
-    patch game_url(@game), params: { game: { age_range: @game.age_range, description: @game.description, difficulty: @game.difficulty, name: @game.name, score: @game.score, status: @game.status } }
+    patch game_url(@game), params: { game: { age_range: @game.age_range, description: @game.description, difficulty: @game.difficulty, name: @game.name, score: @game.score, status: @game.status, time_length: @game.time_length } }
     assert_redirected_to game_url(@game)
   end
 
