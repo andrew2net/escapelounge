@@ -37,21 +37,11 @@
             %b= link_to 'Instructions', @game.instructions_pdf.url
 
         .col-md-2
+          = display_timer
 
-          %div#container-timer{ style: "#{@show_timer ? '' : 'display:none'}" }
-            -# Timer
-            %h2#display-timer{ class: 'text-danger', data: {stop_at: "#{@stop_at}",
-              paused_at: "#{@paused_at}"}}
-
-            = link_to 'Pause game', game_pause_url(@game), id: 'pause-game-btn',
-              class: 'btn btn-primary', style: "#{@paused_at ? 'display:none' : ''}"
-
-            = link_to 'Resume game', game_resume_url(@game), id: 'resume-game-btn',
-              class: "btn btn-primary #{@running ? 'disabled' : ''}",
-              style: "#{@paused_at ? '' : 'display:none'}"
-
-          = link_to 'Start game', game_start_url(@game), id: 'start-game-btn',
-            class: "btn btn-primary", style: "#{@running || @paused_at ? 'display:none' : ''}"
+          = link_to 'Start game', game_start_url(@game, start_at: ''), method: :post,
+            id: 'start-game-btn', class: "btn btn-primary",
+            style: "#{@running || @paused_at ? 'display:none' : ''}"
 
 
       -# - @game.game_steps.each do |step|

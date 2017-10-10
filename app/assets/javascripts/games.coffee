@@ -64,7 +64,11 @@ $ ->
       this.show()
       clearInterval this.interval
 
-  seconds = (stopAt)-> Math.ceil (new Date(stopAt) - new Date) / 1000
+  localDate = ->
+    now = new Date
+    new Date(now - now.getTimezoneOffset() * 60000)
+
+  seconds = (stopAt)-> Math.ceil (new Date(stopAt) - localDate()) / 1000
 
   # When timer started before the page loaded then continue conutdowning.
   if stopAt = timer.display.attr('data-stop-at')
@@ -97,4 +101,4 @@ $ ->
   resumeGameBtn.click (event)->
     event.preventDefault()
     timer.start()
-    $.post event.target.href, { start_at: new Date }
+    $.post event.target.href, { start_at: localDate() }

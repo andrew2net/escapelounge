@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
-  before_action :set_game, only: [:show, :edit, :update, :destroy]
+  before_action :set_game, only: [:show, :edit, :update, :destroy, :steps_flow, :step_answer]
+  before_action :set_step, only: [:steps_flow, :step_answer]
 
   def index
     @games = Game.visible
@@ -17,18 +18,7 @@ class GamesController < ApplicationController
 
   # GET /games/:id
   def show
-    # This need for finishing expired game.
-    current_user && current_user.user_games.running.map { |e| e }
-    # True if there is running game.
-    @running = current_user && current_user.user_games.running.any?
-    # If the game running or paused read UserGame.
-    user_game = current_user && current_user.user_games.find_by(game_id: @game.id, finished_at: nil)
-    @show_timer = !user_game.nil?
-    if @show_timer
-      # Time when the game should stop.
-      @stop_at = (user_game.started_at + user_game.game.time_length.minutes).httpdate
-      @paused_at = user_game.paused_at
-    end
+    @display_pause_buttons = true
   end
 
   # POST /games/:game_id/start
@@ -40,9 +30,6 @@ class GamesController < ApplicationController
       user_game.started_at = params[:start_at]
       user_game.save
       redirect_to game_steps_flow_url(game)
-      # render json: {
-      #   stop_at: user_game.started_at + game.time_length.to_i.minutes
-      # }
     else
       head :ok
     end
@@ -68,12 +55,18 @@ class GamesController < ApplicationController
 
   # GET /games/:game_is/steps_flow(/:step_id)
   def steps_flow
-    @game = Game.find params[:game_id]
-    if params[:step_id]
-      @step = @game.game_steps.not_answered.find params[:step_id]
-      @step = @game.game_steps.not_answered.last unless @step
+  end
+
+  def step_answer
+    require 'pry'; binding.pry
+    solution = @step.game_step_solutions.find_by solution: params[:answer]
+    if solution
+      user_game = current_user.user_games.running.find_by game_id: @game.id
+      StepAnswer.create user_game_id: user_game.id, game_step_id: @step.id
+      redirect_to game_steps_flow_url(@game, @step.next)
     else
-      @step = @game.game_steps.not_answered.first
+      @answer = params[:answer]
+      render :steps_flow
     end
   end
 
@@ -121,7 +114,12 @@ class GamesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_game
-      @game = Game.find(params[:id])
+      @game = Game.find(params[:id] || params[:game_id])
+    end
+
+    def set_step
+      @step = @game.allowed_step step_id: params[:step_id], user_id: current_user.id
+      @step = @game.game_steps.first unless @step
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

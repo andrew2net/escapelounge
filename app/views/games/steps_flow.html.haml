@@ -20,7 +20,22 @@
             %b Step description:
             = @step.description
 
+        .col-md-2
+          = display_timer
+
       .row
         .col-md-12
-          = link_to 'Previous step', game_steps_flow_url(@game), class: 'btn btn-primary'
-          = link_to 'Next step', game_steps_flow_url(@game), class: 'btn btn-primary pull-right'
+          = form_tag game_steps_flow_url(@game, @step) do
+            %p
+              .form-group
+                = label_tag :answer
+                = text_field_tag :answer, @answer, class: 'form-control'
+
+            - if @step.previous(current_user.id)
+              = link_to 'Previous step', game_steps_flow_url(@game), class: 'btn btn-primary'
+
+            .text-center
+              = submit_tag 'Post answer', class: 'btn btn-primary'
+
+            - if @step.next(current_user.id)
+              = link_to 'Next step', game_steps_flow_url(@game), class: 'btn btn-primary pull-right'

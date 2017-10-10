@@ -19,6 +19,10 @@ class Game < ApplicationRecord
 
   scope :visible, -> { where(visible: true) }
 
+  def allowed_step(step_id:, user_id:)
+    game_steps.answered(user_id).where(id: step_id).first
+  end
+
   private
 
   # Generate PDF instructions and attach to the game.
