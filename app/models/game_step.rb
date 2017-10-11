@@ -12,7 +12,7 @@ class GameStep < ApplicationRecord
   default_scope { order :id }
 
   scope :answered, ->(user_id) { joins(step_answers: :user_game)
-      .where(step_answers: { user_games: { id: user_id }})
+      .where(step_answers: { user_games: { user_id: user_id }})
 }
 
   def previous(user_id)
@@ -20,8 +20,16 @@ class GameStep < ApplicationRecord
       .where(game_id: game_id).last
   end
 
+  # Return next allowed step.
   def next(user_id)
-    self.class.answered(user_id).where("game_steps.id > ?", id)
-      .where(game_id: game_id).first
+    # Check if the step ia answered.
+    step_answer = step_answers.of_user(user_id)
+      .where(user_games: { paused_at: nil, finished_at: nil }).first
+    if step_answer
+      # if it's answered then retirn next step.
+      self.class.where(game_id: game_id).where('id > ?', id).first
+    else
+      nil
+    end
   end
 end

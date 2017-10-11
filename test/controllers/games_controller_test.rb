@@ -71,11 +71,12 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
 
   test "should start a game" do
     sign_in @user
-    @game.user_games.find_by(user_id: @user.id).update finished_at: DateTime.now
+    user_game = @game.user_games.find_by(user_id: @user.id)
+    # Finish user game because it created started in fixture.
+    user_game.update finished_at: DateTime.now
     time = DateTime.now
-    get game_start_url @game, params: { start_at: time }, xhr: true
-    # assert JSON.parse(response.body).key? 'stop_at'
-    assert_redirected_to game_steps_flow_url @game
+    post game_start_url @game, params: { start_at: time }
+    assert_redirected_to user_game_step_url UserGame.last
    end
 
    test "shoud pause a game" do

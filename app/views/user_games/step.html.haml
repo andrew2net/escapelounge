@@ -1,0 +1,45 @@
+#game-show
+  .page-head
+    .container
+      .row
+        .col-md-10
+          %h4= @game.name
+
+  %section
+    .container
+      .row
+        .col-md-10
+
+          %p#notice= notice
+
+          %p
+            %b Step name:
+            = @step.name
+
+          %p
+            %b Step description:
+            = @step.description
+
+        .col-md-2
+          = display_timer
+
+      .row
+        .col-md-12
+          = form_tag user_game_step_url(@user_game, @step) do
+            %p
+              .form-group
+                = label_tag :answer
+                = text_field_tag :answer, @answer, class: 'form-control', disabled: @answered
+
+            .row
+              .col-md-4
+                - if previous_step = @step.previous(current_user.id)
+                  = link_to 'Previous step', user_game_step_url(@user_game, previous_step), class: 'btn btn-primary float-md-left'
+
+              .col-md-4
+                .text-center
+                  = submit_tag 'Post answer', class: 'btn btn-primary', disabled: @answered
+
+              .col-md-4
+                - if next_step = @step.next(current_user.id)
+                  = link_to 'Next step', user_game_step_url(@user_game, next_step), class: 'btn btn-primary float-md-right'

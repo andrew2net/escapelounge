@@ -8,6 +8,10 @@ class UserGame < ApplicationRecord
   scope :running, -> { where(paused_at: nil, finished_at: nil) }
   scope :paused, -> { where.not(paused_at: nil).where(finished_at: nil) }
 
+  def formated_result
+    Time.at(result).utc.strftime("%H:%M:%S")
+  end
+
   private
 
   # Check if stared game is expired.

@@ -19,8 +19,16 @@ class Game < ApplicationRecord
 
   scope :visible, -> { where(visible: true) }
 
+  # Return a game step with step_id if it's allowed for user with user_id.
+  # Return nil if the step is not allowed.
   def allowed_step(step_id:, user_id:)
-    game_steps.answered(user_id).where(id: step_id).first
+    # Find previous answered step.
+    ps = game_steps.answered(user_id).where("game_steps.id < ?", step_id).last
+    if ps
+      GameStep.find step_id
+    else
+      nil
+    end
   end
 
   private

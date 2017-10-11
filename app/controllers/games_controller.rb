@@ -1,7 +1,7 @@
 class GamesController < ApplicationController
-  before_action :set_game, only: [:show, :edit, :update, :destroy, :steps_flow, :step_answer]
-  before_action :set_step, only: [:steps_flow, :step_answer]
+  before_action :set_game, only: [:show, :edit, :update, :destroy]
 
+  # GET /games
   def index
     @games = Game.visible
   end
@@ -29,7 +29,7 @@ class GamesController < ApplicationController
       user_game = UserGame.new(user_id: current_user.id, game_id: game.id)
       user_game.started_at = params[:start_at]
       user_game.save
-      redirect_to game_steps_flow_url(game)
+      redirect_to user_game_step_url(user_game)
     else
       head :ok
     end
@@ -53,22 +53,6 @@ class GamesController < ApplicationController
     head :ok
   end
 
-  # GET /games/:game_is/steps_flow(/:step_id)
-  def steps_flow
-  end
-
-  def step_answer
-    require 'pry'; binding.pry
-    solution = @step.game_step_solutions.find_by solution: params[:answer]
-    if solution
-      user_game = current_user.user_games.running.find_by game_id: @game.id
-      StepAnswer.create user_game_id: user_game.id, game_step_id: @step.id
-      redirect_to game_steps_flow_url(@game, @step.next)
-    else
-      @answer = params[:answer]
-      render :steps_flow
-    end
-  end
 
   def new
     @game = Game.new
@@ -114,12 +98,7 @@ class GamesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_game
-      @game = Game.find(params[:id] || params[:game_id])
-    end
-
-    def set_step
-      @step = @game.allowed_step step_id: params[:step_id], user_id: current_user.id
-      @step = @game.game_steps.first unless @step
+      @game = Game.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
