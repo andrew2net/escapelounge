@@ -30,7 +30,8 @@ class UserGamesController < ApplicationController
       end
     else
       @answer = params[:answer]
-      render :steps_flow
+      @game = @user_game.game
+      render :step
     end
   end
 
