@@ -4,6 +4,7 @@ class UserGame < ApplicationRecord
   belongs_to :user
   belongs_to :game
   has_many :step_answers, dependent: :delete_all
+  has_and_belongs_to_many :hints
 
   scope :running, -> { where(paused_at: nil, finished_at: nil) }
   scope :paused, -> { where.not(paused_at: nil).where(finished_at: nil) }

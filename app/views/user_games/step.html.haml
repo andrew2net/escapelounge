@@ -24,6 +24,10 @@
           = display_timer
 
       .row
+        #hints-container.col-md-12.text-center
+          = render partial: 'hints'
+
+      .row
         .col-md-12
           = form_tag user_game_step_url(@user_game, @step) do
             %p

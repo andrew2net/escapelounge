@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171011171715) do
+ActiveRecord::Schema.define(version: 20171012120828) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,13 @@ ActiveRecord::Schema.define(version: 20171011171715) do
     t.integer "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "hints_user_games", id: false, force: :cascade do |t|
+    t.bigint "hint_id", null: false
+    t.bigint "user_game_id", null: false
+    t.index ["hint_id"], name: "index_hints_user_games_on_hint_id"
+    t.index ["user_game_id"], name: "index_hints_user_games_on_user_game_id"
   end
 
   create_table "step_answers", force: :cascade do |t|

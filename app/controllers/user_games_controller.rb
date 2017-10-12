@@ -1,8 +1,8 @@
 class UserGamesController < ApplicationController
-  before_action :set_user_game, only: [:step, :answer]
-  before_action :set_step, only: [:step, :answer]
+  before_action :set_user_game, only: [:step, :answer, :hint]
+  before_action :set_step, only: [:step, :answer, :hint]
 
-  # GET /games/:game_is/steps_flow(/:step_id)
+  # GET /user_games/:user_game_is/step(/:step_id)
   def step
     @game = @user_game.game
     step_answer = @step.step_answers.of_user(current_user.id).find_by(user_game_id: @user_game.id)
@@ -12,7 +12,14 @@ class UserGamesController < ApplicationController
     end
   end
 
-  # GET /games/:game_id/steps_flow/:step_id
+  # POST /user_games/:user_game_id/step/:step_id/hint
+  def hint
+    hint = Hint.find params[:hint_id]
+    @user_game.hints << hint
+    render partial: 'hints'
+  end
+
+  # POST /user_games/:user_game_id/answer/:step_id
   def answer
     solution = @step.game_step_solutions.find_by solution: params[:answer]
     if solution
@@ -35,6 +42,7 @@ class UserGamesController < ApplicationController
     end
   end
 
+  # GET /user_games/:user_game_id/result
   def result
     @user_game = current_user.user_games.find params[:user_game_id]
   end
