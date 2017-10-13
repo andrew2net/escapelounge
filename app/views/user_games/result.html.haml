@@ -13,5 +13,8 @@
           %p#notice= notice
 
           %h2
-            Result
-            = @user_game.formated_result
+            - if @user_game.result
+              Result
+              = @user_game.formated_result
+            - else
+              Time out

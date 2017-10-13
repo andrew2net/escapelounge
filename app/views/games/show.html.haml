@@ -6,7 +6,7 @@
           %h4= @game.name
         -if current_user && current_user.admin
           .col-md-2
-            = link_to 'Edit', edit_game_path(@game), class: "btn btn-sm btn-primary"
+            = link_to 'Edit', edit_admin_game_path(@game), class: "btn btn-sm btn-primary"
 
   %section
     .container
@@ -43,6 +43,19 @@
             id: 'start-game-btn', class: "btn btn-primary",
             style: "#{@running || @paused_at ? 'display:none' : ''}"
 
+      .row
+        .col-md-12
+          %h3.text-center Top 20
+          %table.table.table-striped
+            %thead
+              %tr
+                %th Time
+                %th E-mail
+            %tbody
+              - @game.user_games.includes(:user).where.not(result: nil).order(:result).first(20).each do |user_game|
+                %tr
+                  %td= user_game.formated_result
+                  %td= user_game.user.email
 
       -# - @game.game_steps.each do |step|
         .step-container

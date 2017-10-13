@@ -1,5 +1,5 @@
 .auth-container
-  = form_for @user do |f|
+  = form_for [:admin, @user] do |f|
     - if @user.errors.any?
       #error_explanation
         %h2= "#{pluralize(@user.errors.count, "error")} prohibited this user from being saved:"

@@ -26,19 +26,6 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "should get new" do
-    get new_game_url
-    assert_response :success
-  end
-
-  test "should create game" do
-    assert_difference('Game.count') do
-      post games_url, params: { game: { age_range: @game.age_range, description: @game.description, difficulty: @game.difficulty, name: @game.name, status: @game.status, time_length: @game.time_length } }
-    end
-
-    assert_redirected_to game_url(Game.last)
-  end
-
   test "should show running game" do
     sign_in @user
     get game_url(@game)
@@ -92,22 +79,4 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
      assert_response :success
      assert_nil @user.user_games.find_by(game_id: @game.id).paused_at
    end
-
-  test "should get edit" do
-    get edit_game_url(@game)
-    assert_response :success
-  end
-
-  test "should update game" do
-    patch game_url(@game), params: { game: { age_range: @game.age_range, description: @game.description, difficulty: @game.difficulty, name: @game.name, status: @game.status, time_length: @game.time_length } }
-    assert_redirected_to game_url(@game)
-  end
-
-  test "should destroy game" do
-    assert_difference('Game.count', -1) do
-      delete game_url(@game)
-    end
-
-    assert_redirected_to games_url
-  end
 end

@@ -8,6 +8,7 @@ $ ->
     display: $('#display-timer')
     container: $('#container-timer')
     secondsRemain: 0
+    redirectTo: $('#timeout-redirect-url').html()
 
     # Return remaning time in format MM:ss
     minSec: ->
@@ -20,6 +21,7 @@ $ ->
       this.container.hide()
       startGameBtn.show()
       clearInterval this.interval
+      window.location = this.redirectTo if this.redirectTo
 
     show: ->
       startGameBtn.hide()

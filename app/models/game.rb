@@ -36,7 +36,7 @@ class Game < ApplicationRecord
   # Generate PDF instructions and attach to the game.
   def generate_instructions
     file = "#{Dir.mktmpdir}/#{name.parameterize.underscore}_instructions.pdf"
-    html = ApplicationController.render partial: "games/game_instructions", locals: { game: self }
+    html = ApplicationController.render partial: "admin/games/game_instructions", locals: { game: self }
     pdf = WickedPdf.new.pdf_from_string(html)
     File.open(file, "wb") { |f| f << pdf }
     self.instructions_pdf = File.open file

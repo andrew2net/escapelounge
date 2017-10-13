@@ -1,7 +1,7 @@
 $ ->
   hintsContainer = $ '#hints-container'
-  # showHintBtn = $ '#show-hint-btn'
 
+  # Show hint and reduce remaning time on click the button.
   hintsContainer.on 'click', '#show-hint-btn', (event)->
     hint_id = event.target.getAttribute 'data-hint-id'
     value = parseInt(event.target.getAttribute('data-value'))

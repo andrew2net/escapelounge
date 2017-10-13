@@ -4,6 +4,6 @@
 - @user_game.hints.where(game_step_id: @step.id).each do |hint|
   %p= hint.description
 
-- if hint = @step.hints.covered(@user_game).first
+- if !@user_game.finished_at && hint = @step.hints.covered(@user_game).first
   = button_tag "Show hint (-#{hint.value} sec)", id: 'show-hint-btn', class: 'btn btn-primary',
     data: { url: user_game_step_hint_url(@user_game, @step), hint_id: hint.id, value: hint.value }

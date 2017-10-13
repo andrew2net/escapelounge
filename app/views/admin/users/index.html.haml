@@ -6,7 +6,7 @@
         .col-md-10
           %h4 All Users
         .col-md-2
-          = link_to 'New User', new_user_path, class: "btn btn-sm btn-primary"
+          = link_to 'New User', new_admin_user_path, class: "btn btn-sm btn-primary"
 
   %section
     .container
@@ -24,6 +24,6 @@
               %td= user.name
               %td= user.email
               %td
-                = link_to 'Show', user
-                = link_to 'Edit', edit_user_path(user)
-                = link_to 'Destroy', user, :method => :delete, :data => { :confirm => 'Are you sure?' }
+                = link_to 'Show', admin_user_path(user)
+                = link_to 'Edit', edit_admin_user_path(user)
+                = link_to 'Destroy', admin_user_path(user), :method => :delete, :data => { :confirm => 'Are you sure?' }

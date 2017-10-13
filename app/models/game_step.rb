@@ -21,15 +21,12 @@ class GameStep < ApplicationRecord
   end
 
   # Return next allowed step.
-  def next(user_id)
+  def next(user_game_id)
     # Check if the step ia answered.
-    step_answer = step_answers.of_user(user_id)
-      .where(user_games: { paused_at: nil, finished_at: nil }).first
+    step_answer = step_answers.find_by(user_game_id: user_game_id)
     if step_answer
       # if it's answered then retirn next step.
       self.class.where(game_id: game_id).where('id > ?', id).first
-    else
-      nil
     end
   end
 end

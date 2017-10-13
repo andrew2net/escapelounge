@@ -22,7 +22,8 @@ Rails.application.routes.draw do
 
   get '/games_admin', to: 'games#games_admin_list'
 
-  scope :admin do
+  namespace :admin do
     resources :users
+    resources :games
   end
 end

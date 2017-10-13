@@ -10,6 +10,8 @@ $ ->
         age_range: ageParam[0].value
       }}
 
+  # On change difficulty filter.
   difficultyParam.change getTable
 
+  # On change age filter.
   ageParam.change getTable

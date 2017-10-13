@@ -1,6 +1,6 @@
 .auth-container
 
-  = form_for @game do |f|
+  = form_for [:admin, @game] do |f|
     - if @game.errors.any?
       #error_explanation
         %h2= "#{pluralize(@game.errors.count, "error")} prohibited this game from being saved:"

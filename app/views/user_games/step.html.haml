@@ -1,3 +1,4 @@
+#timeout-redirect-url{ hidden: true }= user_game_result_url(@user_game)
 #game-show
   .page-head
     .container
@@ -45,5 +46,5 @@
                   = submit_tag 'Post answer', class: 'btn btn-primary', disabled: @answered
 
               .col-md-4
-                - if next_step = @step.next(current_user.id)
+                - if next_step = @step.next(@user_game.id)
                   = link_to 'Next step', user_game_step_url(@user_game, next_step), class: 'btn btn-primary float-md-right'
