@@ -4,6 +4,7 @@ class Hint < ApplicationRecord
 
   default_scope { order :id }
 
-  scope :covered, -> { left_joins(:user_games).where(user_games: { id: nil }) }
-  scope :uncovered, -> { left_joins(:user_games).where.not(user_games: { id: nil }) }
+  scope :covered, ->(user_game) { where.not(id: user_game.hints.ids) }
+    # .where.not(user_games: { id: user_game_id }) }
+  # scope :uncovered, -> { left_joins(:user_games).where.not(user_games: { id: nil }) }
 end

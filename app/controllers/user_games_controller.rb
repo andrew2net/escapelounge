@@ -16,6 +16,8 @@ class UserGamesController < ApplicationController
   def hint
     hint = Hint.find params[:hint_id]
     @user_game.hints << hint
+    @user_game.started_at -= hint.value.seconds
+    @user_game.save
     render partial: 'hints'
   end
 
