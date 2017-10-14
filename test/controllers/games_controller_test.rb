@@ -13,16 +13,16 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should return only games with difficulty 1" do
-    post table_games_url, params: { filter: { difficulty: 1 } }, xhr: true
-    assert_select 'tr' do |element|
-      assert_select element, 'td:nth-child(4)', '2 (easy)'
+    post games_games_url, params: { filter: { difficulty: 1 } }, xhr: true
+    assert_select '.game-container' do |element|
+      assert_select element, 'p:nth-child(5)', 'Difficulty: 2 (easy)'
     end
   end
 
   test "should return only games with age_range 1" do
-    post table_games_url, params: { filter: { age_range: 1 } }, xhr: true
-    assert_select 'tr' do |element|
-      assert_select element, 'td:nth-child(5)', 'ages 10 - 14'
+    post games_games_url, params: { filter: { age_range: 1 } }, xhr: true
+    assert_select '.game-container' do |element|
+      assert_select element, 'p:nth-child(6)', 'Age Range: ages 10 - 14'
     end
   end
 

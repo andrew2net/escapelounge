@@ -17,7 +17,7 @@ class Admin::GamesController < ApplicationController
 
     respond_to do |format|
       if @game.save
-        format.html { redirect_to admin_game_url(@game), notice: 'Game was successfully created.' }
+        format.html { redirect_to @game, notice: 'Game was successfully created.' }
         format.json { render :show, status: :created, location: @game }
       else
         format.html { render :new }
@@ -29,7 +29,7 @@ class Admin::GamesController < ApplicationController
   def update
     respond_to do |format|
       if @game.update(game_params)
-        format.html { redirect_to admin_game_url(@game), notice: 'Game was successfully updated.' }
+        format.html { redirect_to @game, notice: 'Game was successfully updated.' }
         format.json { render :show, status: :ok, location: @game }
       else
         format.html { render :edit }
@@ -55,7 +55,7 @@ class Admin::GamesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def game_params
       params.require(:game).permit(:name, :description, :short_description, :status, :difficulty, :age_range,
-                                    :time_length, :instructions,
+                                    :time_length, :instructions, :background,
                                     game_steps_attributes: [:id, :name, :description, :game_id, :_destroy,
                                       hints_attributes: [:id, :description, :value, :game_step_id, :_destroy],
                                       game_step_solutions_attributes: [:id, :solution, :game_step_id, :_destroy],

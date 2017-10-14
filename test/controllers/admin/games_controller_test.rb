@@ -17,7 +17,7 @@ class Admin::GamesControllerTest < ActionDispatch::IntegrationTest
       post admin_games_url, params: { game: { age_range: @game.age_range, description: @game.description, difficulty: @game.difficulty, name: @game.name, status: @game.status, time_length: @game.time_length } }
     end
 
-    assert_redirected_to admin_game_url(Game.last)
+    assert_redirected_to game_url(Game.last)
   end
 
   test "should get edit" do
@@ -27,7 +27,7 @@ class Admin::GamesControllerTest < ActionDispatch::IntegrationTest
 
   test "should update game" do
     patch admin_game_url(@game), params: { game: { age_range: @game.age_range, description: @game.description, difficulty: @game.difficulty, name: @game.name, status: @game.status, time_length: @game.time_length } }
-    assert_redirected_to admin_game_url(@game)
+    assert_redirected_to game_url(@game)
   end
 
   test "should destroy game" do

@@ -7,9 +7,9 @@ class GamesController < ApplicationController
   end
 
   # POST /games/table
-  def table
+  def games
     @games = Game.visible.where filter_params
-    render partial: 'table_body'
+    render @games
   end
 
   # GET /games/:id

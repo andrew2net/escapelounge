@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171012120828) do
+ActiveRecord::Schema.define(version: 20171014155423) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,10 @@ ActiveRecord::Schema.define(version: 20171012120828) do
     t.string "instructions_pdf_content_type"
     t.integer "instructions_pdf_file_size"
     t.datetime "instructions_pdf_updated_at"
+    t.string "background_file_name"
+    t.string "background_content_type"
+    t.integer "background_file_size"
+    t.datetime "background_updated_at"
   end
 
   create_table "hints", id: :serial, force: :cascade do |t|

@@ -6,8 +6,8 @@ Rails.application.routes.draw do
 
   resources :hints
   resources :game_steps
-  resources :games do
-    post :table, on: :collection
+  resources :games, only: [:index, :show] do
+    post :games, on: :collection
     post :start
     post :pause
     post :resume
@@ -24,6 +24,6 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :users
-    resources :games
+    resources :games, except: :show
   end
 end

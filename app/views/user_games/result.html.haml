@@ -6,6 +6,7 @@
           %h4= @user_game.game.name
 
   %section
+    = image_tag @user_game.game.background.url, class: 'img-fluid game-back-img'
     .container
       .row
         .col-md-10

@@ -9,8 +9,22 @@
 
   %section
     .container
+      .row
+        .col-md-12.form-inline.mb-4
+          %label.mr-3
+            %strong Filter:
 
-      %table.table.table-striped
+          = label_tag :difficulty_filter, 'Difficulty', class: 'mx-2'
+          = select_tag :difficulty_filter, options_for_select(Game.difficulties),
+            include_blank: true, class: 'form-control mr-3', autocomplete: :off
+
+          = label_tag :age_filter, 'Age range', class: 'mx-2'
+          = select_tag :age_filter, options_for_select(Game.age_ranges),
+            include_blank: true, class: 'form-control', autocomplete: :off
+
+      #games-user-list.row= render @games
+
+      -# %table.table.table-striped
         %thead
           %tr
             %th Name

@@ -17,6 +17,10 @@ class Game < ApplicationRecord
   has_attached_file :instructions_pdf
   validates_attachment :instructions_pdf, content_type: { content_type: "application/pdf" }
 
+  has_attached_file :background, styles: { thumb: "260x260#" },
+    default_url: ":style/default_game_background.jpg"
+  validates_attachment :background, content_type: { content_type: /\Aimage\/.*\z/ }
+
   scope :visible, -> { where(visible: true) }
 
   # Return a game step with step_id if it's allowed for user with user_id.

@@ -1,11 +1,11 @@
 $ ->
-  table = $('table.table tbody')
+  list = $('#games-user-list')
   difficultyParam = $('#difficulty_filter')
   ageParam = $('#age_filter')
 
   # Get filtered table of games.
   getTable = ->
-    table.load '/games/table', { filter: {
+    list.load '/games/games', { filter: {
         difficulty: difficultyParam[0].value
         age_range: ageParam[0].value
       }}

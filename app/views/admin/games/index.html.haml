@@ -22,12 +22,12 @@
       .tab-content
         #live-game.tab-pane.active{:role => "tabpanel"}
           .row
-            - @games.where(visible: true).each do |game|
-              = render 'games/game_card', game: game
+            - @games.visible.each do |game|
+              = render 'game_card', game: game
         #draft-game.tab-pane{:role => "tabpanel"}
           .row
             - @games.where(visible: false).each do |game|
-              = render 'games/game_card', game: game
+              = render 'game_card', game: game
 
 
       -# %table.table.table-striped
