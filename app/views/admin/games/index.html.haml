@@ -23,9 +23,7 @@
         #live-game.tab-pane.active{:role => "tabpanel"}
           .row= render @games.visible
         #draft-game.tab-pane{:role => "tabpanel"}
-          .row
-            - @games.where(visible: false).each do |game|
-              = render @games
+          .row= render @games.where(visible: false)
 
 
       -# %table.table.table-striped
