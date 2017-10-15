@@ -4,6 +4,7 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
   setup do
     @user = users(:one)
+    sign_in @user
   end
 
   test "should get index" do
@@ -17,7 +18,6 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create user" do
-    sign_in @user
     assert_difference('User.count') do
       post admin_users_url, params: { user: { name: @user.name, email: "test@mail.net", password: '12345678', password_confirmation: '12345678' } }
     end
@@ -36,13 +36,11 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update user" do
-    sign_in @user
     patch admin_user_url(@user), params: { user: { name: @user.name } }
     assert_redirected_to admin_user_url(@user)
   end
 
   test "should destroy user" do
-    sign_in @user
     assert_difference('User.count', -1) do
       delete admin_user_url(@user)
     end

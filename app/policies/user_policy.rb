@@ -1,4 +1,4 @@
-class GamePolicy < ApplicationPolicy
+class UserPolicy < ApplicationPolicy
   def index?
     user && user.admin?
   end

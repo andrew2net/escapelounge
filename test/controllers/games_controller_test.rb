@@ -3,8 +3,9 @@ require 'test_helper'
 class GamesControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
   setup do
-    @game = games(:one)
-    @user = users :one
+    @game = games :two
+    @user = users :two
+   sign_in @user
   end
 
   test "should get index" do
@@ -27,7 +28,6 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show running game" do
-    sign_in @user
     get game_url(@game)
     assert_response :success
     assert_select '#container-timer[style=""]'
@@ -37,7 +37,6 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show paused game" do
-    sign_in @user
     @user.user_games.find_by(game_id: @game.id).update(paused_at: 1)
     get game_url @game
     assert_response :success
@@ -48,7 +47,6 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show stoped game" do
-    sign_in @user
     @user.user_games.find_by(game_id: @game.id).update(finished_at: DateTime.now)
     get game_url @game
     assert_response :success
@@ -57,7 +55,6 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should start a game" do
-    sign_in @user
     user_game = @game.user_games.find_by(user_id: @user.id)
     # Finish user game because it created started in fixture.
     user_game.update finished_at: DateTime.now
@@ -67,14 +64,12 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
    end
 
    test "shoud pause a game" do
-     sign_in @user
      post game_pause_url @game, params: { seconds_remain: 600 }, xhr: true
      assert_response :success
      assert_not_nil @user.user_games.find_by(game_id: @game.id).paused_at
    end
 
    test "should resume a game" do
-     sign_in @user
      post game_resume_url @game, params: { start_at: DateTime.now }, xhr: true
      assert_response :success
      assert_nil @user.user_games.find_by(game_id: @game.id).paused_at

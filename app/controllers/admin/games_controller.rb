@@ -2,14 +2,17 @@ class Admin::GamesController < ApplicationController
   before_action :set_game, only: [:edit, :update, :destroy]
 
   def index
+    authorize Game
     @games = Game.all
   end
 
   def new
+    authorize Game
     @game = Game.new
   end
 
   def create
+    authorize Game
     @game = Game.new(game_params)
 
     respond_to do |format|
@@ -24,6 +27,7 @@ class Admin::GamesController < ApplicationController
   end
 
   def edit
+    authorize @game
   end
 
   def update
@@ -41,6 +45,7 @@ class Admin::GamesController < ApplicationController
 
   def destroy
     @game.destroy
+    authorize @game
     respond_to do |format|
       format.html { redirect_to admin_games_url, notice: 'Game was successfully destroyed.' }
       format.json { head :no_content }

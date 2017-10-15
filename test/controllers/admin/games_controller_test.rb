@@ -5,6 +5,7 @@ class Admin::GamesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @game = games(:one)
     @user = users :one
+    sign_in @user
   end
 
   test "should get new" do

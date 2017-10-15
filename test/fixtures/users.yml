@@ -3,6 +3,7 @@
 one:
   name: First User
   email: test1@email.net
+  admin: true
 
 two:
   name: Second User

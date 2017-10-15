@@ -6,7 +6,7 @@
   #navbarSupportedContent.collapse.navbar-collapse
     %ul.nav.navbar-nav.ml-auto
 
-      - if current_user && current_user.admin
+      - if policy(Game).index?
         %li.nav-item
           = link_to 'Games Admin', admin_games_path, class: "nav-link"
 
