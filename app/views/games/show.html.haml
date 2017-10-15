@@ -46,14 +46,14 @@
 
       .row
         .col-md-12
-          %h3.text-center Top 20
+          %h3.text-center Top 10
           %table.table.table-striped
             %thead
               %tr
                 %th Time
                 %th E-mail
             %tbody
-              - @game.user_games.includes(:user).where.not(result: nil).order(:result).first(20).each do |user_game|
+              - @game.user_games.includes(:user).where.not(result: nil).order(:result).first(10).each do |user_game|
                 %tr
                   %td= user_game.formated_result
                   %td= user_game.user.email
