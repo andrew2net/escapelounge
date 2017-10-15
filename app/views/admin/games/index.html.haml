@@ -21,13 +21,11 @@
       / Tab panes
       .tab-content
         #live-game.tab-pane.active{:role => "tabpanel"}
-          .row
-            - @games.visible.each do |game|
-              = render 'game_card', game: game
+          .row= render @games.visible
         #draft-game.tab-pane{:role => "tabpanel"}
           .row
             - @games.where(visible: false).each do |game|
-              = render 'game_card', game: game
+              = render @games
 
 
       -# %table.table.table-striped

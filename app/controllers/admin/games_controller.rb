@@ -9,9 +9,6 @@ class Admin::GamesController < ApplicationController
     @game = Game.new
   end
 
-  def edit
-  end
-
   def create
     @game = Game.new(game_params)
 
@@ -26,7 +23,11 @@ class Admin::GamesController < ApplicationController
     end
   end
 
+  def edit
+  end
+
   def update
+    authorize @game
     respond_to do |format|
       if @game.update(game_params)
         format.html { redirect_to @game, notice: 'Game was successfully updated.' }

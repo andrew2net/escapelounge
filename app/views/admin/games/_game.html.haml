@@ -1,0 +1,12 @@
+.col-md-3
+  = link_to game do
+    .game-container
+      = image_tag game.background.url :thumb, class: 'img-fluid'
+      %h4= game.name
+      %p= game.short_description
+      %p= "#{game.game_steps.count} Steps"
+      %p= "Difficulty: #{game.difficulty}"
+      %p= "Age Range: #{game.age_range}"
+  .game-footer
+    = link_to 'Edit', edit_admin_game_path(game), class: "btn btn-sm btn-primary"
+    = link_to 'Delete', admin_game_path(game), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-sm btn-danger"
