@@ -17,8 +17,18 @@ class Game < ApplicationRecord
   has_attached_file :instructions_pdf
   validates_attachment :instructions_pdf, content_type: { content_type: "application/pdf" }
 
-  has_attached_file :background, styles: { thumb: "260x260#" },
+  paperclip_opts = {
+    styles:      { thumb: "260x260#"},
     default_url: ":style/default_game_background.jpg"
+  }
+  if Rails.env.production?
+    paperclip_opts.merge! storage: :s3,
+      s3_region: 'us-east-1', # TODO set your S3 region here
+      s3_storage_class: { thumb: :REDUCED_REDUNDANCY },
+      s3_credentials: "#{Rails.root}/config/s3.yml"
+  end
+
+  has_attached_file :background, paperclip_opts
   validates_attachment :background, content_type: { content_type: /\Aimage\/.*\z/ }
 
   scope :visible, -> { where(visible: true) }

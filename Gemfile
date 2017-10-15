@@ -37,6 +37,8 @@ gem 'jquery-turbolinks'
 gem 'font-awesome-sass'
 # Use paperclip for image cropping
 gem "paperclip", "~> 5.0.0"
+# Use AWS S3 service as storage
+gem 'aws-sdk', '~> 2.3.0'
 # Use friendlyID for custom profile URLs
 gem 'friendly_id', '~> 5.1.0'
 # Use cocoon for nested forms
