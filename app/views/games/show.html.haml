@@ -12,9 +12,7 @@
     = image_tag @game.background.url, class: 'img-fluid game-back-img'
     .container
       .row
-        .col-md-10
-
-          %p#notice= notice
+        .col-md-5
 
           %p
             %b Description:
@@ -36,6 +34,9 @@
             = @game.game_steps.count
           %p
             %b= link_to 'Instructions', @game.instructions_pdf.url
+
+        .col-md-5
+          = image_tag @game.banner.url :thumb, class: 'img-fluid'
 
         .col-md-2
           = display_timer

@@ -11,9 +11,18 @@
     .form-group
       = f.label :name
       = f.text_field :name, class: "form-control"
+    .form-check
+      = f.label :visible, class: 'form-check-label' do
+        = f.check_box :visible, class: 'form-check-input'
+        Visible
+    .form-group
+      = f.label :banner
+      = f.file_field :banner
+    = image_tag @game.banner.url :thumb
     .form-group
       = f.label :background
       = f.file_field :background
+    = image_tag @game.background.url :thumb
     .form-group
       = f.label :description
       = f.text_area :description, class: "form-control"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171014155423) do
+ActiveRecord::Schema.define(version: 20171016170626) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,10 @@ ActiveRecord::Schema.define(version: 20171014155423) do
     t.string "background_content_type"
     t.integer "background_file_size"
     t.datetime "background_updated_at"
+    t.string "banner_file_name"
+    t.string "banner_content_type"
+    t.integer "banner_file_size"
+    t.datetime "banner_updated_at"
   end
 
   create_table "hints", id: :serial, force: :cascade do |t|
