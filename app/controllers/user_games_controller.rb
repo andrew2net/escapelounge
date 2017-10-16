@@ -1,10 +1,11 @@
 class UserGamesController < ApplicationController
-  before_action :set_user_game, only: [:step, :answer, :hint]
+  before_action :set_user_game, only: [:step, :answer, :hint, :end, :result]
   before_action :set_step, only: [:step, :answer, :hint]
 
   # GET /user_games/:user_game_is/step(/:step_id)
   def step
     @game = @user_game.game
+    @progress_pescent, @progress_step = @user_game.progress
     step_answer = @step.step_answers.find_by(user_game_id: @user_game.id)
     if step_answer
       @answer = step_answer.answer
@@ -43,9 +44,14 @@ class UserGamesController < ApplicationController
     end
   end
 
+  # POST /user_games/:user_game_id/end
+  def end
+    @user_game.finish
+  end
+
   # GET /user_games/:user_game_id/result
   def result
-    @user_game = current_user.user_games.find params[:user_game_id]
+    @progress_pescent, @progress_step = @user_game.progress
   end
 
   private
@@ -57,6 +63,7 @@ class UserGamesController < ApplicationController
 
     def set_step
       @step = @user_game.game.allowed_step step_id: params[:step_id], user_id: current_user.id
+      # If there is no any answered step then set first step.
       @step = @user_game.game.game_steps.first unless @step
     end
 end

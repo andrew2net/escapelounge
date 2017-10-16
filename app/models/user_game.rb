@@ -9,11 +9,20 @@ class UserGame < ApplicationRecord
   scope :running, -> { where(paused_at: nil, finished_at: nil) }
   scope :paused, -> { where.not(paused_at: nil).where(finished_at: nil) }
 
+  # Retur percent of answered steps
+  def progress
+    total_steps = game.game_steps.count
+    answered_steps = step_answers.count
+    percent = answered_steps.to_f / total_steps.to_f * 100
+    [ "#{percent}%", "#{answered_steps} of #{total_steps}"]
+  end
+
   # Returen result in "hh:MM:ss" format.
   def formated_result
     Time.at(result).utc.strftime("%H:%M:%S") if result
   end
 
+  # Mark the hint as used and reduce remaining time
   def use_hint(hint_id)
     unless self.finished_at
       hint = Hint.find hint_id

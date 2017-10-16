@@ -10,6 +10,12 @@
     = image_tag @game.background.url, class: 'img-fluid game-back-img'
     .container
       .row
+        .col-md-12
+          .progress.mb-4
+            .progress-bar{ style: "width:#{@progress_pescent}" }
+              = @progress_step
+
+      .row
         .col-md-10
 
           %p#notice= notice

@@ -13,8 +13,9 @@ class GameStep < ApplicationRecord
 
   scope :answered, ->(user_id) { joins(step_answers: :user_game)
       .where(step_answers: { user_games: { user_id: user_id }})
-}
+  }
 
+  # Return previous step
   def previous(user_id)
     self.class.answered(user_id).where("game_steps.id < ?", id)
       .where(game_id: game_id).last

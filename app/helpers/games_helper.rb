@@ -19,13 +19,18 @@ module GamesHelper
 
       if @display_pause_buttons
         html += link_to 'Pause game', game_pause_url(@game), id: 'pause-game-btn',
-          class: 'btn btn-primary', style: "#{@paused_at ? 'display:none' : ''}"
+          class: 'btn btn-primary mb-1', style: "#{@paused_at ? 'display:none' : ''}"
 
         html += link_to 'Resume game', game_resume_url(@game), id: 'resume-game-btn',
-          class: "btn btn-primary #{@running ? 'disabled' : ''}",
+          class: "btn btn-primary mb-1 #{@running ? 'disabled' : ''}",
           style: "#{@paused_at ? '' : 'display:none'}"
       end
-      html
+
+      if user_game
+        html += link_to 'End game', user_game_end_url(user_game), id: 'end-game-button',
+          class: "btn btn-primary", style: "#{@running || @paused_at ? '' : 'display:none'}"
+        html
+      end
     end
   end
 end

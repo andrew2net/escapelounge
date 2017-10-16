@@ -1,7 +1,8 @@
 $ ->
-  startGameBtn = $('#start-game-btn')
-  pauseGameBtn = $('#pause-game-btn')
-  resumeGameBtn = $('#resume-game-btn')
+  startGameBtn  = $ '#start-game-btn'
+  pauseGameBtn  = $ '#pause-game-btn'
+  resumeGameBtn = $ '#resume-game-btn'
+  endGameBtn    = $ '#end-game-button'
 
   window.timer =
     interval: null
@@ -21,7 +22,6 @@ $ ->
       this.container.hide()
       startGameBtn.show()
       clearInterval this.interval
-      window.location = this.redirectTo if this.redirectTo
 
     show: ->
       startGameBtn.hide()
@@ -42,6 +42,7 @@ $ ->
             _self.display.html _self.minSec()
           else
             _self.stop()
+            window.location = _self.redirectTo if _self.redirectTo
         , 1000
 
     pause: (pauseAt)->
@@ -85,3 +86,9 @@ $ ->
     event.preventDefault()
     timer.start()
     $.post event.target.href, { start_at: new Date }
+
+  # End the game
+  endGameBtn.click (event)->
+    event.preventDefault()
+    timer.stop()
+    $.post event.target.href
