@@ -1,3 +1,9 @@
+#result-modal.modal
+  .modal-dialog{ role: 'document' }
+    .modal-content
+      .modal-body
+        %h2.text-center
+
 #timeout-redirect-url{ hidden: true }= user_game_result_url(@user_game)
 #game-show
   .page-head
@@ -37,7 +43,7 @@
 
       .row
         .col-md-12
-          = form_tag user_game_step_url(@user_game, @step) do
+          = form_tag user_game_step_url(@user_game, @step), id: 'step-form' do
             %p
               .form-group
                 = label_tag :answer
@@ -46,12 +52,15 @@
             .row
               .col-md-4
                 - if previous_step = @step.previous(current_user.id)
-                  = link_to 'Previous step', user_game_step_url(@user_game, previous_step), class: 'btn btn-primary float-md-left'
+                  = link_to 'Previous step', user_game_step_url(@user_game, previous_step),
+                    class: 'btn btn-primary float-md-left'
 
               .col-md-4
                 .text-center
-                  = submit_tag 'Post answer', class: 'btn btn-primary', disabled: @answered
+                  = link_to 'Post answer', user_game_step_url(@user_game, @step),
+                    class: 'btn btn-primary', disabled: @answered, id: 'answer-btn'
 
               .col-md-4
                 - if next_step = @step.next(@user_game.id)
-                  = link_to 'Next step', user_game_step_url(@user_game, next_step), class: 'btn btn-primary float-md-right'
+                  = link_to 'Next step', user_game_step_url(@user_game, next_step),
+                    class: 'btn btn-primary float-md-right'
