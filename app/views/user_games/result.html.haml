@@ -20,7 +20,9 @@
           %p#notice= notice
 
           %h2
-            - if @user_game.result
+            - if @user_game.result == 0
+              Ended
+            -elsif @user_game.result
               Result
               = @user_game.formated_result
             - else

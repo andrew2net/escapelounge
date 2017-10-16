@@ -9,7 +9,7 @@ class UserGame < ApplicationRecord
   scope :running, -> { where(paused_at: nil, finished_at: nil) }
   scope :paused, -> { where.not(paused_at: nil).where(finished_at: nil) }
 
-  # Retur percent of answered steps
+  # Return percent of answered steps and steps of total
   def progress
     total_steps = game.game_steps.count
     answered_steps = step_answers.count
@@ -33,10 +33,11 @@ class UserGame < ApplicationRecord
   end
 
   # Finish the user game.
-  def finish
+  def finish(result = nil)
     unless finished_at
       self.finished_at = DateTime.now
-      self.result = ((finished_at.to_datetime - started_at.to_datetime) * 24 * 3600).to_i
+      self.result = result ||
+        ((finished_at.to_datetime - started_at.to_datetime) * 24 * 3600).to_i
       save
     end
   end

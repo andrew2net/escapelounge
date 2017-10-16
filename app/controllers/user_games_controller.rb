@@ -46,7 +46,7 @@ class UserGamesController < ApplicationController
 
   # POST /user_games/:user_game_id/end
   def end
-    @user_game.finish
+    @user_game.finish 0
   end
 
   # GET /user_games/:user_game_id/result
