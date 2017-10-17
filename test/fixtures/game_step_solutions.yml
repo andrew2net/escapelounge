@@ -2,8 +2,8 @@
 
 one:
   game_step: one
-  solution: MyString
+  solution: First solution
 
 two:
   game_step: two
-  solution: MyString
+  solution: Second solution

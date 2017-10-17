@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  description: MyString
-  game_id: 1
+  name: First
+  description: First step
+  game: two
 
 two:
-  name: MyString
-  description: MyString
-  game_id: 1
+  name: Second
+  description: Second step
+  game: two

@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  description: MyString
-  game_step_id: 1
-  value: 1
+  description: First hint
+  game_step: one
+  value: 10
 
 two:
-  description: MyString
-  game_step_id: 1
-  value: 1
+  description: Second hint
+  game_step: one
+  value: 20
