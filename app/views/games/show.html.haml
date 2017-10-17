@@ -54,7 +54,7 @@
                 %th Time
                 %th E-mail
             %tbody
-              - @game.user_games.includes(:user).where.not(result: nil).order(:result).first(10).each do |user_game|
+              - @game.user_games.includes(:user).where("result>0").order(:result).first(10).each do |user_game|
                 %tr
                   %td= user_game.formated_result
                   %td= user_game.user.email
