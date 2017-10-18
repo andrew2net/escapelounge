@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  devise_for :users
+  devise_for :users, controllers: { registrations: "user/registrations" }
   root to: "pages#home"
   get 'pages/home'
 
@@ -21,7 +21,8 @@ Rails.application.routes.draw do
     get :result
   end
 
-  get '/games_admin', to: 'games#games_admin_list'
+  resources :subscription_plans, only: [:index, :update] do
+  end
 
   namespace :admin do
     resources :users
