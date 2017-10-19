@@ -1,0 +1,7 @@
+.row.border.border-primary.py-1.border-bottom-0.border-right-0.border-left-0
+  .col-md-2= card[:brand]
+  .col-md-2= card[:last4]
+  .col-md-2= card[:exp]
+  .col-md-2
+    = button_tag 'Delete', class: 'btn btn-primary btn-sm delete-card-btn',
+      type: 'button', data: { card_id: card[:id] }

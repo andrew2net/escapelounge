@@ -1,0 +1,11 @@
+.row
+  .col-md-6
+    = form_tag nil, id: "payment-form" do
+      .form-group
+        %label{ for: 'card-element' }
+          Credit or debit card
+        #card-element
+
+        #card-errors{ role: 'alert' }
+
+      %button.btn.btn-primary Add card

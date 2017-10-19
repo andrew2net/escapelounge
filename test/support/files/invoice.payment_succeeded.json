@@ -1,0 +1,93 @@
+{
+  "id": "evt_1BEJ5EJt7tLdSPFUpi1dFjR9",
+  "object": "event",
+  "api_version": "2017-08-15",
+  "created": 1508339028,
+  "data": {
+    "object": {
+      "id": "in_1BEJ5EJt7tLdSPFU9dESDEGo",
+      "object": "invoice",
+      "amount_due": 999,
+      "application_fee": null,
+      "attempt_count": 0,
+      "attempted": true,
+      "billing": "charge_automatically",
+      "charge": "ch_1BEJ5EJt7tLdSPFUKNcSxVLZ",
+      "closed": true,
+      "currency": "usd",
+      "customer": "cus_BbW69wBIqWUgUs",
+      "date": 1508339028,
+      "description": null,
+      "discount": null,
+      "ending_balance": 0,
+      "forgiven": false,
+      "lines": {
+        "object": "list",
+        "data": [
+          {
+            "id": "sub_BbW7HRjhVh0EpK",
+            "object": "line_item",
+            "amount": 999,
+            "currency": "usd",
+            "description": null,
+            "discountable": true,
+            "livemode": false,
+            "metadata": {
+            },
+            "period": {
+              "start": 1508339028,
+              "end": 1511017428
+            },
+            "plan": {
+              "id": "base",
+              "object": "plan",
+              "amount": 999,
+              "created": 1508265541,
+              "currency": "usd",
+              "interval": "month",
+              "interval_count": 1,
+              "livemode": false,
+              "metadata": {
+              },
+              "name": "Base plan",
+              "statement_descriptor": null,
+              "trial_period_days": null
+            },
+            "proration": false,
+            "quantity": 1,
+            "subscription": null,
+            "subscription_item": "si_1BEJ5EJt7tLdSPFUFOghX8VF",
+            "type": "subscription"
+          }
+        ],
+        "has_more": false,
+        "total_count": 1,
+        "url": "/v1/invoices/in_1BEJ5EJt7tLdSPFU9dESDEGo/lines"
+      },
+      "livemode": false,
+      "metadata": {
+      },
+      "next_payment_attempt": null,
+      "number": "2c7ff7d474-0001",
+      "paid": true,
+      "period_end": 1508339028,
+      "period_start": 1508339028,
+      "receipt_number": null,
+      "starting_balance": 0,
+      "statement_descriptor": null,
+      "subscription": "sub_BbW7HRjhVh0EpK",
+      "subtotal": 999,
+      "tax": null,
+      "tax_percent": null,
+      "total": 999,
+      "webhooks_delivered_at": null
+    }
+  },
+  "livemode": false,
+  "pending_webhooks": 1,
+  "request": {
+    "id": "req_eZjFUgUETRlTLh",
+    "idempotency_key": null
+  },
+  "type": "invoice.payment_succeeded"
+}

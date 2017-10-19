@@ -47,6 +47,8 @@ gem 'cocoon', '~> 1.2', '>= 1.2.10'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 
+gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
+
 #### Back End Gems
 
 # Use jbuilder to build JSON APIs

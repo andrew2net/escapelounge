@@ -8,3 +8,4 @@ one:
 two:
   name: Second User
   email: test2@email.net
+  stripe_id: cus_BbW69wBIqWUgUs

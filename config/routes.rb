@@ -21,8 +21,15 @@ Rails.application.routes.draw do
     get :result
   end
 
-  resources :subscription_plans, only: [:index, :update] do
+  resources :subscriptions, only: :index do
+    get :subscribe
+    post :subscribe, action: :subscribe_user
+    get :billing, on: :collection
+    post :billing, action: :add_card, on: :collection
+    post :delete_card, on: :collection
   end
+
+  post "stripe_webhooks", to: "stripe_webhooks#api"
 
   namespace :admin do
     resources :users
