@@ -68,7 +68,8 @@ class SubscriptionsController < ApplicationController
   def delete_card
     stripe_customer = Stripe::Customer.retrieve(current_user.stripe_id)
     stripe_customer.sources.retrieve(params[:card_id]).delete
-    cards = Stripe::Customer.retrieve(current_user.stripe_id).sources.all
+    stripe_customer = Stripe::Customer.retrieve(current_user.stripe_id)
+    cards = stripe_customer.sources.all
     @cards = cards_data(cards: cards, default: stripe_customer.default_source)
     render partial: "cards"
   end
