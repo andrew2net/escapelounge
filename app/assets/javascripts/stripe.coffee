@@ -35,6 +35,8 @@ $ ->
       displayError.textContent = ''
   )
 
+  cardsContainer = $ '#cards-container'
+
   # Handle form submission
   form = document.getElementById 'payment-form'
   form.addEventListener('submit', (event)->
@@ -51,7 +53,10 @@ $ ->
       else
         # Send the token to your server
         $.post form.action, result.token, (res)->
-          if res.body
+          if res && cardsContainer
+            cardsContainer.html res
+            btn.disabled = false
+            card.clear()
           else
             window.location = '/subscriptions/billing'
     )

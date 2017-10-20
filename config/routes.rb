@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     get :billing, on: :collection
     post :billing, action: :add_card, on: :collection
     post :delete_card, on: :collection
+    post :set_default, on: :collection
   end
 
   post "stripe_webhooks", to: "stripe_webhooks#api"

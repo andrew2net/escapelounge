@@ -1,5 +1,5 @@
 class SubscriptionsController < ApplicationController
-  before_action :set_api_key, only: [:subscribe_user, :billing, :add_card, :delete_card]
+  before_action :set_api_key, only: [:subscribe_user, :billing, :add_card, :delete_card, :set_default]
 
   # GET /subscriptions
   def index
@@ -46,9 +46,12 @@ class SubscriptionsController < ApplicationController
       }
     end
 
-    cards = Stripe::Customer.retrieve(current_user.stripe_id).sources.all
-    @cards = []
-    cards.auto_paging_each { |card| @cards << card_data(card) }
+    stripe_customer = Stripe::Customer.retrieve(current_user.stripe_id)
+    cards = stripe_customer.sources.all
+    @cards = cards_data(cards: cards, default: stripe_customer.default_source)
+    # cards.auto_paging_each do |card|
+    #   @cards << card_data(card: card, default: stripe_customer.default_source)
+    # end
   end
 
   def add_card
@@ -56,14 +59,27 @@ class SubscriptionsController < ApplicationController
     unless stripe_customer
       stripe_customer = Stripe::Customer.retrieve current_user.stripe_id
     end
-    card = stripe_customer.sources.create source: params[:id]
-    render 'card_data', card: card_data(card)
+    stripe_customer.sources.create source: params[:id]
+    cards = stripe_customer.sources.all
+    @cards = cards_data(cards: cards, default: stripe_customer.default_source)
+    render partial: "cards"
   end
 
   def delete_card
-    customer = Stripe::Customer.retrieve(current_user.stripe_id)
-    customer.sources.retrieve(params[:card_id]).delete
-    head :ok
+    stripe_customer = Stripe::Customer.retrieve(current_user.stripe_id)
+    stripe_customer.sources.retrieve(params[:card_id]).delete
+    cards = Stripe::Customer.retrieve(current_user.stripe_id).sources.all
+    @cards = cards_data(cards: cards, default: stripe_customer.default_source)
+    render partial: "cards"
+  end
+
+  def set_default
+    stripe_customer = Stripe::Customer.retrieve(current_user.stripe_id)
+    stripe_customer.default_source = params[:card_id]
+    stripe_customer.save
+    cards = Stripe::Customer.retrieve(current_user.stripe_id).sources.all
+    @cards = cards_data(cards: cards, default: stripe_customer.default_source)
+    render partial: "cards"
   end
 
   private
@@ -84,12 +100,18 @@ class SubscriptionsController < ApplicationController
     end
   end
 
-  def card_data(card)
-    {
-      id:    card.id,
-      brand: card.brand,
-      exp:   "#{card.exp_month.to_s.rjust(2, "0")} / #{card.exp_year}",
-      last4: "....#{card.last4}"
-    }
+  # Retirn array of cards for view
+  def cards_data(cards:, default:)
+    crds= []
+    cards.auto_paging_each do |card|
+      crds << {
+        id:    card.id,
+        brand: card.brand,
+        exp:   "#{card.exp_month.to_s.rjust(2, "0")} / #{card.exp_year}",
+        last4: "....#{card.last4}",
+        default: default == card.id ? 'default' : ''
+      }
+    end
+    crds
   end
 end

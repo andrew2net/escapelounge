@@ -8,9 +8,9 @@
 .container
 
   %h4.mb-3 Cards
-  - @cards.each do |card|
-    = render 'card_data', card: card
-    
+  #cards-container
+    = render partial: 'cards'
+
   = render partial: 'card_form'
   -# = button_tag 'Add card', class: 'btn btn-primary', type: 'button',
     data: { customer: current_user.stripe_id }, id: 'add-card-btn'
