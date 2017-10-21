@@ -3,23 +3,40 @@ class SubscriptionsController < ApplicationController
 
   # GET /subscriptions
   def index
+    redirect_to billing_subscriptions_path if current_user.subscription_id
+    @subscription_plans = SubscriptionPlan.all
   end
 
   # GET /subscriptions/:subscription_plan_id/subscribe
   def subscribe
+    redirect_to billing_subscriptions_path if current_user.subscription_id
   end
 
   # POST /subscriptions/:subscription_plan_id/subscribe
   def subscribe_user
     create_stripe_customer
 
-    # TODO implemet change plan
-    unless current_user.subscription_id
+    # Create or change subscription plan
+    if !current_user.subscription_id
+      plan = SubscriptionPlan.find params[:subscription_plan_id]
       subscription = Stripe::Subscription.create(
         customer: current_user.stripe_id,
-        items: [{ plan: params[:subscription_plan_id] }]
+        items: [{ plan: plan.stripe_id }]
       )
-      current_user.update subscription_id: subscription.id
+      current_user.update subscription_id: subscription.id, plan: plan,
+        period_end: DateTime.strptime(subscription.current_period_end)
+    elsif current_user.subscription_plan_id != params[:subscription_plan_id]
+      plan = SubscriptionPlan.find params[:subscription_plan_id]
+      subscription = Stripe::Subscription.retrieve current_user.subscription_id
+      item_id = subscription.items.data[0].id
+      items = [{
+        id: item_id,
+        plan: plan.stripe_id
+      }]
+      subscription.items = items
+      subscription.save
+      current_user.update subscription_id: subscription.id, subscription_plan: plan,
+        period_end: subscription.current_period_end
     end
 
     head :ok
@@ -49,9 +66,6 @@ class SubscriptionsController < ApplicationController
     stripe_customer = Stripe::Customer.retrieve(current_user.stripe_id)
     cards = stripe_customer.sources.all
     @cards = cards_data(cards: cards, default: stripe_customer.default_source)
-    # cards.auto_paging_each do |card|
-    #   @cards << card_data(card: card, default: stripe_customer.default_source)
-    # end
   end
 
   def add_card

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  stripe_id: MyString
+  price: 
+  period: 1
+
+two:
+  name: MyString
+  stripe_id: MyString
+  price: 
+  period: 1

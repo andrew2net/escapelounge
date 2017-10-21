@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171018181849) do
+ActiveRecord::Schema.define(version: 20171020190716) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,6 +82,15 @@ ActiveRecord::Schema.define(version: 20171018181849) do
     t.index ["user_game_id"], name: "index_step_answers_on_user_game_id"
   end
 
+  create_table "subscription_plans", force: :cascade do |t|
+    t.string "name"
+    t.string "stripe_id"
+    t.decimal "price", precision: 5, scale: 2
+    t.integer "period", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "user_games", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.integer "game_id"
@@ -110,13 +119,15 @@ ActiveRecord::Schema.define(version: 20171018181849) do
     t.inet "last_sign_in_ip"
     t.string "stripe_id"
     t.string "subscription_id"
-    t.string "plan_id"
     t.datetime "period_end"
+    t.bigint "subscription_plan_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["subscription_plan_id"], name: "index_users_on_subscription_plan_id"
   end
 
   add_foreign_key "game_step_solutions", "game_steps"
   add_foreign_key "step_answers", "game_steps"
   add_foreign_key "step_answers", "user_games"
+  add_foreign_key "users", "subscription_plans"
 end

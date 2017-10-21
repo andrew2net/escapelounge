@@ -7,15 +7,17 @@
 
 .container
 
-  %h4.mb-3 Cards
-  #cards-container
-    = render partial: 'cards'
+  %h4 Subscription
+  = form_tag nil, id: 'change-subscribe-form' do
+    .form-group
+      = label_tag :subscription_plan
+      = select_tag :subscription_plan, options_for_select(SubscriptionPlan.pluck(:name, :id),
+        current_user.subscription_plan_id), class: 'form-control',
+        prompt: 'Select subscription plan', autocomplete: :off
+    = button_tag 'Change plan', disabled: true, class: 'btn btn-primary', id: 'change-plan-btn',
+      type: :button, data: { current_plan: current_user.subscription_plan_id }, autocomplete: :off
 
-  = render partial: 'card_form'
-  -# = button_tag 'Add card', class: 'btn btn-primary', type: 'button',
-    data: { customer: current_user.stripe_id }, id: 'add-card-btn'
-
-  %h4.mt-5 Invoices
+  %h4.mb-3.mt-5 Invoices
 
   .row.border.border-primary.pt-2.border-bottom-0.border-right-0.border-left-0
     .col-md-3
@@ -53,3 +55,9 @@
             .col-md-2= line[:amount]
             .col-md-2= line[:period_start].strftime '%F'
             .col-md-2= line[:period_end].strftime '%F'
+
+  %h4.mt-5 Cards
+  #cards-container
+    = render partial: 'cards'
+
+  = render partial: 'card_form'

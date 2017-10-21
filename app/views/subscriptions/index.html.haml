@@ -7,26 +7,11 @@
 
 .container
   .row
-    .col-md-4
-      .card.text-center
-        .card-body
-          %h4 Base plan
-          %p $9.99 / month
-          = link_to 'Subscribe', subscription_subscribe_url(:base),
-            class: 'btn btn-primary'
-
-    .col-md-4
-      .card.text-center
-        .card-body
-          %h4 Advance plan
-          %p $14.99 / month
-          = link_to 'Subscribe', subscription_subscribe_url(:advance),
-            class: 'btn btn-primary'
-
-    .col-md-4
-      .card.text-center
-        .card-body
-          %h4 Premium plan
-          %p $19.99 / month
-          = link_to 'Subscribe', subscription_subscribe_url(:premium),
-            class: 'btn btn-primary'
+    - @subscription_plans.each do |plan|
+      .col-md-4
+        .card.text-center
+          .card-body
+            %h4= plan.name
+            %p= "$#{plan.price} / #{plan.period}"
+            = link_to 'Subscribe', subscription_subscribe_url(plan.stripe_id),
+              class: 'btn btn-primary'

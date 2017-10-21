@@ -12,3 +12,7 @@ game_step2 = GameStep.create(name: "Things will get better, right?.", descriptio
 
 hint1 = Hint.create(description: "I am a bird with long beige beak, and I only sign when I speak", value: -5, game_step_id: 1)
 hint2 = Hint.create(description: "If the hint before is not enough, then your brain must be full of fluff", value: -8, game_step_id: 1)
+
+SubscriptionPlan.create name: 'Base plan', stripe_id: 'base', price: 9.99
+SubscriptionPlan.create name: 'Advance plan', stripe_id: 'advance', price: 9.99
+SubscriptionPlan.create name: 'Premium plan', stripe_id: 'premium', price: 9.99

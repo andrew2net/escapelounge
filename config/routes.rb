@@ -21,7 +21,7 @@ Rails.application.routes.draw do
     get :result
   end
 
-  resources :subscriptions, only: :index do
+  resources :subscriptions, param: :plan_id, only: :index do
     get :subscribe
     post :subscribe, action: :subscribe_user
     get :billing, on: :collection
