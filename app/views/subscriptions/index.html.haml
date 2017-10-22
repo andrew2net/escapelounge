@@ -13,5 +13,5 @@
           .card-body
             %h4= plan.name
             %p= "$#{plan.price} / #{plan.period}"
-            = link_to 'Subscribe', subscription_subscribe_url(plan.stripe_id),
+            = link_to 'Subscribe', subscription_subscribe_url(plan),
               class: 'btn btn-primary'
