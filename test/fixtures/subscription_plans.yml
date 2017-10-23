@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  stripe_id: MyString
-  price: 
-  period: 1
+  name: Base plan
+  stripe_id: base
+  price:
+  period: 0
 
 two:
-  name: MyString
-  stripe_id: MyString
-  price: 
-  period: 1
+  name: Advance plan
+  stripe_id: advance
+  price:
+  period: 0

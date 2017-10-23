@@ -23,8 +23,8 @@ class SubscriptionsController < ApplicationController
         customer: current_user.stripe_id,
         items: [{ plan: plan.stripe_id }]
       )
-      current_user.update subscription_id: subscription.id, plan: plan,
-        period_end: DateTime.strptime(subscription.current_period_end)
+      current_user.update subscription_id: subscription.id, subscription_plan: plan,
+        period_end: DateTime.strptime(subscription.current_period_end.to_s, "%s")
     elsif current_user.subscription_plan_id != params[:subscription_plan_id]
       plan = SubscriptionPlan.find params[:subscription_plan_id]
       subscription = Stripe::Subscription.retrieve current_user.subscription_id
@@ -36,7 +36,7 @@ class SubscriptionsController < ApplicationController
       subscription.items = items
       subscription.save
       current_user.update subscription_id: subscription.id, subscription_plan: plan,
-        period_end: subscription.current_period_end
+        period_end: DateTime.strptime(subscription.current_period_end.to_s, "%s")
     end
 
     head :ok
@@ -68,6 +68,7 @@ class SubscriptionsController < ApplicationController
     @cards = cards_data(cards: cards, default: stripe_customer.default_source)
   end
 
+  # POST /subscriptions/billing
   def add_card
     stripe_customer = create_stripe_customer
     unless stripe_customer
@@ -79,6 +80,7 @@ class SubscriptionsController < ApplicationController
     render partial: "cards"
   end
 
+  # POST /subscriptions/delete_card
   def delete_card
     stripe_customer = Stripe::Customer.retrieve(current_user.stripe_id)
     stripe_customer.sources.retrieve(params[:card_id]).delete
@@ -88,6 +90,7 @@ class SubscriptionsController < ApplicationController
     render partial: "cards"
   end
 
+  # POST /subscriptions/set_default
   def set_default
     stripe_customer = Stripe::Customer.retrieve(current_user.stripe_id)
     stripe_customer.default_source = params[:card_id]
