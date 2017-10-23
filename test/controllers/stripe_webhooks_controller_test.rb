@@ -10,7 +10,7 @@ class StripeWebhooksControllerTest < ActionDispatch::IntegrationTest
       headers: { 'Content-Type' => 'application/json' }
     assert_response :success
     @user.reload
-    assert_not_nil @user.plan_id
+    assert_not_nil @user.subscription_plan_id
     assert_not_nil @user.period_end
   end
 end

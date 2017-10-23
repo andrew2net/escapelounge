@@ -9,7 +9,8 @@ class StripeWebhooksController < ActionController::Base
       if user
         subs = params[:data][:object][:lines][:data][0]
         period_end = DateTime.strptime subs[:period][:end].to_s, "%s"
-        user.update plan_id: subs[:plan][:id], period_end: period_end
+        plan = SubscriptionPlan.find_by stripe_id: subs[:plan][:id]
+        user.update subscription_plan: plan, period_end: period_end
       end
     when "invoice.payment_failed"
     when "charge.succeeded"
