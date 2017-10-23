@@ -60,6 +60,8 @@ gem 'pundit'
 # Use postgreSQL for the database
 gem 'pg', '~> 0.21.0'
 
+gem 'figaro'
+
 
 
 group :doc do

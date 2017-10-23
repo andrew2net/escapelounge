@@ -22,3 +22,8 @@
 
 /public/system/
 /config/s3.yml
+
+# Ignore application configuration
+/config/application.yml
+
+/config/database.yml
