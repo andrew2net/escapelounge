@@ -18,13 +18,24 @@ $ ->
 
   changePlanBtn = $ '#change-plan-btn'
   subscriptionPlan = $ '#change-subscribe-form select'
+  cancelSubscriptionBtn = $ '#cancel-subscription-btn'
+  subscriptionCanceledWarn = $ '#subscription-canceled-warn'
 
   changePlanBtn.click (event)->
     event.target.disabled = true
     $.post "/subscriptions/#{subscriptionPlan.val()}/subscribe", ->
       event.target.setAttribute 'data-current-plan', subscriptionPlan.val()
+      cancelSubscriptionBtn.prop 'disabled', false
+      subscriptionCanceledWarn.addClass 'd-none'
 
   subscriptionPlan.change (event)->
     pristine = event.target.value.length == 0 ||
-      event.target.value == changePlanBtn.attr('data-current-plan')
+      event.target.value == changePlanBtn.attr('data-current-plan') &&
+      subscriptionCanceledWarn.hasClass 'd-none'
     changePlanBtn.prop('disabled', pristine)
+
+  cancelSubscriptionBtn.click (event)->
+    event.target.disabled = true
+    $.post "/subscriptions/unsubscribe", ->
+      subscriptionCanceledWarn.removeClass 'd-none'
+      changePlanBtn.prop 'disabled', false

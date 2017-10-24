@@ -1,5 +1,7 @@
 class SubscriptionsController < ApplicationController
-  before_action :set_api_key, only: [:subscribe_user, :billing, :add_card, :delete_card, :set_default]
+  before_action :set_api_key, only: [
+    :subscribe_user, :billing, :add_card, :delete_card, :set_default, :unsubscribe
+  ]
 
   # GET /subscriptions
   def index
@@ -42,30 +44,43 @@ class SubscriptionsController < ApplicationController
     head :ok
   end
 
+  # POST /subscriptions/unsubscribe
+  def unsubscribe
+    subscription = Stripe::Subscription.retrieve current_user.subscription_id
+    subscription.delete at_period_end: true
+    head :ok
+  end
+
   # GET /subscriptions/billing
   def billing
-    invoices = Stripe::Invoice.list customer: current_user.stripe_id
-    @invoices = []
-    invoices.auto_paging_each do |invoice|
-      @invoices << {
-        id:       invoice.id,
-        created:  DateTime.strptime(invoice.date.to_s, "%s"),
-        amount:   invoice.total.to_f / 100,
-        currency: invoice.currency,
-        status:   invoice.paid ? "paid" : "unpaid",
-        lines:    invoice.lines.data.map { |l| {
-          type:         l.type,
-          name:         l.plan.name,
-          amount:       l.amount.to_f / 100,
-          period_start: DateTime.strptime(l.period.start.to_s, "%s"),
-          period_end:   DateTime.strptime(l.period.end.to_s, "%s")
-        }}
-      }
-    end
+    if current_user.stripe_id
+      invoices = Stripe::Invoice.list customer: current_user.stripe_id
+      @invoices = []
+      invoices.auto_paging_each do |invoice|
+        @invoices << {
+          id:       invoice.id,
+          created:  DateTime.strptime(invoice.date.to_s, "%s"),
+          amount:   invoice.total.to_f / 100,
+          currency: invoice.currency,
+          status:   invoice.paid ? "paid" : "unpaid",
+          lines:    invoice.lines.data.map { |l| {
+            type:         l.type,
+            name:         l.plan.name,
+            amount:       l.amount.to_f / 100,
+            period_start: DateTime.strptime(l.period.start.to_s, "%s"),
+            period_end:   DateTime.strptime(l.period.end.to_s, "%s")
+          }}
+        }
+      end
 
-    stripe_customer = Stripe::Customer.retrieve(current_user.stripe_id)
-    cards = stripe_customer.sources.all
-    @cards = cards_data(cards: cards, default: stripe_customer.default_source)
+      subscription = Stripe::Subscription.retrieve current_user.subscription_id
+      @subscription_canceled = subscription.cancel_at_period_end
+      stripe_customer = Stripe::Customer.retrieve(current_user.stripe_id)
+      cards = stripe_customer.sources.all
+      @cards = cards_data(cards: cards, default: stripe_customer.default_source)
+    else
+      redirect_to subscriptions_path
+    end
   end
 
   # POST /subscriptions/billing

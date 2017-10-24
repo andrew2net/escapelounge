@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   resources :subscriptions, param: :plan_id, only: :index do
     get :subscribe
     post :subscribe, action: :subscribe_user
+    post :unsubscribe, on: :collection
     get :billing, on: :collection
     post :billing, action: :add_card, on: :collection
     post :delete_card, on: :collection

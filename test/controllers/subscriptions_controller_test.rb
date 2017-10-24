@@ -13,9 +13,17 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should rturn subscribe page" do
+  test "should return subscribe page" do
     get subscription_subscribe_path subscription_plans(:one)
     assert_response :success
+  end
+
+  test "should cancel subscription" do
+    @user.update subscription_id: "sub_BbW7HRjhVh0EpK"
+    Stripe::Subscription.stub :retrieve, stripe_subscription_retrive_mock do
+      post unsubscribe_subscriptions_path
+      assert_response :success
+    end
   end
 
   test "should create Stripe's customer and subscription" do
@@ -44,10 +52,19 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "should redirect to index if stripe customer doesn't exists" do
+    @user.update stripe_id: nil
+    get billing_subscriptions_path
+    assert_redirected_to subscriptions_path
+  end
+
   test "should render billing page" do
+    @user.update subscription_id: "sub_BbW7HRjhVh0EpK"
     Stripe::Invoice.stub :list, stripe_invoice_list_mock do
-      get billing_subscriptions_path
-      assert_response :success
+      Stripe::Subscription.stub :retrieve, stripe_subscription_retrive_mock do
+        get billing_subscriptions_path
+        assert_response :success
+      end
     end
   end
 
@@ -122,6 +139,18 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
         assert customer.is_a? String
         assert items.is_a? Array
         assert_not items.empty?
+        subscription
+      end
+    end
+
+    def stripe_subscription_retrive_mock
+      subscription = Minitest::Mock.new
+      subscription.expect :delete, nil do |at_period_end:|
+        [TrueClass, FalseClass].include? at_period_end.class
+      end
+      subscription.expect :cancel_at_period_end, false
+      lambda do |subscription_id|
+        assert subscription_id.is_a? String
         subscription
       end
     end
