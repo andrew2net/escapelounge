@@ -63,16 +63,16 @@ $ ->
 
   # Starting game.
   startGameBtn.click (event)->
-    # event.preventDefault()
-    startAt = encodeURIComponent new Date
-    event.target.href += "?start_at=#{startAt}"
-    # timeZoneOffset = startAt.getTimezoneOffset()
-    # $.post event.target.href, {
-      # start_at: startAt
-      # timezone_offset: timeZoneOffset
-    # }, (response)->
-    #   if response.stop_at
-    #     timer.start seconds(response.stop_at)
+    event.preventDefault()
+    startAt = new Date
+    csrfToken = $('meta[name=csrf-token]').attr('content')
+    csrfParam = $('meta[name=csrf-param]').attr('content')
+    metadataInput = """<input name="start_at" value="#{startAt}" type="hidden" />"""
+    if csrfParam != undefined && csrfToken != undefined
+      metadataInput += """<input name="#{csrfParam}" value="#{csrfToken}" type="hidden" />"""
+    form = $ """<form method="post" action="#{event.target.href}"></form>"""
+    form.hide().append(metadataInput).appendTo 'body'
+    form.submit()
 
   # Pause game
   pauseGameBtn.click (event)->

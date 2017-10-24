@@ -25,7 +25,7 @@
             = @game.difficulty
           %p
             %b Age range:
-            = @game.age_range
+            = @game.grades.map { |g| g.name}.join ', '
           %p
             %b Max Time Alloted:
             = @game.time_length
@@ -41,7 +41,7 @@
         .col-md-2
           = display_timer
 
-          = link_to 'Start game', game_start_url(@game), method: :post,
+          = link_to 'Start game', game_start_url(@game),
             id: 'start-game-btn', class: "btn btn-primary",
             style: "#{@running || @paused_at ? 'display:none' : ''}"
 

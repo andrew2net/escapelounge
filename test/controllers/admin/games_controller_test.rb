@@ -15,7 +15,7 @@ class Admin::GamesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create game" do
     assert_difference('Game.count') do
-      post admin_games_url, params: { game: { age_range: @game.age_range, description: @game.description, difficulty: @game.difficulty, name: @game.name, status: @game.status, time_length: @game.time_length } }
+      post admin_games_url, params: { game: { grade_ids: @game.grades.ids, description: @game.description, difficulty: @game.difficulty, name: @game.name, status: @game.status, time_length: @game.time_length } }
     end
 
     assert_redirected_to game_url(Game.last)
@@ -27,7 +27,7 @@ class Admin::GamesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update game" do
-    patch admin_game_url(@game), params: { game: { age_range: @game.age_range, description: @game.description, difficulty: @game.difficulty, name: @game.name, status: @game.status, time_length: @game.time_length } }
+    patch admin_game_url(@game), params: { game: { grade_ids: @game.grades.ids, description: @game.description, difficulty: @game.difficulty, name: @game.name, status: @game.status, time_length: @game.time_length } }
     assert_redirected_to game_url(@game)
   end
 

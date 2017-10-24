@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171020190716) do
+ActiveRecord::Schema.define(version: 20171024151041) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,7 +37,6 @@ ActiveRecord::Schema.define(version: 20171020190716) do
     t.string "short_description"
     t.integer "status"
     t.integer "difficulty"
-    t.integer "age_range"
     t.boolean "visible", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -55,6 +54,26 @@ ActiveRecord::Schema.define(version: 20171020190716) do
     t.string "banner_content_type"
     t.integer "banner_file_size"
     t.datetime "banner_updated_at"
+  end
+
+  create_table "games_grades", id: false, force: :cascade do |t|
+    t.bigint "game_id", null: false
+    t.bigint "grade_id", null: false
+    t.index ["game_id"], name: "index_games_grades_on_game_id"
+    t.index ["grade_id"], name: "index_games_grades_on_grade_id"
+  end
+
+  create_table "grades", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "grades_subscription_plans", id: false, force: :cascade do |t|
+    t.bigint "grade_id", null: false
+    t.bigint "subscription_plan_id", null: false
+    t.index ["grade_id"], name: "index_grades_subscription_plans_on_grade_id"
+    t.index ["subscription_plan_id"], name: "index_grades_subscription_plans_on_subscription_plan_id"
   end
 
   create_table "hints", id: :serial, force: :cascade do |t|

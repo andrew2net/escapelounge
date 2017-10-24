@@ -1,0 +1,10 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: ages 5-9
+
+two:
+  name: ages 10-14
+
+three:
+  name: ages 15-19

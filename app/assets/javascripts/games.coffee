@@ -7,7 +7,7 @@ $ ->
   getTable = ->
     list.load '/games/games', { filter: {
         difficulty: difficultyParam[0].value
-        age_range: ageParam[0].value
+        grade_id: ageParam[0].value
       }}
 
   # On change difficulty filter.

@@ -8,7 +8,7 @@ class GamesController < ApplicationController
 
   # POST /games/table
   def games
-    @games = Game.visible.where filter_params
+    @games = Game.includes(:grades).visible.where filter_params
     render @games
   end
 
@@ -56,6 +56,9 @@ class GamesController < ApplicationController
     end
 
     def filter_params
-      params.require(:filter).permit(:difficulty, :age_range).select { |_k, v| !v.blank? }
+      fp = params.require(:filter).permit(:difficulty, :grade_id)
+        .select { |_k, v| !v.blank? }
+      fp[:games_grades] = { grade_id: fp.delete(:grade_id) } if fp[:grade_id]
+      fp
     end
 end

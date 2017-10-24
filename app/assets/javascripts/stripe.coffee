@@ -1,4 +1,6 @@
 $ ->
+  # Return if there isn't card element on page
+  return unless document.getElementById 'card-element'
   # Create a Stripe client
   stripe = Stripe 'pk_test_aEl2kU2mLmlQyBR4fYbZLNJ8'
 

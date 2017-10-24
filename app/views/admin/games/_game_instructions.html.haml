@@ -6,7 +6,7 @@
 
 %h2 Age range
 
-%p= game.age_range
+%p= game.grades.map { |g| g.name }.join ', '
 
 %h2 Difficulty
 

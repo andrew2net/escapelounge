@@ -36,8 +36,12 @@
       = f.label :difficulty
       = f.select :difficulty, Game.difficulties.to_a.map { |w| [w[0], w[0]] }, {}, class: 'form-control'
     .form-group
-      = f.label :age_range
-      = f.select :age_range, Game.age_ranges.to_a.map { |w| [w[0], w[0]] }, {}, class: 'form-control'
+      %div
+        = f.label :grade_ids, 'Age ranges', class: 'mb-0'
+      = f.collection_check_boxes :grade_ids, Grade.all, :id, :name do |b|
+        .form-check.form-check-inline
+          = b.label(class: 'form-check-label') { b.check_box(class: 'form-check-input mr-2') + b.text }
+      -# = f.select :age_range, Game.age_ranges.to_a.map { |w| [w[0], w[0]] }, {}, class: 'form-control'
     .form-group
       %label TIme allotted to complete the game
       = f.text_field :time_length, class: "form-control"

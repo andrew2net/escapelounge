@@ -21,9 +21,10 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should return only games with age_range 1" do
-    post games_games_url, params: { filter: { age_range: 1 } }, xhr: true
+    grade = grades :two
+    post games_games_url, params: { filter: { grade_id: grade.id } }, xhr: true
     assert_select '.game-container' do |element|
-      assert_select element, 'p:nth-child(6)', 'Age Range: ages 10 - 14'
+      assert_select element, 'p:nth-child(6)', "Age Range: \nages 10-14"
     end
   end
 
