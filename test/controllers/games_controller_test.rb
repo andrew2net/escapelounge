@@ -56,23 +56,33 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should start a game" do
+    @user.subscription_plan = subscription_plans :two
     user_game = @game.user_games.find_by(user_id: @user.id)
     # Finish user game because it created started in fixture.
     user_game.update finished_at: DateTime.now
     time = DateTime.now
     post game_start_url @game, params: { start_at: time }
     assert_redirected_to user_game_step_url UserGame.last
-   end
+  end
 
-   test "shoud pause a game" do
-     post game_pause_url @game, params: { seconds_remain: 600 }, xhr: true
-     assert_response :success
-     assert_not_nil @user.user_games.find_by(game_id: @game.id).paused_at
-   end
+  test "shoud not start a game" do
+    user_game = @game.user_games.find_by(user_id: @user.id)
+    # Finish user game because it created started in fixture.
+    user_game.update finished_at: DateTime.now
+    time = DateTime.now
+    post game_start_url @game, params: { start_at: time }
+    assert_redirected_to game_path(@game)
+  end
 
-   test "should resume a game" do
-     post game_resume_url @game, params: { start_at: DateTime.now }, xhr: true
-     assert_response :success
-     assert_nil @user.user_games.find_by(game_id: @game.id).paused_at
-   end
+  test "shoud pause a game" do
+    post game_pause_url @game, params: { seconds_remain: 600 }, xhr: true
+    assert_response :success
+    assert_not_nil @user.user_games.find_by(game_id: @game.id).paused_at
+  end
+
+  test "should resume a game" do
+    post game_resume_url @game, params: { start_at: DateTime.now }, xhr: true
+    assert_response :success
+    assert_nil @user.user_games.find_by(game_id: @game.id).paused_at
+  end
 end

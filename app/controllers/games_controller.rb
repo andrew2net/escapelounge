@@ -19,16 +19,20 @@ class GamesController < ApplicationController
 
   # POST /games/:game_id/start
   def start
-    user_game = !current_user.nil? && current_user.user_games.paused.find_by(game_id: params[:game_id])
+    user_game = current_user.user_games.paused.find_by(game_id: params[:game_id])
+    # Start new usergame if there isn't started this type of game and no running other game
     if !user_game && !current_user.user_games.running.any?
       game = Game.find params[:game_id]
+      authorize game
       user_game = UserGame.new(user_id: current_user.id, game_id: game.id)
       user_game.started_at = params[:start_at]
       user_game.save
       redirect_to user_game_step_url(user_game)
     else
-      head :ok
+      render :show, notice: "Other game is running."
     end
+  rescue Pundit::NotAuthorizedError
+    redirect_to game_path(params[:game_id]), notice: "You have not subscription to start the game."
   end
 
   # POST /games/:game_id/pause

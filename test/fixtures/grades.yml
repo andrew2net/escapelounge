@@ -2,6 +2,10 @@
 
 one:
   name: ages 5-9
+  subscription_plans:
+    - two
+  games:
+    - two
 
 two:
   name: ages 10-14

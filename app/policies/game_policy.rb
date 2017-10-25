@@ -11,6 +11,11 @@ class GamePolicy < ApplicationPolicy
     user.admin?
   end
 
+  def start?
+    record.grades.joins(:subscription_plans)
+      .where(subscription_plans: {id: user.subscription_plan_id}).any?
+  end
+
   def destroy?
     user.admin?
   end
