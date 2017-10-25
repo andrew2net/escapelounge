@@ -1,32 +1,32 @@
 class Admin::UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
-  # GET /users
-  # GET /users.json
+  # GET /admin/users
+  # GET /admin/users.json
   def index
     authorize User
     @users = User.all
   end
 
-  # GET /users/1
-  # GET /users/1.json
+  # GET /admin/users/1
+  # GET /admin/users/1.json
   def show
     authorize @user
   end
 
-  # GET /users/new
+  # GET /admin/users/new
   def new
     authorize User
     @user = User.new
   end
 
-  # GET /users/1/edit
+  # GET /admin/users/1/edit
   def edit
     authorize @user
   end
 
-  # POST /users
-  # POST /users.json
+  # POST /admin/users
+  # POST /admin/users.json
   def create
     authorize User
     @user = User.new(user_params)

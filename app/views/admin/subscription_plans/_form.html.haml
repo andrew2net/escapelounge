@@ -1,0 +1,29 @@
+.auth-container
+  = form_for [:admin, @subscription_plan] do |f|
+    - if @subscription_plan.errors.any?
+      #error_explanation
+        %h2= "#{pluralize(@subscription_plan.errors.count, "error")} prohibited this user from being saved:"
+        %ul
+          - @subscription_plan.errors.full_messages.each do |msg|
+            %li= msg
+
+    .form-group
+      = f.label :name
+      = f.text_field :name, class: "form-control"
+    .form-group
+      = f.label :stripe_id, 'Stripe ID'
+      = f.text_field :stripe_id, class: 'form-control'
+    .form-group
+      = f.label :period
+      = f.select :period, options_for_select(SubscriptionPlan.periods.map { |k, _v| k }), {}, class: 'form-control'
+    .form-group
+      = f.label :price, 'Price $'
+      = f.text_field :price, class: 'form-control'
+    .form-group
+      %div
+        = f.label :grade_ids, 'Age ranges', class: 'mb-0'
+      = f.collection_check_boxes :grade_ids, Grade.all, :id, :name do |b|
+        .form-check.form-check-inline
+          = b.label(class: 'form-check-label') { b.check_box(class: 'form-check-input mr-2') + b.text }
+    .actions
+      = f.submit 'Save', class: "btn btn-primary"

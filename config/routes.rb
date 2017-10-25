@@ -36,5 +36,6 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :users
     resources :games, except: :show
+    resources :subscription_plans, except: :show
   end
 end

@@ -1,16 +1,19 @@
 class Admin::GamesController < ApplicationController
   before_action :set_game, only: [:edit, :update, :destroy]
 
+  # GET /admin/games
   def index
     authorize Game
     @games = Game.all
   end
 
+  # GET /admin/games/new
   def new
     authorize Game
     @game = Game.new
   end
 
+  # POST /admin/games
   def create
     authorize Game
     @game = Game.new(game_params)
@@ -26,10 +29,12 @@ class Admin::GamesController < ApplicationController
     end
   end
 
+  # GET /admin/games/:id/edit
   def edit
     authorize @game
   end
 
+  # PATCH/PUT /admin/games/:id
   def update
     authorize @game
     respond_to do |format|
@@ -43,6 +48,7 @@ class Admin::GamesController < ApplicationController
     end
   end
 
+  # DELETE /admin/games/:id
   def destroy
     @game.destroy
     authorize @game

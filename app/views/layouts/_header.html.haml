@@ -6,15 +6,21 @@
   #navbarSupportedContent.collapse.navbar-collapse
     %ul.nav.navbar-nav.ml-auto
 
-      - if policy(Game).index?
-        %li.nav-item
-          = link_to 'Games Admin', admin_games_path, class: "nav-link"
+      - if current_user && current_user.admin?
+        %li.nav-item.dropdown
+          %a#navbarDropdownAdminMenuLink.nav-link.dropdown-toggle{"aria-expanded" => "false",
+            "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "http://example.com"}
+            Admin menu
+          .dropdown-menu{"aria-labelledby" => "navbarDropdownAdminMenuLink"}
+            = link_to 'Games Admin', admin_games_path, class: "dropdown-item"
+            = link_to 'Subscription plans', admin_subscription_plans_path, class: 'dropdown-item'
 
       - if current_user
         %li.nav-item
           = link_to 'Games', games_path, class: "nav-link"
         %li.nav-item.dropdown
-          %a#navbarDropdownMenuLink.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "http://example.com"}
+          %a#navbarDropdownMenuLink.nav-link.dropdown-toggle{"aria-expanded" => "false",
+            "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "http://example.com"}
             = current_user.email
           .dropdown-menu{"aria-labelledby" => "navbarDropdownMenuLink"}
             = link_to "Settings", edit_user_registration_path(current_user), class: "dropdown-item"
