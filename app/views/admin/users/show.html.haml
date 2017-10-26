@@ -1,9 +1,12 @@
-%p#notice= notice
+.page-head
+  .container
+    .row
+      .col-md-10
+        %h4= @user.name
+      .col-md-2
+        = link_to 'Edit', edit_admin_user_path(@user), class: 'btn btn-sm btn-primary'
 
-%p
-  %b Name:
-  = @user.name
-
-= link_to 'Edit', edit_admin_user_path(@user)
-\|
-= link_to 'Back', admin_users_path
+.container
+  %p
+    %b Name:
+    = @user.name

@@ -5,7 +5,7 @@ class Admin::UsersController < ApplicationController
   # GET /admin/users.json
   def index
     authorize User
-    @users = User.all
+    @users = User.page params[:page]
   end
 
   # GET /admin/users/1
