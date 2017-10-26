@@ -4,26 +4,25 @@ class Admin::GradesController < ApplicationController
   # GET /admin/grades
   # GET /admin/grades.json
   def index
+    authorize Grade
     @grades = Grade.all
-  end
-
-  # GET /admin/grades/1
-  # GET /admin/grades/1.json
-  def show
   end
 
   # GET /admin/grades/new
   def new
+    authorize Grade
     @grade = Grade.new
   end
 
   # GET /admin/grades/1/edit
   def edit
+    authorize @grade
   end
 
   # POST /admin/grades
   # POST /admin/grades.json
   def create
+    authorize Grade
     @grade = Grade.new(grade_params)
 
     respond_to do |format|
@@ -40,6 +39,7 @@ class Admin::GradesController < ApplicationController
   # PATCH/PUT /admin/grades/1
   # PATCH/PUT /admin/grades/1.json
   def update
+    authorize @grade
     respond_to do |format|
       if @grade.update(grade_params)
         format.html { redirect_to admin_grades_path, notice: 'Grade was successfully updated.' }
@@ -54,6 +54,7 @@ class Admin::GradesController < ApplicationController
   # DELETE /admin/grades/1
   # DELETE /admin/grades/1.json
   def destroy
+    authorize @grade
     @grade.destroy
     respond_to do |format|
       format.html { redirect_to admin_grades_url, notice: 'Grade was successfully destroyed.' }
