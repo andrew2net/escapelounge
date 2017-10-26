@@ -43,9 +43,6 @@ gem 'aws-sdk', '~> 2.3.0'
 gem 'friendly_id', '~> 5.1.0'
 # Use cocoon for nested forms
 gem 'cocoon', '~> 1.2', '>= 1.2.10'
-# A PDF generation plugin for Ruby on Rails
-gem 'wicked_pdf'
-gem 'wkhtmltopdf-binary'
 
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 
@@ -60,8 +57,13 @@ gem 'pundit'
 # Use postgreSQL for the database
 gem 'pg', '~> 0.21.0'
 
+# A PDF generation plugin for Ruby on Rails
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
+
 gem 'figaro'
 
+gem 'kaminari'
 
 
 group :doc do
