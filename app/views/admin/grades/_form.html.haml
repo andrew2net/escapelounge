@@ -1,0 +1,14 @@
+.auth-container
+  = form_for [:admin, @grade] do |f|
+    - if @grade.errors.any?
+      #error_explanation
+        %h2= "#{pluralize(@grade.errors.count, "error")} prohibited this grade from being saved:"
+        %ul
+          - @grade.errors.full_messages.each do |message|
+            %li= message
+
+    .form-group
+      = f.label :name
+      = f.text_field :name, class: 'form-control'
+    .actions
+      = f.submit 'Save', class: 'btn btn-primary'

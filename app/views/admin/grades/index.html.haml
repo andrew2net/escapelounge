@@ -1,0 +1,22 @@
+.page-head
+  .container
+    .row
+      .col-md-10
+        %h4 Grades
+      .col-md-2
+        = link_to 'New Grade', new_admin_grade_path, class: 'btn btn-sm btn-primary'
+
+.container
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Name
+        %th Actions
+
+    %tbody
+      - @grades.each do |grade|
+        %tr
+          %td= grade.name
+          %td
+            = link_to 'Edit', edit_admin_grade_path(grade)
+            = link_to 'Destroy', admin_grade_path(grade), method: :delete, data: { confirm: 'Are you sure?' }

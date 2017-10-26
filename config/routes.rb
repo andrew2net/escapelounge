@@ -39,5 +39,6 @@ Rails.application.routes.draw do
     resources :users
     resources :games, except: :show
     resources :subscription_plans, except: :show
+    resources :grades, except: :show
   end
 end
