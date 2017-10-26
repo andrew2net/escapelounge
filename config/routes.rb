@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'games_history', to: 'games_history#index'
+
   devise_for :users, controllers: { registrations: "user/registrations" }
   root to: "pages#home"
   get 'pages/home'

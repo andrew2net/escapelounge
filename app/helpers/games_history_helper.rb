@@ -1,0 +1,2 @@
+module GamesHistoryHelper
+end

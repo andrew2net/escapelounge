@@ -1,3 +1,4 @@
+# If result 0 then game ended, if greater 0 then finished, if nil then timeouted.
 class UserGame < ApplicationRecord
   after_find :check_started_game
 
@@ -19,7 +20,13 @@ class UserGame < ApplicationRecord
 
   # Returen result in "hh:MM:ss" format.
   def formated_result
-    Time.at(result).utc.strftime("%H:%M:%S") if result
+    if result == 0
+      "Ended"
+    elsif result
+      Time.at(result).utc.strftime("%H:%M:%S")
+    else
+      "Time expired"
+    end
   end
 
   # Mark the hint as used and reduce remaining time

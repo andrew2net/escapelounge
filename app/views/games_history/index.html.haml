@@ -1,0 +1,20 @@
+.page-head
+  .container
+    .row
+      .col-md-10
+        %h4 Games history
+
+%section
+  .container
+    %table.table.table-striped
+      %thead
+        %tr
+          %th Game
+          %th Finished at
+          %th Result
+      %tbody
+        - @user_games.each do |g|
+          %tr
+            %td= g.game.name
+            %td= g.finished_at
+            %td= g.formated_result

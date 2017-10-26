@@ -112,7 +112,7 @@ class UserGamesControllerTest < ActionDispatch::IntegrationTest
     get user_game_result_url @user_game
     @user_game.reload
     assert_response :success
-    assert_includes response.body, "Time out"
+    assert_includes response.body, "Time expired"
     assert_nil @user_game.result
   end
 end
