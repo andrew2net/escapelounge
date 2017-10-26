@@ -29,6 +29,7 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show running game" do
+    @user.update subscription_plan: subscription_plans(:two)
     get game_url(@game)
     assert_response :success
     assert_select '#container-timer[style=""]'
@@ -39,6 +40,7 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
 
   test "should show paused game" do
     @user.user_games.find_by(game_id: @game.id).update(paused_at: 1)
+    @user.update subscription_plan: subscription_plans(:two)
     get game_url @game
     assert_response :success
     assert_select '#container-timer[style=""]'
@@ -49,10 +51,17 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
 
   test "should show stoped game" do
     @user.user_games.find_by(game_id: @game.id).update(finished_at: DateTime.now)
+    @user.update subscription_plan: subscription_plans(:two)
     get game_url @game
     assert_response :success
     assert_select '#container-timer[style*="display:none"]'
     assert_select '#start-game-btn[style=""]', 'Start game'
+  end
+
+  test "should not show start button" do
+    get game_url @game
+    assert_response :success
+    assert_includes response.body, "You have no subscription to start the game."
   end
 
   test "should start a game" do

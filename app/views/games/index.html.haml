@@ -20,7 +20,12 @@
 
           = label_tag :age_filter, 'Age range', class: 'mx-2'
           = select_tag :age_filter, options_for_select(Grade.pluck :name, :id),
-            include_blank: true, class: 'form-control', autocomplete: :off
+            include_blank: true, class: 'form-control mr-3', autocomplete: :off
+
+          = label_tag :allowed_filter, class: 'form-check-label' do
+            %input#allowed_filter.form-check-input{ type: 'checkbox',
+              checked: true, autocomplete: 'off' }
+            &nbsp;Show only allowed games
 
       #games-user-list.row= render @games
 

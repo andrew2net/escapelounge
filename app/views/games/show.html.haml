@@ -39,11 +39,14 @@
           = image_tag @game.banner.url :thumb, class: 'img-fluid'
 
         .col-md-2
-          = display_timer
+          - if @allowed
+            = display_timer
 
-          = link_to 'Start game', game_start_url(@game),
-            id: 'start-game-btn', class: "btn btn-primary",
-            style: "#{@running || @paused_at ? 'display:none' : ''}"
+            = link_to 'Start game', game_start_url(@game),
+              id: 'start-game-btn', class: "btn btn-primary",
+              style: "#{@running || @paused_at ? 'display:none' : ''}"
+          - else
+            %p You have no subscription to start the game.
 
       .row
         .col-md-12

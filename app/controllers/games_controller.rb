@@ -3,17 +3,20 @@ class GamesController < ApplicationController
 
   # GET /games
   def index
-    @games = Game.visible
+    @games = Game.visible.allowed current_user
   end
 
   # POST /games/table
   def games
     @games = Game.includes(:grades).visible.where filter_params
+    @games = @games.allowed current_user if params[:allowed_filter] == "true"
     render @games
   end
 
   # GET /games/:id
   def show
+    @allowed = @game.grades.joins(:subscription_plans)
+      .where(subscription_plans: {id: current_user.subscription_plan_id}).any?
     @display_pause_buttons = true
   end
 
