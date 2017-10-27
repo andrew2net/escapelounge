@@ -20,11 +20,11 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "should return only games with age_range 1" do
+  test "should return only games with grade 1" do
     grade = grades :two
     post games_games_url, params: { filter: { grade_id: grade.id } }, xhr: true
     assert_select '.game-container' do |element|
-      assert_select element, 'p:nth-child(6)', "Age Range: \nages 10-14"
+      assert_select element, 'p:nth-child(6)', "Grades: \n#{grade.name}"
     end
   end
 
@@ -65,7 +65,7 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should start a game" do
-    @user.subscription_plan = subscription_plans :two
+    @user.update subscription_plan: subscription_plans(:two), period_end: (DateTime.now + 1.day)
     user_game = @game.user_games.find_by(user_id: @user.id)
     # Finish user game because it created started in fixture.
     user_game.update finished_at: DateTime.now
@@ -74,7 +74,18 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to user_game_step_url UserGame.last
   end
 
-  test "shoud not start a game" do
+  test "shoud not start a game because there isn't apropriate subscription" do
+    @user.update period_end: (DateTime.now + 1.day)
+    user_game = @game.user_games.find_by(user_id: @user.id)
+    # Finish user game because it created started in fixture.
+    user_game.update finished_at: DateTime.now
+    time = DateTime.now
+    post game_start_url @game, params: { start_at: time }
+    assert_redirected_to game_path(@game)
+  end
+
+  test "shoud not start a game because subscription is expired" do
+    @user.update subscription_plan: subscription_plans(:two), period_end: (DateTime.now - 1.day)
     user_game = @game.user_games.find_by(user_id: @user.id)
     # Finish user game because it created started in fixture.
     user_game.update finished_at: DateTime.now

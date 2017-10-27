@@ -10,3 +10,30 @@
   %p
     %b Name:
     = @user.name
+
+  %p
+    %b Subscription plan:
+    = @user.subscription_plan && @user.subscription_plan.name
+    %b to date:
+    = @user.period_end && @user.period_end.strftime('%F')
+  %p
+    %b Created at:
+    = @user.created_at.strftime('%F')
+    %b last active:
+    = @user.last_active.strftime('%F')
+
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Game
+        %th Finished at
+        %th Result
+    %tbody
+      - @user_games.each do |g|
+        %tr
+          %td= g.game.name
+          %td= g.finished_at
+          %td= g.formated_result
+
+  .pagination.justify-content-center
+    = paginate @user_games

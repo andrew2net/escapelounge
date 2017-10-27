@@ -18,7 +18,7 @@
           = select_tag :difficulty_filter, options_for_select(Game.difficulties),
             include_blank: true, class: 'form-control mr-3', autocomplete: :off
 
-          = label_tag :age_filter, 'Age range', class: 'mx-2'
+          = label_tag :age_filter, 'Grade', class: 'mx-2'
           = select_tag :age_filter, options_for_select(Grade.pluck :name, :id),
             include_blank: true, class: 'form-control mr-3', autocomplete: :off
 

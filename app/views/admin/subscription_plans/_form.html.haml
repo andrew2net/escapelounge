@@ -21,7 +21,7 @@
       = f.text_field :price, class: 'form-control'
     .form-group
       %div
-        = f.label :grade_ids, 'Age ranges', class: 'mb-0'
+        = f.label :grade_ids, 'Grades', class: 'mb-0'
       = f.collection_check_boxes :grade_ids, Grade.all, :id, :name do |b|
         .form-check.form-check-inline
           = b.label(class: 'form-check-label') { b.check_box(class: 'form-check-input mr-2') + b.text }

@@ -12,7 +12,8 @@ class GamePolicy < ApplicationPolicy
   end
 
   def start?
-    record.grades.joins(:subscription_plans)
+    user.period_end && user.period_end > DateTime.now &&
+      record.grades.joins(:subscription_plans)
       .where(subscription_plans: {id: user.subscription_plan_id}).any?
   end
 

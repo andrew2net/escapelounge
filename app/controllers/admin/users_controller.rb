@@ -5,13 +5,15 @@ class Admin::UsersController < ApplicationController
   # GET /admin/users.json
   def index
     authorize User
-    @users = User.includes(:user_games, :subscription_plan).page params[:page]
+    @users = User.includes(:subscription_plan).page params[:page]
   end
 
   # GET /admin/users/1
   # GET /admin/users/1.json
   def show
     authorize @user
+    @user_games = @user.user_games.includes(:game).order(finished_at: :desc)
+      .page params[:page]
   end
 
   # GET /admin/users/new
