@@ -15,8 +15,6 @@ class GamesController < ApplicationController
 
   # GET /games/:id
   def show
-    @allowed = @game.grades.joins(:subscription_plans)
-      .where(subscription_plans: {id: current_user.subscription_plan_id}).any?
     @display_pause_buttons = true
   end
 

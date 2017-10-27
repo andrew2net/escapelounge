@@ -39,7 +39,7 @@
           = image_tag @game.banner.url :thumb, class: 'img-fluid'
 
         .col-md-2
-          - if @allowed
+          - if policy(@game).start?
             = display_timer
 
             = link_to 'Start game', game_start_url(@game),
