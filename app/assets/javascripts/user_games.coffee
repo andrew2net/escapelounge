@@ -13,8 +13,10 @@ $ ->
     url = event.target.getAttribute 'data-url'
     hintsContainer.load url, { hint_id: hint_id }
 
-  answerBtn.click (event)->
+  modalTimeOut = null
+  submit = (event)->
     event.preventDefault()
+    return if modalTimeOut
     $.post event.target.href, form.serialize(), (resp)->
       switch resp.result
         when 'success'
@@ -23,8 +25,9 @@ $ ->
           modalMessage.removeClass 'text-info'
           modalMessage.addClass 'text-success'
           modal.modal 'show'
-          setTimeout ->
+          modalTimeOut = setTimeout ->
             window.location = resp.redirect
+            modalTimeOut = null
           , 2000
         when 'fail'
           modalMessage.html 'Wrong answer!'
@@ -32,8 +35,9 @@ $ ->
           modalMessage.removeClass 'text-info'
           modalMessage.addClass 'text-danger'
           modal.modal 'show'
-          setTimeout ->
+          modalTimeOut = setTimeout ->
             modal.modal 'hide'
+            modalTimeOut = null
           , 2000
         when 'finish'
           modalMessage.html 'Game is ended!'
@@ -41,6 +45,10 @@ $ ->
           modalMessage.removeClass 'text-success'
           modalMessage.addClass 'text-info'
           modal.modal 'show'
-          setTimeout ->
+          modalTimeOut = setTimeout ->
             window.location = resp.redirect
+            modalTimeOut = null
           , 2000
+
+  answerBtn.click submit
+  form.submit submit
