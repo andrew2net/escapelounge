@@ -43,12 +43,14 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
   test "should update subscription" do
     @user.update subscription_id: "sub_BbW7HRjhVh0EpK"
     Stripe::Customer.stub :create, stripe_customer_mock do
-      Stripe::Subscription.stub :create, stripe_subscription_mock do
+      # Stripe::Subscription.stub :create, stripe_subscription_mock do
+      Stripe::Subscription.stub :retrieve, stripe_subscription_retrive_mock do
         post subscription_subscribe_path subscription_plans(:one)
         assert_response :success
         @user.reload
         assert_equal DateTime.strptime(1511017428.to_s, "%s"), @user.period_end
       end
+      # end
     end
   end
 
@@ -62,8 +64,10 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
     @user.update subscription_id: "sub_BbW7HRjhVh0EpK"
     Stripe::Invoice.stub :list, stripe_invoice_list_mock do
       Stripe::Subscription.stub :retrieve, stripe_subscription_retrive_mock do
-        get billing_subscriptions_path
-        assert_response :success
+        Stripe::Customer.stub :retrieve, stripe_customer_retrieve_mock do
+          get billing_subscriptions_path
+          assert_response :success
+        end
       end
     end
   end
@@ -148,7 +152,19 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
       subscription.expect :delete, nil do |at_period_end:|
         [TrueClass, FalseClass].include? at_period_end.class
       end
+
+      item = Minitest::Mock.new
+      item.expect :id, "si_1BEJ5EJt7tLdSPFUFOghX8VF"
+
+      items = Minitest::Mock.new
+      items.expect :data, [item]
+
+      subscription.expect :items, items
+      subscription.expect :items=, nil, [Array]
+      subscription.expect :save, nil
+      subscription.expect :id, "sub_BbW7HRjhVh0EpK"
       subscription.expect :cancel_at_period_end, false
+      subscription.expect :current_period_end, 1511017428
       lambda do |subscription_id|
         assert subscription_id.is_a? String
         subscription

@@ -101,8 +101,10 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should resume a game" do
-    post game_resume_url @game, params: { start_at: DateTime.now }, xhr: true
-    assert_response :success
+    user_game = user_games :two
+    user_game.update paused_at: 600
+    post game_resume_url @game, params: { start_at: DateTime.now }
+    assert_redirected_to user_game_step_url(user_game, user_game.last_allowed_step)
     assert_nil @user.user_games.find_by(game_id: @game.id).paused_at
   end
 end

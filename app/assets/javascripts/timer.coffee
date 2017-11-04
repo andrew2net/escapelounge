@@ -3,7 +3,9 @@ $ ->
   pauseGameBtn  = $ '#pause-game-btn'
   resumeGameBtn = $ '#resume-game-btn'
   endGameBtn    = $ '#end-game-button'
+  linkToSteps   = $ '#link-to-steps'
 
+  # Game timer
   window.timer =
     interval: null
     display: $('#display-timer')
@@ -49,6 +51,7 @@ $ ->
       this.secondsRemain = pauseAt if pauseAt
       pauseGameBtn.hide()
       resumeGameBtn.show()
+      linkToSteps.hide()
       this.show()
       clearInterval this.interval
 
@@ -61,18 +64,22 @@ $ ->
     else
       timer.start seconds(stopAt)
 
-  # Starting game.
-  startGameBtn.click (event)->
-    event.preventDefault()
+  startResume = (url)->
+    linkToSteps.show()
     startAt = new Date
     csrfToken = $('meta[name=csrf-token]').attr('content')
     csrfParam = $('meta[name=csrf-param]').attr('content')
     metadataInput = """<input name="start_at" value="#{startAt}" type="hidden" />"""
     if csrfParam != undefined && csrfToken != undefined
       metadataInput += """<input name="#{csrfParam}" value="#{csrfToken}" type="hidden" />"""
-    form = $ """<form method="post" action="#{event.target.href}"></form>"""
+    form = $ """<form method="post" action="#{url}"></form>"""
     form.hide().append(metadataInput).appendTo 'body'
     form.submit()
+
+  # Starting game.
+  startGameBtn.click (event)->
+    event.preventDefault()
+    startResume event.target.href
 
   # Pause game
   pauseGameBtn.click (event)->
@@ -84,8 +91,7 @@ $ ->
   # Resume game.
   resumeGameBtn.click (event)->
     event.preventDefault()
-    timer.start()
-    $.post event.target.href, { start_at: new Date }
+    startResume event.target.href
 
   # End the game
   endGameBtn.click (event)->

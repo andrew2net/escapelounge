@@ -7,6 +7,7 @@ class GamesController < ApplicationController
   end
 
   # POST /games/table
+  # return filtered games list
   def games
     @games = Game.includes(:grades).visible.where filter_params
     @games = @games.allowed current_user if params[:allowed_filter] == "true"
@@ -53,7 +54,8 @@ class GamesController < ApplicationController
       started_at = DateTime.parse(params[:start_at]) - passed_seconds.seconds
       user_game.update started_at: started_at, paused_at: nil
     end
-    head :ok
+    # head :ok
+    redirect_to user_game_step_url(user_game, user_game && user_game.last_allowed_step)
   end
 
   private
