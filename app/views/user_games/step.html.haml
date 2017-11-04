@@ -45,9 +45,10 @@
         .col-md-12
           = form_tag user_game_step_url(@user_game, @step), id: 'step-form' do
             %p
-              .form-group
-                = label_tag :answer
-                = text_field_tag :answer, @answer, class: 'form-control', disabled: @answered
+              - if has_solutions = @step.game_step_solutions.any?
+                .form-group
+                  = label_tag :answer
+                  = text_field_tag :answer, @answer, class: 'form-control', disabled: @answered
 
             .row
               .col-md-4
@@ -56,9 +57,10 @@
                     class: 'btn btn-primary float-md-left'
 
               .col-md-4
-                .text-center
-                  = link_to 'Post answer', user_game_step_url(@user_game, @step),
-                    class: 'btn btn-primary', disabled: @answered, id: 'answer-btn'
+                - if has_solutions
+                  .text-center
+                    = link_to 'Post answer', user_game_step_url(@user_game, @step),
+                      class: 'btn btn-primary', disabled: @answered, id: 'answer-btn'
 
               .col-md-4
                 - if next_step = @step.next(@user_game.id)

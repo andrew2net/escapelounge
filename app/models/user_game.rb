@@ -12,10 +12,25 @@ class UserGame < ApplicationRecord
 
   # Return percent of answered steps and steps of total
   def progress
-    total_steps = game.game_steps.count
+    total_steps = game.game_steps.joins(:game_step_solutions).distinct.count
     answered_steps = step_answers.count
     percent = answered_steps.to_f / total_steps.to_f * 100
     [ "#{percent}%", "#{answered_steps} of #{total_steps}"]
+  end
+
+  # Return step next after last answered
+  def last_allowed_step
+    previous_step = nil
+    game.game_steps.includes(:game_step_solutions).each do |step|
+        has_answer = step.step_answers.where(user_game_id: id).any?
+        if previous_step && !has_answer && !previous_step.game_step_solutions.any?
+          return previous_step
+        elsif !has_answer
+          return step
+        end
+        previous_step = step
+      end
+      # .where("NOT step_answers.id IS NULL AND step_answers.user_game_id=? OR game_step_solutions.id IS NULL", id).last
   end
 
   # Returen result in "hh:MM:ss" format.

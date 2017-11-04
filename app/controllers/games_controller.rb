@@ -30,7 +30,9 @@ class GamesController < ApplicationController
       user_game.save
       redirect_to user_game_step_url(user_game)
     else
-      render :show, notice: "Other game is running."
+      @game = Game.find params[:game_id]
+      flash.now[:notice] = "Other game is running."
+      render :shower
     end
   rescue Pundit::NotAuthorizedError
     redirect_to game_path(params[:game_id]), notice: "You have not subscription to start the game."
