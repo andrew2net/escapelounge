@@ -64,7 +64,7 @@ class UserGamesController < ApplicationController
     end
 
     def set_step
-      @step = @user_game.game.allowed_step step_id: params[:step_id], user_id: current_user.id
+      @step = @user_game.game.allowed_step step_id: params[:step_id], user_game_id: @user_game.id
       # If there is no any answered step then set first step.
       @step = @user_game.game.game_steps.first unless @step
     end
