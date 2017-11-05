@@ -15,16 +15,14 @@
   %section
     = image_tag @game.background.url, class: 'img-fluid game-back-img'
     .container
-      .row
+      %div{ style: 'position:sticky;background:white;padding:20px;top:5px;z-index:1000'}
+        .progress.mb-4
+          .progress-bar{ style: "width:#{@progress_pescent}" }
+            = @progress_step
+        = display_timer(inline: true)
+
+      .row.mt-4
         .col-md-12
-          .progress.mb-4
-            .progress-bar{ style: "width:#{@progress_pescent}" }
-              = @progress_step
-
-      .row
-        .col-md-10
-
-          %p#notice= notice
 
           %p
             %b Step name:
@@ -33,9 +31,6 @@
           %p
             %b Step description:
             = @step.description
-
-        .col-md-2
-          = display_timer
 
       .row
         #hints-container.col-md-12.text-center
