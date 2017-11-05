@@ -64,14 +64,19 @@ $ ->
     else
       timer.start seconds(stopAt)
 
+  formMetadata = ->
+    csrfToken = $('meta[name=csrf-token]').attr('content')
+    csrfParam = $('meta[name=csrf-param]').attr('content')
+    metadataInput = ''
+    if csrfParam != undefined && csrfToken != undefined
+      metadataInput += """<input name="#{csrfParam}" value="#{csrfToken}" type="hidden" />"""
+    metadataInput
+
   startResume = (url)->
     linkToSteps.show()
     startAt = new Date
-    csrfToken = $('meta[name=csrf-token]').attr('content')
-    csrfParam = $('meta[name=csrf-param]').attr('content')
     metadataInput = """<input name="start_at" value="#{startAt}" type="hidden" />"""
-    if csrfParam != undefined && csrfToken != undefined
-      metadataInput += """<input name="#{csrfParam}" value="#{csrfToken}" type="hidden" />"""
+    metadataInput += formMetadata()
     form = $ """<form method="post" action="#{url}"></form>"""
     form.hide().append(metadataInput).appendTo 'body'
     form.submit()
@@ -96,5 +101,8 @@ $ ->
   # End the game
   endGameBtn.click (event)->
     event.preventDefault()
-    timer.stop()
-    $.post event.target.href
+    # timer.stop()
+    # $.post event.target.href
+    form = $ """<form method="post" action="#{event.target.href}"></form>"""
+    form.hide().append(formMetadata()).appendTo 'body'
+    form.submit()

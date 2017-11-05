@@ -80,7 +80,7 @@ class UserGamesControllerTest < ActionDispatch::IntegrationTest
 
   test "shoud end the game" do
     post user_game_end_url(@user_game)
-    assert_response :success
+    assert_redirected_to user_game_result_path(@user_game)
     @user_game.reload
     assert_not_nil @user_game.finished_at
     assert_equal @user_game.result, 0

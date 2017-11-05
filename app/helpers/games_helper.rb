@@ -35,17 +35,16 @@ module GamesHelper
               class: "btn btn-primary mb-1 #{@running ? 'disabled' : ''}",
               style: "#{@paused_at ? '' : 'display:none'}"
           end
+        else
+          html += content_tag :div, class: elem_class do
+            link_to "Game description", game_path(@game)
+          end
         end
 
         if user_game
           html += content_tag :div, class: elem_class do
             link_to 'End game', user_game_end_url(user_game), id: 'end-game-button',
               class: "btn btn-primary", style: "#{@running || @paused_at ? '' : 'display:none'}"
-          end
-        end
-        unless @display_pause_buttons
-          html += content_tag :div, class: elem_class do
-            link_to "Game description", game_path(@game)
           end
         end
         html

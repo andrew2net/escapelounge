@@ -8,17 +8,16 @@
   %section
     = image_tag @user_game.game.background.url, class: 'img-fluid game-back-img'
     .container
+      .game-step-subnav
+        .progress.mb-4
+          .progress-bar{ style: "width:#{@progress_pescent}" }
+            = @progress_step
+
       .row
         .col-md-12
-          .progress.mb-4
-            .progress-bar{ style: "width:#{@progress_pescent}" }
-              = @progress_step
 
-      .row
-        .col-md-10
-
-          %p#notice= notice
-
-          %h2
+          %h2.mt-4
             Result
             = @user_game.formated_result
+
+          = link_to 'Game description', game_path(@user_game.game)
