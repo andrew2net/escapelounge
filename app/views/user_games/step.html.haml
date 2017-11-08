@@ -52,12 +52,15 @@
                     class: 'btn btn-primary float-md-left'
 
               .col-md-4
-                - if has_solutions
-                  .text-center
+                .text-center
+                  - if has_solutions
                     = link_to 'Post answer', user_game_step_url(@user_game, @step),
                       class: 'btn btn-primary', disabled: @answered, id: 'answer-btn'
+                  - elsif !@next_step
+                    = link_to 'Finish the game', user_game_step_url(@user_game, @step),
+                    class: 'btn btn-primary', method: :post
 
               .col-md-4
-                - if next_step = @step.next(@user_game.id)
-                  = link_to 'Next step', user_game_step_url(@user_game, next_step),
+                - if @next_step
+                  = link_to 'Next step', user_game_step_url(@user_game, @next_step),
                     class: 'btn btn-primary float-md-right'

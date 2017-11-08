@@ -14,6 +14,8 @@ $ ->
     hintsContainer.load url, { hint_id: hint_id }
 
   modalTimeOut = null
+
+  # Submit answer
   submit = (event)->
     event.preventDefault()
     return if modalTimeOut
