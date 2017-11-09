@@ -15,14 +15,14 @@ gem 'haml-rails', '~> 1.0'
 # Use SASS for stylesheets
 gem 'sass-rails', '~> 5.0', '>= 5.0.6'
 # Use bootstrap for front-end framework
-gem 'bootstrap', '~> 4.0.0.alpha6'
+gem 'bootstrap', '~> 4.0.0.beta2.1'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.1.0'
 end
 
 # bootstrap dependency
-gem 'popper_js', '~> 1.11.1'
+gem 'popper_js', '>= 1.12.3'
 
 # Use coffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2', '>= 4.2.2'

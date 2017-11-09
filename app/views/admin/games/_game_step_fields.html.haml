@@ -1,22 +1,31 @@
 .nested-fields
 
-  .form-group
-    = f.label :name
-    = f.text_field :name, class: "form-control"
-  .form-group
-    = f.label :description
-    = f.text_area :description, class: "form-control"
+  .card
+    .card-header{ role: 'tab', id: "header-#{f.object.id}" }
+      .form-inline
+        -# = f.label :name
+        = f.text_field :name, class: "form-control col-md-11"
+        = link_to "#collapse-#{f.object.id}", class: 'float-right ml-3', data: { parent: '#game_steps', toggle: 'collapse' } do
+          = icon 'caret-down'
+        %a.float-right.ml-2{:href => "#"}
+          = icon 'arrows'
 
-  #game_steps
-    %h3 Hints
-    = f.fields_for :hints do |hint|
-      = render 'hint_fields', f: hint
-    .links
-      = link_to_add_association 'add hint', f, :hints
-    %h3 Solutions
-    = f.fields_for :game_step_solutions do |game_step_solution|
-      = render 'game_step_solution_fields', f: game_step_solution
-    .links
-      = link_to_add_association 'add solution', f, :game_step_solutions
+    .collapse{ id: "collapse-#{f.object.id}", role: 'tabpanel', data: { parent: '#game_steps' } }
+      .card-body
+        .form-group
+          = f.label :description
+          = f.text_area :description, class: "form-control"
 
-  = link_to_remove_association "remove game step", f, class: "btn btn-danger"
+        #game_steps
+          %h3 Hints
+          = f.fields_for :hints do |hint|
+            = render 'hint_fields', f: hint
+          .links
+            = link_to_add_association 'add hint', f, :hints
+          %h3 Solutions
+          = f.fields_for :game_step_solutions do |game_step_solution|
+            = render 'game_step_solution_fields', f: game_step_solution
+          .links
+            = link_to_add_association 'add solution', f, :game_step_solutions
+
+        = link_to_remove_association "remove game step", f, class: "btn btn-danger"

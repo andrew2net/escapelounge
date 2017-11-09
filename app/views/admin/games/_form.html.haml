@@ -47,7 +47,7 @@
       = f.text_field :time_length, class: "form-control"
 
     %h3 Game Steps
-    #game_steps
+    #game_steps{ role: 'tablist' }
       = f.fields_for :game_steps do |game_step|
         = render 'game_step_fields', f: game_step
       .links
