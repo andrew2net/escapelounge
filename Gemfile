@@ -30,6 +30,7 @@ gem 'coffee-rails', '~> 4.2', '>= 4.2.2'
 gem 'uglifier', '>= 1.3.0'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 # Use turbolinks to make following links in your web application faster
 # gem 'turbolinks'
 gem 'jquery-turbolinks'

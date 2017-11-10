@@ -1,6 +1,12 @@
 $ ->
   gameSteps = $ '#game_steps'
 
+  setPositions = ->
+    $('#sortable > .nested-fields').each (i, step)->
+      $(step).find('input[hidden]').val i + 1
+
+  setPositions()
+
   # Set id for new step
   gameSteps.on('cocoon:before-insert', (e, item)->
     newStep = $(item).find('.collapse')
@@ -35,3 +41,10 @@ $ ->
     $('.collapse').collapse("hide")
     $(this).parent().find('.fa-caret-down').removeClass('fa-caret-down').addClass('fa-caret-up')
   )
+
+  $('#sortable').sortable({
+    handle: '.sortable-handle'
+    stop: (e, ui)-> setPositions()
+  })
+  gameSteps.on('click', '.sortable-handle', (e)-> e.preventDefault())
+  # gameSteps.on('mouseenter', '.sortable-handle', (e)-> $('.collapse').collapse('hide'))

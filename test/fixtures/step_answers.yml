@@ -2,7 +2,7 @@
 
 one:
   game_step: one
-  user_game: one
+  user_game: two
 
 two:
   game_step: two

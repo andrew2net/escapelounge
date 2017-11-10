@@ -55,10 +55,12 @@ class Game < ApplicationRecord
   # Return a game step with step_id if it's allowed for user with user_id.
   # Return nil if the step is not allowed.
   def allowed_step(step_id:, user_game_id:)
+    step = game_steps.where(id: step_id).first
     # Find previous answered step.
-    ps = game_steps.joins(:game_step_solutions).where("game_steps.id < ?", step_id).last
-    if ps && ps.step_answers.where(user_game_id: user_game_id).any?
-      GameStep.find step_id
+    ps = game_steps
+      .where("game_steps.position < ?", step && step.position).last
+    if ps && (ps.step_answers.where(user_game_id: user_game_id).any? || !ps.game_step_solutions.any?)
+      step
     else
       nil
     end

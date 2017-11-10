@@ -12,6 +12,7 @@
 //
 //= require jquery3
 //= require jquery_ujs
+//= require jquery-ui/widgets/sortable
 //= require tether
 //= require popper
 //= require bootstrap-sprockets

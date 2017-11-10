@@ -53,10 +53,10 @@
 
               .col-md-4
                 .text-center
-                  - if has_solutions
+                  - if has_solutions && !@answered
                     = link_to 'Post answer', user_game_step_url(@user_game, @step),
-                      class: 'btn btn-primary', disabled: @answered, id: 'answer-btn'
-                  - elsif !@next_step
+                      class: 'btn btn-primary', id: 'answer-btn'
+                  - elsif !@next_step && !has_solutions
                     = link_to 'Finish the game', user_game_step_url(@user_game, @step),
                     class: 'btn btn-primary', method: :post
 

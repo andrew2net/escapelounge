@@ -2,12 +2,13 @@
 
   .card
     .card-header{ role: 'tab', id: "header-#{f.object.id}" }
+      = f.text_field :position, hidden: true
       .form-inline
         -# = f.label :name
         = f.text_field :name, class: "form-control col-md-11"
         = link_to "#collapse-#{f.object.id}", class: 'float-right ml-3', data: { parent: '#game_steps', toggle: 'collapse' } do
           = icon 'caret-down'
-        %a.float-right.ml-2{:href => "#"}
+        %a.sortable-handle.float-right.ml-2{:href => "#"}
           = icon 'arrows'
 
     .collapse{ id: "collapse-#{f.object.id}", role: 'tabpanel', data: { parent: '#game_steps' } }
@@ -16,7 +17,7 @@
           = f.label :description
           = f.text_area :description, class: "form-control"
 
-        #hints
+        .hints
           %h3 Hints
           = f.fields_for :hints do |hint|
             = render 'hint_fields', f: hint

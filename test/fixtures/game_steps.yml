@@ -4,8 +4,10 @@ one:
   name: First
   description: First step
   game: two
+  position: 1
 
 two:
   name: Second
   description: Second step
   game: two
+  position: 2

@@ -48,10 +48,11 @@
 
     %h3 Game Steps
     #game_steps{ role: 'tablist' }
-      = f.fields_for :game_steps do |game_step|
-        = render 'game_step_fields', f: game_step
-      .links
-        = link_to_add_association 'add game step', f, :game_steps
+      #sortable
+        = f.fields_for :game_steps do |game_step|
+          = render 'game_step_fields', f: game_step
+        .links
+          = link_to_add_association 'add game step', f, :game_steps
 
     .actions
       = f.submit 'Save', class: "btn btn-primary"

@@ -1,7 +1,8 @@
-- if @step.hints.any?
+- hints = @user_game.hints.where(game_step_id: @step.id)
+- if !@answered && @step.hints.any? || hints.any? 
   %h3 Hints
 
-- @user_game.hints.where(game_step_id: @step.id).each do |hint|
+- hints.each do |hint|
   %p= hint.description
 
 - if !@answered && !@user_game.finished_at && hint = @step.hints.covered(@user_game).first
