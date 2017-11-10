@@ -16,7 +16,7 @@
           = f.label :description
           = f.text_area :description, class: "form-control"
 
-        #game_steps
+        #hints
           %h3 Hints
           = f.fields_for :hints do |hint|
             = render 'hint_fields', f: hint
