@@ -1,20 +1,37 @@
 $ ->
   gameSteps = $ '#game_steps'
 
+  # Set id for new step
+  gameSteps.on('cocoon:before-insert', (e, item)->
+    newStep = $(item).find('.collapse')
+    if newStep
+      # find previous steps and aincrement id if found, if not set id to 1
+      steps = gameSteps.find('.collapse')
+      id = if steps.length
+        parseInt(steps.last().attr('id').match(/\d+$/)[0]) + 1
+      else
+        1
+      stepId = 'collapse-' + id
+      newStep.attr('id', stepId)
+      newStep.parent().find('a[data-toggle="collapse"]').attr('href', '#' + stepId)
+      header = newStep.prev().attr('id', 'header-' + id)
+  )
+
   # Expand new game step.
   gameSteps.on('cocoon:after-insert', (e, item)->
-    new_step = $(item).find('.collapse')
-    if new_step.length
+    newStep = $(item).find('.collapse')
+    if newStep.length
       $('.collapse').collapse("hide")
-      new_step.collapse('show')
+      newStep.collapse('show')
   )
 
-  gameSteps.on('hidden.bs.collapse', '.collapse', (e, item)->
-    $("a[href='##{e.target.id}']").find('.fa-caret-up').removeClass('fa-caret-up').addClass('fa-caret-down')
+  # Change caret class.
+  gameSteps.on('hidden.bs.collapse', '.collapse', (e)->
+    $(this).parent().find('.fa-caret-up').removeClass('fa-caret-up').addClass('fa-caret-down')
   )
 
-  # Resolve issue with Bootstrap 4 accordeon collapse.
+  # Resolve issue with Bootstrap 4 accordeon collapse and change caret class.
   gameSteps.on('show.bs.collapse', '.collapse', (e)->
     $('.collapse').collapse("hide")
-    $("a[href='##{e.target.id}']").find('.fa-caret-down').removeClass('fa-caret-down').addClass('fa-caret-up')
+    $(this).parent().find('.fa-caret-down').removeClass('fa-caret-down').addClass('fa-caret-up')
   )
