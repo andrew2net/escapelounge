@@ -1,4 +1,5 @@
 class GameStep < ApplicationRecord
+  include Attachable
 
   belongs_to :game
   has_many :step_answers, dependent: :delete_all
@@ -8,6 +9,9 @@ class GameStep < ApplicationRecord
 
   has_many :game_step_solutions, dependent: :destroy
   accepts_nested_attributes_for :game_step_solutions, reject_if: :all_blank, allow_destroy: true
+
+  has_attached_file :image, attachment_opts(styles: { thumb: "260x260#" })
+  validates_attachment :image, content_type: { content_type: /\Aimage\/.*\z/ }
 
   default_scope { order :game_id, :position }
 

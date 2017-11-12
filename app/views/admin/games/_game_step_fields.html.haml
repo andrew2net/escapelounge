@@ -17,6 +17,11 @@
           = f.label :description
           = f.text_area :description, class: "form-control"
 
+        .form-group
+          = f.label :image
+          = f.file_field :image
+        = image_tag f.object.image.url :thumb
+
         .hints
           %h3 Hints
           = f.fields_for :hints do |hint|

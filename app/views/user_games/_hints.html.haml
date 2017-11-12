@@ -1,9 +1,11 @@
 - hints = @user_game.hints.where(game_step_id: @step.id)
-- if !@answered && @step.hints.any? || hints.any? 
+- if !@answered && @step.hints.any? || hints.any?
   %h3 Hints
 
 - hints.each do |hint|
   %p= hint.description
+  - if hint.image.present?
+    %p.text-center= image_tag hint.image.url :thumb
 
 - if !@answered && !@user_game.finished_at && hint = @step.hints.covered(@user_game).first
   = button_tag "Show hint (-#{hint.value} sec)", id: 'show-hint-btn', class: 'btn btn-primary',

@@ -31,6 +31,9 @@
           %p
             %b Step description:
             = @step.description
+            
+          - if @step.image.present?
+            %p.text-center= image_tag @step.image.url :thumb
 
       .row
         #hints-container.col-md-12.text-center

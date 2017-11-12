@@ -1,8 +1,14 @@
 .nested-fields
-  
+
   .form-group
     = f.label :description
     = f.text_area :description, class: "form-control"
+
+  .form-group
+    = f.label :image
+    = f.file_field :image
+  = image_tag f.object.image.url :thumb
+
   .form-group
     = f.label :value
     = f.number_field :value, class: "form-control"
