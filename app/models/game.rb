@@ -6,6 +6,9 @@ class Game < ApplicationRecord
   has_many :user_games, dependent: :destroy
   has_many :users, through: :user_games
 
+  has_many :game_assets
+  accepts_nested_attributes_for :game_assets, reject_if: :all_blank, allow_destroy: true
+
   has_many :game_steps, dependent: :destroy
   accepts_nested_attributes_for :game_steps, reject_if: :all_blank, allow_destroy: true
 
@@ -18,7 +21,7 @@ class Game < ApplicationRecord
 
   validates :time_length, presence: true
 
-  has_attached_file :instructions_pdf
+  has_attached_file :instructions_pdf, attachment_opts
   validates_attachment :instructions_pdf, content_type: { content_type: "application/pdf" }
 
   has_attached_file :background, attachment_opts({

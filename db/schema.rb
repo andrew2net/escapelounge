@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171112120002) do
+ActiveRecord::Schema.define(version: 20171113164230) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "game_assets", force: :cascade do |t|
+    t.string "name"
+    t.bigint "game_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "file_file_name"
+    t.string "file_content_type"
+    t.integer "file_file_size"
+    t.datetime "file_updated_at"
+    t.index ["game_id"], name: "index_game_assets_on_game_id"
+  end
 
   create_table "game_step_solutions", force: :cascade do |t|
     t.bigint "game_step_id"
@@ -154,6 +166,7 @@ ActiveRecord::Schema.define(version: 20171112120002) do
     t.index ["subscription_plan_id"], name: "index_users_on_subscription_plan_id"
   end
 
+  add_foreign_key "game_assets", "games"
   add_foreign_key "game_step_solutions", "game_steps"
   add_foreign_key "step_answers", "game_steps"
   add_foreign_key "step_answers", "user_games"

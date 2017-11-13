@@ -54,6 +54,10 @@
             = @game.game_steps.count
           %p
             %b= link_to 'Instructions', @game.instructions_pdf.url
+          %p
+            %b Assets
+            - @game.game_assets.each do |asset|
+              %p= link_to asset.name, asset.file.url
 
         .col-md-5
           = image_tag @game.banner.url :thumb, class: 'img-fluid'

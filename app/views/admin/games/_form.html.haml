@@ -46,6 +46,13 @@
       %label TIme allotted to complete the game
       = f.text_field :time_length, class: "form-control"
 
+    %h3 Assets
+    #game_assets
+      = f.fields_for :game_assets do |game_asset|
+        = render 'game_asset_fields', f: game_asset
+      .links
+        = link_to_add_association 'add asset', f, :game_assets
+
     %h3 Game Steps
     #game_steps{ role: 'tablist' }
       #sortable
