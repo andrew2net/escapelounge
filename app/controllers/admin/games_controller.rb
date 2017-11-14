@@ -68,7 +68,7 @@ class Admin::GamesController < ApplicationController
     def game_params
       params.require(:game).permit(:name, :description, :short_description, :status, :difficulty, {grade_ids: []},
                                     :time_length, :instructions, :banner, :background, :visible,
-                                    game_assets_attributes: [:id, :name, :file],
+                                    game_assets_attributes: [:id, :name, :file, :_destroy],
                                     game_steps_attributes: [:id, :name, :description, :game_id, :_destroy, :position, :image,
                                       hints_attributes: [:id, :description, :value, :game_step_id, :_destroy, :image],
                                       game_step_solutions_attributes: [:id, :solution, :game_step_id, :_destroy],
