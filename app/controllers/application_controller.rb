@@ -3,8 +3,17 @@ class ApplicationController < ActionController::Base
   include Pundit
   protect_from_forgery with: :exception
   before_action :authenticate_user!
+  layout :layout_by_resource
 
   protected
+
+  def layout_by_resource
+    if devise_controller?
+      "devise"
+    else
+      "application"
+    end
+  end
 
   def configure_permitted_parameters
     added_attrs = [:name, :email, :password, :password_confirmation, :admin]
