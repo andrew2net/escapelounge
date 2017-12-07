@@ -13,6 +13,14 @@
           %div{ class: "alert alert-#{type == :notice ? 'success' : type} fadeout", data: { dismiss: 'alert' } }
             %button.close &times;
             .text-center= msg if msg.is_a?(String)
-    -# = render 'layouts/header'
-    = yield
+
+    .auth-container
+      .row
+        .col-6.auth-image
+        .col-6.auth-form
+          .row.mx-2.mb-3.mt-4
+            .col-12
+              = image_tag 'logo-color-ridlz.png', class: 'img-fluid mt-5'
+
+          = yield
     -# = render 'layouts/footer'
