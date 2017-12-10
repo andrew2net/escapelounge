@@ -159,6 +159,7 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
       items = Minitest::Mock.new
       items.expect :data, [item]
 
+      subscription.expect :status, "active"
       subscription.expect :items, items
       subscription.expect :items=, nil, [Array]
       subscription.expect :save, nil

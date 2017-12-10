@@ -3,14 +3,23 @@ class GamesController < ApplicationController
 
   # GET /games
   def index
-    @games = Game.visible.allowed current_user
+    @games = if current_user&.period_end && current_user.period_end >= DateTime.now
+      Game.visible.allowed current_user
+    else
+      []
+    end
   end
 
   # POST /games/table
   # return filtered games list
   def games
-    @games = Game.includes(:grades).visible.where filter_params
-    @games = @games.allowed current_user if params[:allowed_filter] == "true"
+    show_all = params[:allowed_filter] != "true"
+    if current_user&.period_end && current_user.period_end >= DateTime.now || show_all
+      @games = Game.includes(:grades).visible.where filter_params
+      @games = @games.allowed current_user unless show_all
+    else
+      @games = []
+    end
     render @games
   end
 

@@ -1,6 +1,10 @@
 $ ->
-  # Delete card
-  cardsContainer = $ '#cards-container'
+  $cardsContainer = $ '#cards-container'
+  $changePlanBtn = $ '#change-plan-btn'
+  $subscriptionPlan = $ '#change-subscribe-form select'
+  $cancelSubscriptionBtn = $ '#cancel-subscription-btn'
+  $subscriptionCanceledWarn = $ '#subscription-canceled-warn'
+  $subscriptionWillCancelWarn = $ '#subscription-will-cancel-warn'
 
   # Perform operation on card (delete or set default)
   cardOp = (target, url)->
@@ -8,34 +12,33 @@ $ ->
     $.post url, card_id: target.parentNode.getAttribute('data-card-id'),
       (response)->
         target.disabled = false
-        cardsContainer.html response
+        $cardsContainer.html response
 
-  cardsContainer.on 'click', '.delete-card-btn', (event)->
-    cardOp event.target, '/subscriptions/delete_card'
+  $cardsContainer.on 'click', '.delete-card-btn', (event)->
+    cardOp @, '/subscriptions/delete_card'
 
-  cardsContainer.on 'click', '.set-default-btn', (event)->
-    cardOp event.target, '/subscriptions/set_default'
+  $cardsContainer.on 'click', '.set-default-btn', (event)->
+    cardOp @, '/subscriptions/set_default'
 
-  changePlanBtn = $ '#change-plan-btn'
-  subscriptionPlan = $ '#change-subscribe-form select'
-  cancelSubscriptionBtn = $ '#cancel-subscription-btn'
-  subscriptionCanceledWarn = $ '#subscription-canceled-warn'
+  $changePlanBtn.click (event)->
+    @disabled = true
+    $.post "/subscriptions/#{$subscriptionPlan.val()}/subscribe", ->
+      @.setAttribute 'data-current-plan', $subscriptionPlan.val()
+      $cancelSubscriptionBtn.prop 'disabled', false
+      $subscriptionWillCancelWarn.addClass 'd-none'
 
-  changePlanBtn.click (event)->
-    event.target.disabled = true
-    $.post "/subscriptions/#{subscriptionPlan.val()}/subscribe", ->
-      event.target.setAttribute 'data-current-plan', subscriptionPlan.val()
-      cancelSubscriptionBtn.prop 'disabled', false
-      subscriptionCanceledWarn.addClass 'd-none'
+  # On subscription select
+  $subscriptionPlan.change (event)->
+    pristine = @value.length == 0 ||
+      @value == $changePlanBtn.attr('data-current-plan') &&
+      $subscriptionWillCancelWarn.hasClass 'd-none'
+    $changePlanBtn.prop('disabled', pristine)
 
-  subscriptionPlan.change (event)->
-    pristine = event.target.value.length == 0 ||
-      event.target.value == changePlanBtn.attr('data-current-plan') &&
-      subscriptionCanceledWarn.hasClass 'd-none'
-    changePlanBtn.prop('disabled', pristine)
-
-  cancelSubscriptionBtn.click (event)->
+  $cancelSubscriptionBtn.click (event)->
     event.target.disabled = true
     $.post "/subscriptions/unsubscribe", ->
-      subscriptionCanceledWarn.removeClass 'd-none'
-      changePlanBtn.prop 'disabled', false
+      $subscriptionWillCancelWarn.removeClass 'd-none'
+      $changePlanBtn.prop 'disabled', false
+
+  # Disbale subscribe button if subscription plan not selected.
+  $changePlanBtn.attr 'disabled', true unless $subscriptionPlan.val()

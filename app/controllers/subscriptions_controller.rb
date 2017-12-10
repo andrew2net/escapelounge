@@ -30,13 +30,17 @@ class SubscriptionsController < ApplicationController
     elsif current_user.subscription_plan_id != params[:subscription_plan_id]
       plan = SubscriptionPlan.find params[:subscription_plan_id]
       subscription = Stripe::Subscription.retrieve current_user.subscription_id
-      item_id = subscription.items.data[0].id
-      items = [{
-        id: item_id,
-        plan: plan.stripe_id
-      }]
-      subscription.items = items
-      subscription.save
+
+      # If current subscription is canceled then create new else update current one
+      if subscription.status == "canceled"
+        subscription = Stripe::Subscription.create customer: current_user.stripe_id,
+          items: [{ plan: plan.stripe_id }]
+      else
+        item_id = subscription.items.data[0].id
+        subscription.items = [{ id: item_id, plan: plan.stripe_id }]
+        subscription.save
+      end
+
       current_user.update subscription_id: subscription.id, subscription_plan: plan,
         period_end: DateTime.strptime(subscription.current_period_end.to_s, "%s")
     end
@@ -74,7 +78,8 @@ class SubscriptionsController < ApplicationController
       end
 
       subscription = Stripe::Subscription.retrieve current_user.subscription_id
-      @subscription_canceled = subscription.cancel_at_period_end
+      @subscription_canceled = subscription.status == "canceled"
+      @subscription_will_cancel = !@subscription_canceled && subscription.cancel_at_period_end
       stripe_customer = Stripe::Customer.retrieve(current_user.stripe_id)
       cards = stripe_customer.sources.all
       @cards = cards_data(cards: cards, default: stripe_customer.default_source)

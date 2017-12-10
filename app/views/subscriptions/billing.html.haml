@@ -8,19 +8,27 @@
 .container
 
   %h4 Subscription
-  = content_tag :p, id: 'subscription-canceled-warn',
-    class: "text-warning #{@subscription_canceled ? '' : 'd-none'}" do
+  = content_tag :p, class: "text-warning #{@subscription_will_cancel ? '' : 'd-none'}",
+      id: 'subscription-will-cancel-warn' do
     Current subscription will be canceled at perriod end.
+
+  = content_tag :p, class: "text-warning #{@subscription_canceled ? '' : 'd-none'}",
+      id: 'subscription-canceled-warn' do
+    You don't have actual subscription.
+
   = form_tag nil, id: 'change-subscribe-form' do
     .form-group
       = label_tag :subscription_plan
       = select_tag :subscription_plan, options_for_select(SubscriptionPlan.pluck(:name, :id),
-        current_user.subscription_plan_id), class: 'form-control',
+        !@subscription_canceled && current_user.subscription_plan_id), class: 'form-control',
         prompt: 'Select subscription plan', autocomplete: :off
-    = button_tag 'Change plan', disabled: !@subscription_canceled,
-      class: 'btn btn-primary', id: 'change-plan-btn', autocomplete: :off,
-      type: :button, data: { current_plan: current_user.subscription_plan_id }
-    = button_tag 'Cancel subscription', class: 'btn btn-primary', id: 'cancel-subscription-btn',
+
+    = button_tag disabled: !@subscription_canceled, class: 'btn btn-primary',
+        id: 'change-plan-btn', autocomplete: :off, type: :button,
+        data: { current_plan: !@subscription_canceled && current_user.subscription_plan_id } do
+      = @subscription_canceled ? 'Subscribe' : 'Change plan'
+
+    = button_tag 'Cancel subscription', class: 'btn btn-primary ml-2', id: 'cancel-subscription-btn',
       type: :button, disabled: !current_user.subscription_plan_id || @subscription_canceled
 
   %h4.mb-3.mt-5 Invoices
