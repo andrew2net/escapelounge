@@ -1,7 +1,7 @@
 module GamesHelper
 
   # Render timer. If inline is true then render timer in inline format.
-  def display_timer(inline: false)
+  def display_timer(bar: false)
     # This need for finishing expired game.
     current_user && current_user.user_games.running.map { |e| e }
     # True if there is running game.
@@ -15,14 +15,16 @@ module GamesHelper
       @paused_at = user_game.paused_at
     end
 
-    elem_class = inline ? "col-md-2" : "col-md-12"
+    elem_class = 'col-md-12' # inline ? "col-md-2" : "col-md-12"
 
     content_tag :div, id: "container-timer", style: "#{show_timer ? "" : "display:none"}" do
       content_tag :div, class: "row" do
         html = content_tag :div, class: elem_class do
-          content_tag :h2, '', id: "display-timer", class: "text-danger",
+          content_tag :span, '', id: "display-timer",
             data: { stop_at: "#{stop_at}", paused_at: "#{@paused_at}" }
         end
+
+        return html if bar
 
         if @display_pause_buttons
           html += content_tag :div, class: elem_class do

@@ -1,6 +1,12 @@
 %nav.navbar.navbar-expand-md.sticky-top
   %span.text.page-title
     = yield :title
+  - if @step
+    .game-progress-bar
+      .circle-progress{ style: "transform: rotate(#{180-@user_game.progress_deg}deg)" }
+      .timer-bar
+        Time Remaining
+        = display_timer bar: true
   = link_to root_path, class: 'navbar-brand' do
     = image_tag 'ridlz-logo.svg'
   %button.navbar-toggler{ aria: { controls: 'navbarSupportedContent', expanded: 'false', label: 'Toggle navigation' },

@@ -18,6 +18,12 @@ class UserGame < ApplicationRecord
     [ "#{percent}%", "#{answered_steps} of #{total_steps}"]
   end
 
+  def progress_deg
+    total_steps = game.game_steps.joins(:game_step_solutions).distinct.count
+    answered_steps = step_answers.count
+    (180 * answered_steps / total_steps).round
+  end
+
   # Return step next after last answered
   def last_allowed_step
     previous_step = nil

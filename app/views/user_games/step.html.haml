@@ -21,7 +21,7 @@
     -# = image_tag @game.background.url, class: 'img-fluid game-back-img'
     .container.full-vh-minus-nav.pattern-bottom
       .row.page-bar
-      .row
+      .row.pt-5
         .col-12.text-center
           %h4.step-title
             = image_tag 'icon-magnifier.svg', height: 40
@@ -74,7 +74,7 @@
         .col-md-12{style: "padding-top:100px"}
           %hr
 
-          .progress.mb-4
-            .progress-bar{ style: "width:#{@progress_pescent}" }
-              = @progress_step
-          = display_timer(inline: true)
+          -# .progress.mb-4
+          -#   .progress-bar{ style: "width:#{@progress_pescent}" }
+          -#     = @progress_step
+          -# = display_timer(inline: true)
