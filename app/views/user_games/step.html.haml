@@ -1,3 +1,6 @@
+= content_for :title do
+  = @game.name
+
 #result-modal.modal.fade
   .modal-dialog
     .modal-content
@@ -5,16 +8,24 @@
         %h2.text-center
 
 #timeout-redirect-url{ hidden: true }= user_game_result_url(@user_game)
-#game-show
-  .page-head
+#game-show{ style: "background-image: url(#{image_url(@game.background.url)})" }
+  -# .page-head
     .container
       .row
         .col-md-10
           %h4= @game.name
 
   %section
-    = image_tag @game.background.url, class: 'img-fluid game-back-img'
+    -# = image_tag @game.background.url, class: 'img-fluid game-back-img'
     .container
+      .row.page-bar
+      .row
+        .col-12.text-center
+          %h4.step-title
+            = image_tag 'icon-magnifier.svg', height: 40
+            = @step.name
+
+      = image_tag 'divider-orange.svg'
       .game-step-subnav
         .progress.mb-4
           .progress-bar{ style: "width:#{@progress_pescent}" }
@@ -31,7 +42,7 @@
           %p
             %b Step description:
             = @step.description
-            
+
           - if @step.image.present?
             %p.text-center= image_tag @step.image.url :thumb
 

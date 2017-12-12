@@ -17,20 +17,27 @@
         = link_to 'Start game', game_start_url(@game), class: 'btn btn-primary',
           id: 'start-game-btn'
 
-#game-show
-  .page-head
+#game-show{ style: "background-image: url(#{image_url(@game.background.url)}); background-size: cover" }
+  -# .page-head
     .container
       .row
         .col-md-10
           %h4= @game.name
-        -if current_user && current_user.admin
+        - if current_user && current_user.admin
           .col-md-2
             = link_to 'Edit', edit_admin_game_path(@game),
               class: "btn btn-sm btn-primary", id: 'start-game-btn'
 
   %section
-    = image_tag @game.background.url, class: 'img-fluid game-back-img'
+    -# = image_tag @game.background.url, class: 'img-fluid game-back-img'
     .container
+      .row
+        .col-md-10
+          %h4= @game.name
+        - if current_user && current_user.admin
+          .col-md-2
+            = link_to 'Edit', edit_admin_game_path(@game),
+              class: "btn btn-sm btn-primary", id: 'start-game-btn'
       .row
         .col-md-5
 
@@ -59,10 +66,10 @@
             - @game.game_assets.each do |asset|
               %p= link_to asset.name, asset.file.url
 
-        .col-md-5
+        .col-md-4
           = image_tag @game.banner.url :thumb, class: 'img-fluid'
 
-        .col-md-2
+        .col-md-3
           - if policy(@game).start?
             = display_timer
 

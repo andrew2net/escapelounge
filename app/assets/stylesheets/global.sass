@@ -1,5 +1,5 @@
 body
-  background-image: image-url('bg-clue-01-80.jpg')
+  // background-image: image-url('bg-clue-01-80.jpg')
   background-size: cover
   background-color: #edf0f8
   color: $gray-700
@@ -23,13 +23,24 @@ body
 
 nav.navbar
   height: 50px
+  position: fixed
+  top: 0
+  width: 100%
+  z-index: 9999
   background: $blue
-  box-shadow: 0 0 8px 4px rgba(0,0,0,0.1)
+  box-shadow: 0px 1px 10px 0px $blue
   a.navbar-brand
     color: white
     img
       width: 150px
-
+  .page-title
+    position: absolute
+    top: 12px
+    left: 0
+    right: 0
+    text-align: center
+    color: white
+    z-index: -9
   ul.nav
     a.nav-link
       font-size: 0.85em
@@ -95,12 +106,28 @@ img.game-back-img
   top: 5px
   z-index: 1000
 
-#game-show
+#games-list
+  section
+    .container
+      background: none !important
+      padding-top: 1em !important
+#game-show, #games-list
   .page-head
     margin-bottom: 0
   section
     .container
-      padding-top: 3em
+      background-color: white
+      // padding-top: 3em
+      margin-top: 50px
+      box-shadow: 0px 0px 10px -5px $blue
+      .page-bar
+        height: 25px
+        background-color: $gray-200
+        margin-bottom: 2em
+      h4.step-title
+        text-transform: uppercase
+        font-weight: bold
+        color: $gray-700
   .step-container
     background-color: white
     padding: 2em 1em
