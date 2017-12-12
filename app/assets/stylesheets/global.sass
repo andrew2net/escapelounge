@@ -5,6 +5,9 @@ body
   color: $gray-700
   font-family: $font-family-sans-serif
 
+.full-vh-minus-nav
+  min-height: calc(100vh - 50px)
+
 .form-group
   label, em
     font-family: $font-family-base
@@ -23,10 +26,6 @@ body
 
 nav.navbar
   height: 50px
-  position: fixed
-  top: 0
-  width: 100%
-  z-index: 9999
   background: $blue
   box-shadow: 0px 1px 10px 0px $blue
   a.navbar-brand
@@ -117,8 +116,6 @@ img.game-back-img
   section
     .container
       background-color: white
-      // padding-top: 3em
-      margin-top: 50px
       box-shadow: 0px 0px 10px -5px $blue
       .page-bar
         height: 25px
