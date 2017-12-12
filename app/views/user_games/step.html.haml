@@ -8,6 +8,8 @@
         %h2.text-center
 
 #timeout-redirect-url{ hidden: true }= user_game_result_url(@user_game)
+
+
 #game-show.full-vh-minus-nav{ style: "background-image: url(#{image_url(@game.background.url)})" }
   -# .page-head
     .container
@@ -26,21 +28,10 @@
             = @step.name
 
       = image_tag 'divider-orange.svg'
-      .game-step-subnav
-        .progress.mb-4
-          .progress-bar{ style: "width:#{@progress_pescent}" }
-            = @progress_step
-        = display_timer(inline: true)
 
       .row.mt-4
         .col-md-12
-
           %p
-            %b Step name:
-            = @step.name
-
-          %p
-            %b Step description:
             = @step.description
 
           - if @step.image.present?
@@ -78,3 +69,12 @@
                 - if @next_step
                   = link_to 'Next step', user_game_step_url(@user_game, @next_step),
                     class: 'btn btn-primary float-md-right'
+
+      .row
+        .col-md-12{style: "padding-top:100px"}
+          %hr
+
+          .progress.mb-4
+            .progress-bar{ style: "width:#{@progress_pescent}" }
+              = @progress_step
+          = display_timer(inline: true)
