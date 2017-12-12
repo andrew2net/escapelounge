@@ -55,7 +55,7 @@ class UserGame < ApplicationRecord
     unless self.finished_at
       hint = Hint.find hint_id
       self.hints << hint
-      self.started_at -= hint.value.seconds
+      self.started_at -= hint.value.seconds if hint.value
       save
     end
   end
