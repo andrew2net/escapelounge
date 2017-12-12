@@ -1,12 +1,33 @@
-- hints = @user_game.hints.where(game_step_id: @step.id)
-- if !@answered && @step.hints.any? || hints.any?
+- hints = user_game.hints.where(game_step_id: step.id)
+.row
+  .col-12
+    #hint-link
+      = link_to '#' do
+        = image_tag 'icon-hint.svg', height: 20
+        Hint
+      #hint-pop{ style: 'display: none' }
+        .hint-title Hint
+        .hint-body
+          - hints.each do |hint|
+            - if hint.image.present
+              %p.text-center= image_tag hint.image.url :thumb
+
+          - if !answered && !user_game.finished_at && hint = step.hints.covered(user_game).first
+            = link_to "Show hint (-#{hint.value} sec)", '#', id: 'show-hint-btn',
+              data: { url: user_game_step_hint_url(user_game, step), hint_id: hint.id, value: hint.value }
+
+        .hint-footer
+        
+.row.hints-bar
+-# - hints = user_game.hints.where(game_step_id: step.id)
+-# - if !answered && step.hints.any? || hints.any?
   %h3 Hints
 
-- hints.each do |hint|
+-# - hints.each do |hint|
   %p= hint.description
   - if hint.image.present?
     %p.text-center= image_tag hint.image.url :thumb
 
-- if !@answered && !@user_game.finished_at && hint = @step.hints.covered(@user_game).first
+-# - if !answered && !user_game.finished_at && hint = step.hints.covered(user_game).first
   = button_tag "Show hint (-#{hint.value} sec)", id: 'show-hint-btn', class: 'btn btn-primary',
-    data: { url: user_game_step_hint_url(@user_game, @step), hint_id: hint.id, value: hint.value }
+    data: { url: user_game_step_hint_url(user_game, step), hint_id: hint.id, value: hint.value }

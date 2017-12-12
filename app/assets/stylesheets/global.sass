@@ -176,12 +176,15 @@ img.game-back-img
         text-transform: uppercase
         font-weight: bold
         color: $gray-700
-
       &.pattern-bottom
         background-image: image-url("pattern-question2.png")
         background-repeat: repeat-x
         background-position: bottom
-
+      p.step-description
+        font-family: $font-family-base
+        font-size: 18pt
+        font-style: italic
+        text-align: center
   .step-container
     background-color: white
     padding: 2em 1em
@@ -217,3 +220,52 @@ img.game-back-img
         border-radius: $borderRadius
       p
         margin: 0
+
+#hint-link
+  position: relative
+  margin-bottom: 12px
+  a
+    color: $orange
+  #hint-pop
+    background-color: white
+    position: absolute
+    bottom: 40px
+    left: -10px
+    border: 1px solid $orange
+    font-size: 12px
+    &:before
+      position: absolute
+      height: 20px
+      width: 20px
+      border-right: 1px solid $orange
+      border-bottom: 1px solid $orange
+      content: ''
+      transform: rotate(45deg)
+      bottom: -10px
+      background-color: white
+      left: 30px
+    .hint-title
+      background-color: $orange
+      text-transform: uppercase
+      color: white
+      text-align: center
+      letter-spacing: 4px
+      font-size: 14px
+    .hint-body
+      height: 150px
+      width: 300px
+      text-align: center
+      color: $gray-600
+      a
+        top: 50px
+        position: relative
+    .hint-footer
+      height: 20px
+      text-align: center
+      background-color: white
+      z-index: 1
+      position: relative
+
+.hints-bar
+  height: 10px
+  background-color: $orange
