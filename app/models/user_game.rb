@@ -52,7 +52,8 @@ class UserGame < ApplicationRecord
 
   # Mark the hint as used and reduce remaining time
   def use_hint(hint_id)
-    unless self.finished_at
+    # Don't add hint if the game is finished or the hint is already added
+    unless self.finished_at || hints.exists?(hint_id)
       hint = Hint.find hint_id
       self.hints << hint
       self.started_at -= hint.value.seconds if hint.value

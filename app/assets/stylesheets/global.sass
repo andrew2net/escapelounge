@@ -231,14 +231,13 @@ img.game-back-img
     position: absolute
     bottom: 40px
     left: -10px
-    border: 1px solid $orange
     font-size: 12px
+    box-shadow: 0px 0 10px 0px $orange
     &:before
       position: absolute
       height: 20px
       width: 20px
-      border-right: 1px solid $orange
-      border-bottom: 1px solid $orange
+      box-shadow: 0px 0 10px 0px $orange
       content: ''
       transform: rotate(45deg)
       bottom: -10px
@@ -252,13 +251,31 @@ img.game-back-img
       letter-spacing: 4px
       font-size: 14px
     .hint-body
-      height: 150px
+      position: relative
+      background-color: white
+      z-index: 10
+      height: 170px
       width: 300px
       text-align: center
       color: $gray-600
-      a
-        top: 50px
-        position: relative
+      #hints-carousel
+        overflow-y: scroll
+        height: 170px
+      ol.carousel-indicators
+        li
+          background-color: rgba(239, 121, 24, 0.2)
+          &.active
+            background-color: rgba(239, 121, 24, 0.4)
+      .carousel-item
+        min-height: 170px
+        p
+          padding: 1rem 1rem 0
+          font-family: 'Cormorant Garamond'
+          font-size: 12pt
+          font-style: italic
+        a
+          top: 70px
+          position: relative
     .hint-footer
       height: 20px
       text-align: center

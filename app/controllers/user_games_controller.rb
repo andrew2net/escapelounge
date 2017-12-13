@@ -9,7 +9,7 @@ class UserGamesController < ApplicationController
     @next_step = @step.next(@user_game.id)
     step_answer = @step.step_answers.find_by(user_game_id: @user_game.id)
     if step_answer
-      @answer = step_answer.answer
+      @answer   = step_answer.answer
       @answered = true
     end
   end
@@ -17,7 +17,12 @@ class UserGamesController < ApplicationController
   # POST /user_games/:user_game_id/step/:step_id/hint
   def hint
     @user_game.use_hint params[:hint_id]
-    render partial: 'hints'
+    render partial: 'hints', locals: {
+      user_game: @user_game,
+      answered:  @answered,
+      step:      @step,
+      hints:     @user_game.hints.where(game_step_id: @step.id)
+    }
   end
 
   # POST /user_games/:user_game_id/answer/:step_id

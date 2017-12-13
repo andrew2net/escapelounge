@@ -1,19 +1,30 @@
 $ ->
-  $hintsContainer = $ '#hints-container'
+  $hintsContainer = $ '#hints-carousel'
   $answerBtn      = $ '#answer-btn'
   $form           = $ '#step-form'
   $modal          = $ '#result-modal'
   $modalMessage   = $modal.find 'h2'
-  $hintLink       = $ '#hint-link a'
+  $hintLink       = $ '#hint-link > a'
   $hintPop        = $ '#hint-pop'
 
   # Show hint and reduce remaning time on click the button.
   $hintsContainer.on 'click', '#show-hint-btn', (event)->
-    hint_id = event.target.getAttribute 'data-hint-id'
-    value = parseInt(event.target.getAttribute('data-value'))
+    event.preventDefault()
+    hint_id = @.getAttribute 'data-hint-id'
+    value = parseInt(@.getAttribute('data-value'))
     window.timer.secondsRemain -= value
-    url = event.target.getAttribute 'data-url'
-    $hintsContainer.load url, { hint_id: hint_id }
+    url = @.getAttribute 'data-url'
+    $hintsContainer.load url, { hint_id: hint_id }, ->
+      $items = $hintsContainer.find '.carousel-item'
+      n = if $items.last().find('#show-hint-btn').length
+        $items.length - 2
+      else
+        $items.length - 1
+      $hintsContainer.carousel n
+
+  $hintsContainer.on 'slide.bs.carousel', (e)->
+    $hintsContainer.find('.carousel-indicators li').removeClass 'active'
+    $hintsContainer.find(".carousel-indicators li[data-slide-to='#{e.to}']").addClass 'active'
 
   modalTimeOut = null
 
@@ -21,7 +32,7 @@ $ ->
   submit = (event)->
     event.preventDefault()
     return if modalTimeOut
-    $.post event.target.href, $form.serialize(), (resp)->
+    $.post @href, $form.serialize(), (resp)->
       switch resp.result
         when 'success'
           $modalMessage.html 'Success!'
@@ -57,8 +68,6 @@ $ ->
   $hintLink.click (e)->
     e.preventDefault()
     $hintPop.fadeToggle() # 'd-none'
-
-  # new Popper $hintLink, $hintPop
 
   $answerBtn.click submit
   $form.submit submit
