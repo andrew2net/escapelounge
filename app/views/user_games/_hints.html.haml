@@ -3,22 +3,27 @@
   has_next_hint = !answered && !user_game.finished_at && hint
   hints_size = hints.size
 
-%ol.carousel-indicators
-  - hints.each_with_index do |_h, i|
-    %li{ data: { target: '#hints-carousel', slide_to: i.to_s },
-      class: (i + 1) == hints_size && !has_next_hint ? 'active' : '' }
+-# Show carousel indicator if there is any opened hint
+- if hints.any?
+  %ol.carousel-indicators
+    - hints.each_with_index do |_h, i|
+      -# If there is no next hint set last opened hint active
+      %li{ data: { target: '#hints-carousel', slide_to: i.to_s },
+        class: (i + 1) == hints_size && !has_next_hint ? 'active' : '' }
 
-  - if has_next_hint
-    %li.active{ data: { target: '#hints-carousel', slide_to: hints.size.to_s } }
+    -# If has hext hint set it active
+    - if has_next_hint
+      %li.active{ data: { target: '#hints-carousel', slide_to: hints.size.to_s } }
 
 .carousel-inner
+  -# Show opened hints
   - hints.each_with_index do |h, i|
     .carousel-item{ class: (i + 1) == hints_size && !has_next_hint ? 'active' : '' }
       %p= h.description
       - if h.image.present?
         = image_tag h.image.url(:thumb), class: 'd-block img-fluid mx-auto mb-3'
-
-  - if has_next_hint
+  -# Show next hint prompt
+  - if has_next_hint && hints.any?
     .carousel-item.active
-      = link_to "Show hint (-#{hint.value} sec)", '#', id: 'show-hint-btn',
+      = link_to "Show hex hint (-#{hint.value} sec)", '#', id: 'show-hint-btn',
         data: { url: user_game_step_hint_url(user_game, step), hint_id: hint.id, value: hint.value }

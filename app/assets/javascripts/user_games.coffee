@@ -6,21 +6,33 @@ $ ->
   $modalMessage   = $modal.find 'h2'
   $hintLink       = $ '#hint-link > a'
   $hintPop        = $ '#hint-pop'
+  $eyeInKeyhole   = $ '#eye-in-keyhole'
+  $keyInKeyhole   = $ '#key-in-keyhole'
 
-  # Show hint and reduce remaning time on click the button.
-  $hintsContainer.on 'click', '#show-hint-btn', (event)->
-    event.preventDefault()
-    hint_id = @.getAttribute 'data-hint-id'
-    value = parseInt(@.getAttribute('data-value'))
+  loadHint = ($showHintBtn)->
+    hint_id = $showHintBtn.data 'hint-id'
+    value = parseInt $showHintBtn.data 'value'
     window.timer.secondsRemain -= value
-    url = @.getAttribute 'data-url'
+    url = $showHintBtn.data 'url'
     $hintsContainer.load url, { hint_id: hint_id }, ->
       $items = $hintsContainer.find '.carousel-item'
+      # Display slide with last hint
       n = if $items.last().find('#show-hint-btn').length
         $items.length - 2
       else
         $items.length - 1
       $hintsContainer.carousel n
+
+  $eyeInKeyhole.click ->
+    $keyInKeyhole.addClass 'translate-up-40'
+    $('#hint-open-animation').addClass 'hint-open'
+    $('#hint-open-bubble').fadeOut()
+    loadHint $(@)
+
+  # Show hint and reduce remaning time on click the button.
+  $hintsContainer.on 'click', '#show-hint-btn', (event)->
+    event.preventDefault()
+    loadHint $(@)
 
   $hintsContainer.on 'slide.bs.carousel', (e)->
     $hintsContainer.find('.carousel-indicators li').removeClass 'active'
@@ -65,9 +77,11 @@ $ ->
             modalTimeOut = null
           , 2000
 
+  # Toggle hints window
   $hintLink.click (e)->
     e.preventDefault()
     $hintPop.fadeToggle() # 'd-none'
 
+  # Submit form
   $answerBtn.click submit
   $form.submit submit

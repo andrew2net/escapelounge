@@ -1,0 +1,76 @@
+svg
+  .fill-orange
+    fill: $orange
+  .fill-gray
+    fill: $gray-600
+  .stroke-orange
+    stroke: $orange
+  .stroke-gray
+    stroke: $gray-600
+
+@keyframes eyeInKeyhole
+  0%, 8%
+    transform: rotateY(0deg)
+  10%, 18%
+    transform: rotateY(90deg)
+  20%, 88%
+    transform: rotateY(0deg)
+  90%, 98%
+    transform: rotateY(90deg)
+  100%
+    transform: rotateY(0deg)
+
+#eyelid
+  cursor: pointer
+
+g#eye-in-keyhole
+  cursor: pointer
+  transform-origin: 150px
+  animation-name: eyeInKeyhole
+  animation-duration: 5s
+  animation-iteration-count: infinite
+  animation-timing-function: linear
+
+@keyframes pupilInKeyhole
+  0%, 35%
+    transform: translateX(0px)
+  40%
+    transform: translateX(10px)
+  41%, 56%
+    transform: translateX(8px)
+  59%
+    transform: translateX(10px)
+  70%
+    transform: translateX(-10px)
+  71%, 86%
+    transform: translateX(-8px)
+  89%
+    transform: translateX(-10px)
+  94%, 100%
+    transform: translateX(0px)
+
+g#pupil-in-keyhole
+  animation-name: pupilInKeyhole
+  animation-duration: 5s
+  animation-iteration-count: infinite
+
+#key-in-keyhole
+  transition-property: transform
+  transition-duration: 0.5s
+
+.translate-up-40
+  transform: translateY(-40px)
+
+.hint-open
+  height: 0px !important
+
+#hint-open-animation
+  position: absolute
+  top: 1px
+  z-index: 99
+  height: 190px
+  overflow: hidden
+  transition-property: height
+  transition-duration: 1s
+  transition-delay: 0.6s
+  transition-timing-function: linear

@@ -70,24 +70,31 @@
           -# %hr
 
       -# Hints
-      .row
-        .col-12
-          #hint-link
-            = link_to '#' do
-              = image_tag 'icon-hint.svg', height: 20
-              Hint
-            #hint-pop{ style: 'display: none' }
-              .hint-title Hint
-              .hint-body
-                #hints-carousel.carousel.slide{ data: { interval: 'false' } }
-                  = render 'hints', user_game: @user_game, answered: @answered, step: @step,
-                    hints: @user_game.hints.where(game_step_id: @step.id)
-                -# .hint-footer
-                %a.carousel-control-prev{ href: '#hints-carousel', role: 'button', data: { slide: 'prev' } }
-                  %span.fa.fa-chevron-left{ aria: { hidden: true } }
-                  %span.sr-only Previous
-                %a.carousel-control-next{ href: '#hints-carousel', role: 'button', data: { slide: 'next' } }
-                  %span.fa.fa-chevron-right{ aria: { hidden: true } }
-                  %span.sr-only Previous
+      .hints-bar
+        .container
+          - if @step.hints.any?
+            #hint-link
+              = link_to '#' do
+                = image_tag 'icon-hint.svg', height: 20
+                Hint
+              #hint-pop
+                -# Retrive opened hints
+                - hints = @user_game.hints.where(game_step_id: @step.id)
 
-      .row.hints-bar
+                -# Show animation if there aren't opened hints
+                - if hints.blank? && @step.hints.any?
+                  = render 'hints_animation', hint: @step.hints.first, user_game: @user_game, step: @step
+
+                .hint-title
+                  Hint
+                .hint-body
+                  #hints-carousel.carousel.slide{ data: { interval: 'false' } }
+                    = render 'hints', user_game: @user_game, answered: @answered, step: @step,
+                      hints: hints
+                  -# Show navigation buttons
+                  %a.carousel-control-prev{ href: '#hints-carousel', role: 'button', data: { slide: 'prev' } }
+                    %span.fa.fa-chevron-left{ aria: { hidden: true } }
+                    %span.sr-only Previous
+                  %a.carousel-control-next{ href: '#hints-carousel', role: 'button', data: { slide: 'next' } }
+                    %span.fa.fa-chevron-right{ aria: { hidden: true } }
+                    %span.sr-only Previous

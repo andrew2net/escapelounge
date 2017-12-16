@@ -18,18 +18,7 @@
           id: 'start-game-btn'
 
 #game-show.full-vh-minus-nav.pattern-bottom{ style: "background-image: url(#{image_url(@game.background.url)}); background-size: cover" }
-  -# .page-head
-    .container
-      .row
-        .col-md-10
-          %h4= @game.name
-        - if current_user && current_user.admin
-          .col-md-2
-            = link_to 'Edit', edit_admin_game_path(@game),
-              class: "btn btn-sm btn-primary", id: 'start-game-btn'
-
   %section
-    -# = image_tag @game.background.url, class: 'img-fluid game-back-img'
     .container
       .row
         .col-md-10
