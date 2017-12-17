@@ -14,13 +14,22 @@
         %path.fill-orange{ d: 'M150 63 q-17 22 0 44 m0 0 q17 -22 0 -44', fill: '#ef7918' }
         %path{ d: 'M150 70 q-10 15 0 30 m0 0 q10 -15 0 -30', fill: 'black' }
         %circle{ cx: 150, cy: 80, r: 2, fill: 'white' }
-      %filter{ id: 'shadow', x: 0, y: 0, width: '200%', height: '200%' }
+      %filter{ id: 'shadow' }
         %feOffset{ result: 'offOut', in: 'SourceAlpha', dx: 1, dy: 1 }
-        %feGaussianBlur{ result: 'blurOut', in: 'offOut', stdDeviation: 2 }
+        %feColorMatrix{ result: 'matrixOut', in: 'offOut', type: 'matrix',
+          values: '0.2 0 0 0 0 0 0.2 0 0 0 0 0 0.2 0 0 0 0 0 1 0' }
+        %feGaussianBlur{ result: 'blurOut', in: 'matrixOut', stdDeviation: 2 }
         %feBlend{ in: 'SourceGraphic', in2: 'blurOut', mode: 'normal' }
+      %radialGradient{ id: 'beam', fy: 1 }
+        %stop{ offset: 0, 'stop-color' => 'yellow' }
+        %stop{ offset: 2, 'stop-color' => '#ef7918' }
+      %filter{ id: 'beamBlur' }
+        %feGaussianBlur{ stdDeviation: 6 }
 
     -# Background
     %rect.fill-orange{ width: '100%', height: '100%' }
+
+    %polygon#flashlight{ points: '120 100 80 -80 220 -80 180 100', fill: 'url(#beam)', filter: 'url(#beamBlur)' }
 
     -# Keyhole
     %use.fill-gray{ 'xlink:href' => '#KeyHoleShadow', 'fill-opacity' => 0.5 }

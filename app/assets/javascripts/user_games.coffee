@@ -27,6 +27,7 @@ $ ->
     $keyInKeyhole.addClass 'translate-up-40'
     $('#hint-open-animation').addClass 'hint-open'
     $('#hint-open-bubble').addClass 'hide-hint-bubble'
+    $('#flashlight').addClass 'flashlight-animate'
     loadHint $(@)
 
   # Show hint and reduce remaning time on click the button.
