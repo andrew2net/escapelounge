@@ -23,11 +23,11 @@ $ ->
         $items.length - 1
       $hintsContainer.carousel n
 
-  $eyeInKeyhole.click ->
+  $('#eyelid').click ->
     $keyInKeyhole.addClass 'translate-up-40'
     $('#hint-open-animation').addClass 'hint-open'
-    $('#hint-open-bubble').fadeOut()
-    loadHint $(@)
+    $('#hint-open-bubble').addClass 'hide-hint-bubble'
+    # loadHint $(@)
 
   # Show hint and reduce remaning time on click the button.
   $hintsContainer.on 'click', '#show-hint-btn', (event)->

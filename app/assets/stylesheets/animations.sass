@@ -3,7 +3,7 @@ svg
     fill: $orange
   .fill-gray
     fill: $gray-600
-  .stroke-orange
+  .stroke-orang
     stroke: $orange
   .stroke-gray
     stroke: $gray-600
@@ -74,3 +74,24 @@ g#pupil-in-keyhole
   transition-duration: 1s
   transition-delay: 0.6s
   transition-timing-function: linear
+
+@keyframes hideHintBubble
+  0%
+    transform: scale(1)
+    opacity: 1
+  25%
+    transform: scale(0.9)
+    opacity: 1
+  50%
+    transform: scale(1)
+    opacity: 1
+  100%
+    opacity: 0
+
+#hint-open-bubble
+  transform-origin: 50% 25%
+
+.hide-hint-bubble
+  animation-name: hideHintBubble
+  animation-duration: 1s
+  animation-fill-mode: forwards
