@@ -34,11 +34,11 @@
     -# Keyhole
     %use.fill-gray{ 'xlink:href' => '#KeyHoleShadow', 'fill-opacity' => 0.5 }
 
-    %g#eyelid
+    %g#eyelid{ data: { url: user_game_step_hint_url(user_game, step), hint_id: hint.id, value: hint.value } }
       %use{ 'xlink:href' => '#KeyHole', fill: 'black' }
 
       -# Eye
-      %g#eye-in-keyhole{ data: { url: user_game_step_hint_url(user_game, step), hint_id: hint.id, value: hint.value } }
+      %g#eye-in-keyhole
         %circle{ cx: 150, cy: 85, r: 30, fill: 'white' }
         -# Pupil
         %g#pupil-in-keyhole
