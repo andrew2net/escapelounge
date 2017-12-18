@@ -1,77 +1,83 @@
-.page-head
+= content_for :title, 'Billing'
+
+-# .page-head
   .container
     .row
       .col-md-10
         %h4 Billing
       .col-md-2
+%section
+  .container.full-vh-minus-nav.pb-3
+    .row.page-bar
 
-.container
+    %fieldset.border.border-primary.rounded.p-3
+      %legend Subscription
+      = content_tag :p, class: "text-warning #{@subscription_will_cancel ? '' : 'd-none'}",
+          id: 'subscription-will-cancel-warn' do
+        Current subscription will be canceled at perriod end.
 
-  %h4 Subscription
-  = content_tag :p, class: "text-warning #{@subscription_will_cancel ? '' : 'd-none'}",
-      id: 'subscription-will-cancel-warn' do
-    Current subscription will be canceled at perriod end.
+      = content_tag :p, class: "text-warning #{@subscription_canceled ? '' : 'd-none'}",
+          id: 'subscription-canceled-warn' do
+        You don't have actual subscription.
 
-  = content_tag :p, class: "text-warning #{@subscription_canceled ? '' : 'd-none'}",
-      id: 'subscription-canceled-warn' do
-    You don't have actual subscription.
+      = form_tag nil, id: 'change-subscribe-form' do
+        .form-group
+          = label_tag :subscription_plan
+          = select_tag :subscription_plan, options_for_select(SubscriptionPlan.pluck(:name, :id),
+            !@subscription_canceled && current_user.subscription_plan_id), class: 'form-control',
+            prompt: 'Select subscription plan', autocomplete: :off
 
-  = form_tag nil, id: 'change-subscribe-form' do
-    .form-group
-      = label_tag :subscription_plan
-      = select_tag :subscription_plan, options_for_select(SubscriptionPlan.pluck(:name, :id),
-        !@subscription_canceled && current_user.subscription_plan_id), class: 'form-control',
-        prompt: 'Select subscription plan', autocomplete: :off
+        = button_tag disabled: !@subscription_canceled, class: 'btn btn-primary',
+            id: 'change-plan-btn', autocomplete: :off, type: :button,
+            data: { current_plan: !@subscription_canceled && current_user.subscription_plan_id } do
+          = @subscription_canceled ? 'Subscribe' : 'Change plan'
 
-    = button_tag disabled: !@subscription_canceled, class: 'btn btn-primary',
-        id: 'change-plan-btn', autocomplete: :off, type: :button,
-        data: { current_plan: !@subscription_canceled && current_user.subscription_plan_id } do
-      = @subscription_canceled ? 'Subscribe' : 'Change plan'
+        = button_tag 'Cancel subscription', class: 'btn btn-primary ml-2', id: 'cancel-subscription-btn',
+          type: :button, disabled: !current_user.subscription_plan_id || @subscription_canceled
 
-    = button_tag 'Cancel subscription', class: 'btn btn-primary ml-2', id: 'cancel-subscription-btn',
-      type: :button, disabled: !current_user.subscription_plan_id || @subscription_canceled
+    %fieldset.border.border-primary.rounded.p-3.mt-3
+      %legend Invoices
 
-  %h4.mb-3.mt-5 Invoices
+      .row.border.border-primary.mx-1.pt-2.border-bottom-0.border-right-0.border-left-0
+        .col-md-3
+          %h6 Created
+        .col-md-3
+          %h6 Amount
+        .col-md-2
+          %h6 Currency
+        .col-md-2
+          %h6 Status
 
-  .row.border.border-primary.pt-2.border-bottom-0.border-right-0.border-left-0
-    .col-md-3
-      %h6 Created
-    .col-md-3
-      %h6 Amount
-    .col-md-2
-      %h6 Currency
-    .col-md-2
-      %h6 Status
+      - @invoices.each do |invoice|
+        .row.border.border-primary.mx-1.py-1.border-bottom-0.border-right-0.border-left-0
+          .col-md-3= invoice[:created].strftime '%F'
+          .col-md-3= invoice[:amount]
+          .col-md-2= invoice[:currency]
+          .col-md-2= invoice[:status]
+          .col-md-2
+            = button_tag 'Details', class: 'btn btn-primary btn-sm', type: 'button',
+              data: { toggle: 'collapse', target: "##{invoice[:id]}" }
 
-  - @invoices.each do |invoice|
-    .row.border.border-primary.py-1.border-bottom-0.border-right-0.border-left-0
-      .col-md-3= invoice[:created].strftime '%F'
-      .col-md-3= invoice[:amount]
-      .col-md-2= invoice[:currency]
-      .col-md-2= invoice[:status]
-      .col-md-2
-        = button_tag 'Details', class: 'btn btn-primary btn-sm', type: 'button',
-          data: { toggle: 'collapse', target: "##{invoice[:id]}" }
+        .collapse{ id: invoice[:id] }
+          .card.card-body.mb-2
+            .row
+              .col-md-3 Type
+              .col-md-3 Name
+              .col-md-2 Amount
+              .col-md-2 Period start
+              .col-md-2 Period end
 
-    .collapse{ id: invoice[:id] }
-      .card.card-body
-        .row
-          .col-md-3 Type
-          .col-md-3 Name
-          .col-md-2 Amount
-          .col-md-2 Period start
-          .col-md-2 Period end
+            - invoice[:lines].each do |line|
+              .row
+                .col-md-3= line[:type]
+                .col-md-3= line[:name]
+                .col-md-2= line[:amount]
+                .col-md-2= line[:period_start].strftime '%F'
+                .col-md-2= line[:period_end].strftime '%F'
 
-        - invoice[:lines].each do |line|
-          .row
-            .col-md-3= line[:type]
-            .col-md-3= line[:name]
-            .col-md-2= line[:amount]
-            .col-md-2= line[:period_start].strftime '%F'
-            .col-md-2= line[:period_end].strftime '%F'
+    %fieldset.border.border-primary.rounded.p-3.mt-3
+      %legend Cards
+      #cards-container
+        = render partial: 'cards'
 
-  %h4.mt-5 Cards
-  #cards-container
-    = render partial: 'cards'
-
-  = render partial: 'card_form'
+      = render partial: 'card_form'

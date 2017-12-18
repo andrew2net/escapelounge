@@ -1,7 +1,7 @@
 .col-md-3
   = link_to game do
-    .game-container
-      = image_tag game.background.url :thumb, class: 'img-fluid'
+    .game-container{ style: "background-image: url(#{image_url(game.background.url(:thumb))})" }
+      -# = image_tag game.background.url :thumb, class: 'img-fluid'
       %h4= game.name
       %p= game.short_description
       %p= "#{game.game_steps.count} Steps"

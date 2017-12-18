@@ -1,39 +1,39 @@
-.page-head
-  .container
+= content_for :title, @user.name
+
+%section
+  .container.full-vh-minus-nav
+    .row.page-bar
     .row
       .col-md-10
-        %h4= @user.name
       .col-md-2
         = link_to 'Edit', edit_admin_user_path(@user), class: 'btn btn-sm btn-primary'
+    %p
+      %b Name:
+      = @user.name
 
-.container
-  %p
-    %b Name:
-    = @user.name
+    %p
+      %b Subscription plan:
+      = @user.subscription_plan && @user.subscription_plan.name
+      %b to date:
+      = @user.period_end && @user.period_end.strftime('%F')
+    %p
+      %b Created at:
+      = @user.created_at.strftime('%F')
+      %b last active:
+      = @user.last_active.strftime('%F')
 
-  %p
-    %b Subscription plan:
-    = @user.subscription_plan && @user.subscription_plan.name
-    %b to date:
-    = @user.period_end && @user.period_end.strftime('%F')
-  %p
-    %b Created at:
-    = @user.created_at.strftime('%F')
-    %b last active:
-    = @user.last_active.strftime('%F')
-
-  %table.table.table-striped
-    %thead
-      %tr
-        %th Game
-        %th Finished at
-        %th Result
-    %tbody
-      - @user_games.each do |g|
+    %table.table.table-striped
+      %thead
         %tr
-          %td= g.game.name
-          %td= g.finished_at
-          %td= g.formated_result
+          %th Game
+          %th Finished at
+          %th Result
+      %tbody
+        - @user_games.each do |g|
+          %tr
+            %td= g.game.name
+            %td= g.finished_at
+            %td= g.formated_result
 
-  .pagination.justify-content-center
-    = paginate @user_games
+    .pagination.justify-content-center
+      = paginate @user_games

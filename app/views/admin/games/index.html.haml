@@ -1,15 +1,13 @@
+= content_for :title, 'All Games - Admin'
 #games-admin-list
 
-  .page-head
-    .container
+  %section
+    .container.full-vh-minus-nav
+      .row.page-bar
       .row
         .col-md-10
-          %h4 All Games
         .col-md-2
-          = link_to 'New Game', new_admin_game_path, class: "btn btn-sm btn-primary"
-
-  %section
-    .container
+          = link_to 'New Game', new_admin_game_path, class: 'btn btn-sm btn-primary'
 
       / Nav tabs
       %ul.nav.nav-tabs{:role => "tablist"}
@@ -20,31 +18,7 @@
 
       / Tab panes
       .tab-content
-        #live-game.tab-pane.active{:role => "tabpanel"}
+        #live-game.tab-pane.active{ role: 'tabpanel' }
           .row= render @games.visible
-        #draft-game.tab-pane{:role => "tabpanel"}
+        #draft-game.tab-pane{ role: 'tabpanel' }
           .row= render @games.where(visible: false)
-
-
-      -# %table.table.table-striped
-      -#   %thead
-      -#     %tr
-      -#       %th Name
-      -#       %th Description
-      -#       %th # of Steps
-      -#       %th Difficulty
-      -#       %th Age range
-      -#       %th Actions
-      -#
-      -#   %tbody
-      -#     - @games.each do |game|
-      -#       %tr
-      -#         %td= game.name
-      -#         %td= game.description
-      -#         %td= game.game_steps.count
-      -#         %td= game.difficulty
-      -#         %td= game.age_range
-      -#         %td
-      -#           = link_to 'Show', game
-      -#           = link_to 'Edit', edit_game_path(game)
-      -#           = link_to 'Destroy', game, :method => :delete, :data => { :confirm => 'Are you sure?' }
