@@ -1,10 +1,12 @@
 .nested-fields
-  .form-group
-    = f.label :name
-    = f.text_field :name, class: 'form-control'
-  .form-group
-    = f.label :file
-    = f.file_field :file
+  .form-row
+    .form-group.col-6
+      = f.label :name
+      = f.text_field :name, class: 'form-control'
+    .form-group.col-6
+      = f.label :file
+      %br
+      = f.file_field :file
   %p
     = f.object.file_file_name
 

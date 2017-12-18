@@ -1,65 +1,69 @@
-.auth-container
-
-  = form_for [:admin, @game] do |f|
-    - if @game.errors.any?
-      #error_explanation
-        %h2= "#{pluralize(@game.errors.count, "error")} prohibited this game from being saved:"
-        %ul
-          - @game.errors.full_messages.each do |msg|
-            %li= msg
-
-    .form-group
+= form_for [:admin, @game] do |f|
+  - if @game.errors.any?
+    #error_explanation
+      %h2 #{pluralize(@game.errors.count, 'error')} prohibited this game from being saved:
+      %ul
+        - @game.errors.full_messages.each do |msg|
+          %li= msg
+  .form-row
+    .form-group.col-10
       = f.label :name
-      = f.text_field :name, class: "form-control"
-    .form-check
-      = f.label :visible, class: 'form-check-label' do
-        = f.check_box :visible, class: 'form-check-input'
-        Visible
-    .form-group
-      = f.label :banner
-      = f.file_field :banner
-    = image_tag @game.banner.url :thumb
-    .form-group
-      = f.label :background
-      = f.file_field :background
-    = image_tag @game.background.url :thumb
-    .form-group
-      = f.label :description
-      = f.text_area :description, class: "form-control"
-    .form-group
-      = f.label :short_description
-      = f.text_area :short_description, class: "form-control"
-    .form-group
-      = f.label :instructions
-      = f.text_area :instructions, class: "form-control"
-    .form-group
+      = f.text_field :name, class: 'form-control'
+    .form-group.col-2
+      .form-check.mt-4
+        = f.label :visible, class: 'form-check-label' do
+          = f.check_box :visible, class: 'form-check-input'
+          Visible
+  .row.mb-3
+    .col-6
+      .form-group
+        = f.label :banner
+        = f.file_field :banner
+      = image_tag @game.banner.url :thumb
+    .col-6
+      .form-group
+        = f.label :background
+        = f.file_field :background
+      = image_tag @game.background.url :thumb
+  .form-group
+    = f.label :description
+    = f.text_area :description, class: 'form-control'
+  .form-group
+    = f.label :short_description
+    = f.text_area :short_description, class: 'form-control'
+  .form-group
+    = f.label :instructions
+    = f.text_area :instructions, class: 'form-control'
+  .form-row
+    .form-group.col-4
       = f.label :difficulty
       = f.select :difficulty, Game.difficulties.to_a.map { |w| [w[0], w[0]] }, {}, class: 'form-control'
-    .form-group
+    .form-group.col-4
       %div
         = f.label :grade_ids, 'Grades', class: 'mb-0'
       = f.collection_check_boxes :grade_ids, Grade.all, :id, :name do |b|
         .form-check.form-check-inline
           = b.label(class: 'form-check-label') { b.check_box(class: 'form-check-input mr-2') + b.text }
-      -# = f.select :age_range, Game.age_ranges.to_a.map { |w| [w[0], w[0]] }, {}, class: 'form-control'
-    .form-group
+    .form-group.col-4
       %label TIme allotted to complete the game
-      = f.text_field :time_length, class: "form-control"
+      = f.text_field :time_length, class: 'form-control'
 
-    %h3 Assets
+  %fieldset.border.border-primary.rounded.p-4
+    %legend Assets
     #game_assets
       = f.fields_for :game_assets do |game_asset|
         = render 'game_asset_fields', f: game_asset
-      .links
-        = link_to_add_association 'add asset', f, :game_assets
+      .links.my-2
+        = link_to_add_association 'add asset', f, :game_assets, class: 'btn btn-primary'
 
-    %h3 Game Steps
+  %fieldset.border.border-primary.rounded.p-4
+    %legend Game Steps
     #game_steps{ role: 'tablist' }
       #sortable
         = f.fields_for :game_steps do |game_step|
           = render 'game_step_fields', f: game_step
         .links
-          = link_to_add_association 'add game step', f, :game_steps
+          = link_to_add_association 'add game step', f, :game_steps, class: 'btn btn-primary mt-3'
 
-    .actions
-      = f.submit 'Save', class: "btn btn-primary"
+  .actions.py-4
+    = f.submit 'Save', class: 'btn btn-primary'

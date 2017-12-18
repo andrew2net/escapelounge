@@ -16,7 +16,7 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
   test "should return only games with difficulty 1" do
     post games_games_url, params: { filter: { difficulty: 1 } }, xhr: true
     assert_select '.game-container' do |element|
-      assert_select element, 'p:nth-child(5)', 'Difficulty: 2 (easy)'
+      assert_select element, 'p:nth-child(4)', 'Difficulty: 2 (easy)'
     end
   end
 
@@ -24,7 +24,7 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
     grade = grades :two
     post games_games_url, params: { filter: { grade_id: grade.id } }, xhr: true
     assert_select '.game-container' do |element|
-      assert_select element, 'p:nth-child(6)', "Grades: \n#{grade.name}"
+      assert_select element, 'p:nth-child(5)', "Grades: #{grade.name}"
     end
   end
 
