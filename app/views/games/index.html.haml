@@ -1,18 +1,10 @@
+= content_for :title do
+  All Games
 #games-list
-
-  -# .page-head
-    .container
-      .row
-        .col-md-10
-          %h4 All Games
-        .col-md-2
-
   %section
-    .container
-      .row.my-4
-        .col-md-12.text-center
-          %h4.page-title All Games
-      .row
+    .container.full-vh-minus-nav
+      .row.page-bar
+      .row.py-3
         .col-md-12.form-inline.mb-4
           %label.mr-3
             %strong Filter:
@@ -22,7 +14,7 @@
             include_blank: true, class: 'form-control mr-3', autocomplete: :off
 
           = label_tag :age_filter, 'Grade', class: 'mx-2'
-          = select_tag :age_filter, options_for_select(Grade.pluck :name, :id),
+          = select_tag :age_filter, options_for_select(Grade.pluck(:name, :id)),
             include_blank: true, class: 'form-control mr-3', autocomplete: :off
 
           = label_tag :allowed_filter, class: 'form-check-label' do
@@ -31,21 +23,3 @@
             &nbsp;Show only allowed games
 
       #games-user-list.row= render @games
-
-      -# %table.table.table-striped
-        %thead
-          %tr
-            %th Name
-            %th Short Description
-            %th # of Steps
-            %th
-              Difficulty
-              = select_tag :difficulty_filter, options_for_select(Game.difficulties),
-                class: 'form-control', include_blank: true
-            %th
-              Age range
-              = select_tag :age_filter, options_for_select(Game.age_ranges),
-                class: 'form-control', include_blank: true
-            %th Actions
-
-        %tbody= render partial: 'table_body'

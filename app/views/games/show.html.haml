@@ -1,3 +1,6 @@
+= content_for :title do
+  = @game.name
+
 #start-game-modal.modal.fade
   .modal-dialog
     .modal-content
@@ -17,17 +20,18 @@
         = link_to 'Start game', game_start_url(@game), class: 'btn btn-primary',
           id: 'start-game-btn'
 
-#game-show.full-vh-minus-nav.pattern-bottom{ style: "background-image: url(#{image_url(@game.background.url)}); background-size: cover" }
+#game-show{ style: "background-image: url(#{image_url(@game.background.url)}); background-size: cover" }
   %section
-    .container
-      .row
+    .container.full-vh-minus-nav.pattern-bottom
+      .row.page-bar
+      .row.pt-4
         .col-md-10
-          %h4= @game.name
+          -# %h4= @game.name
         - if current_user && current_user.admin
           .col-md-2
             = link_to 'Edit', edit_admin_game_path(@game),
               class: "btn btn-sm btn-primary", id: 'start-game-btn'
-      .row
+      .row.pt-4
         .col-md-5
 
           %p

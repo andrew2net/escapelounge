@@ -1,13 +1,10 @@
-#game-show
-  .page-head
-    .container
-      .row
-        .col-md-10
-          %h4= @user_game.game.name
+= content_for :title do
+  = @user_game.game.name
 
+#game-show{ style: "background-image: url(#{image_url(@user_game.game.background.url)})" }
   %section
-    = image_tag @user_game.game.background.url, class: 'img-fluid game-back-img'
-    .container
+    .container.full-vh-minus-nav.pattern-bottom
+      .row.page-bar
       .game-step-subnav
         .progress.mb-4
           .progress-bar{ style: "width:#{@progress_pescent}" }
