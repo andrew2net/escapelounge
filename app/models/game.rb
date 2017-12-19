@@ -38,7 +38,7 @@ class Game < ApplicationRecord
 
   scope :visible, -> { where(visible: true) }
 
-  scope :allowed, ->(user) { joins(grades: :subscription_plans)
+  scope :allowed, ->(user) { includes(grades: :subscription_plans)
     .where(subscription_plans: { id: user.subscription_plan_id }) }
 
   # Return a game step with step_id if it's allowed for user with user_id.
