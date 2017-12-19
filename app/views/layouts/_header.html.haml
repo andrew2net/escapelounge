@@ -1,16 +1,19 @@
-%nav.navbar.navbar-expand-md.sticky-top
+%nav.navbar.navbar-expand-md.navbar-dark.sticky-top
+  -# Title
   %span.text.page-title
     = yield :title
+  -# Progress bar
   - if @step
     .game-progress-bar
       .circle-progress{ style: "transform: rotate(#{180-@user_game.progress_deg}deg)" }
       .timer-bar
         Time Remaining
         = display_timer bar: true
+  -# Logo
   = link_to root_path, class: 'navbar-brand' do
     = image_tag 'ridlz-logo.svg'
   %button.navbar-toggler{ aria: { controls: 'navbarSupportedContent', expanded: 'false', label: 'Toggle navigation' },
-  data: { target: '#navbarSupportedContent', toggle: 'collapse' }, type: 'button' }
+      data: { target: '#navbarSupportedContent', toggle: 'collapse' }, type: 'button' }
     %span.navbar-toggler-icon
 
   #navbarSupportedContent.collapse.navbar-collapse

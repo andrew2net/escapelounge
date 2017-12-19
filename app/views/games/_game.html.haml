@@ -1,6 +1,6 @@
-.col-md-3
+.col-12.col-md-6.col-lg-4.col-xl-3
   = link_to game do
-    .game-container{ style: "background-image: url(#{image_url(game.background.url(:thumb))})" }
+    .game-container{ style: "background-image: url(#{image_url(game.background.url(:thumb))});background-size:cover" }
       -# = image_tag game.background.url :thumb, class: 'img-fluid'
       %h4= game.name
       %p= game.short_description

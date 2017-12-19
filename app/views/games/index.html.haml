@@ -5,21 +5,23 @@
     .container.full-vh-minus-nav
       .row.page-bar
       .row.py-3
-        .col-md-12.form-inline.mb-4
+        .col-md-12.mb-4
           %label.mr-3
             %strong Filter:
 
-          = label_tag :difficulty_filter, 'Difficulty', class: 'mx-2'
-          = select_tag :difficulty_filter, options_for_select(Game.difficulties),
-            include_blank: true, class: 'form-control mr-3', autocomplete: :off
-
-          = label_tag :age_filter, 'Grade', class: 'mx-2'
-          = select_tag :age_filter, options_for_select(Grade.pluck(:name, :id)),
-            include_blank: true, class: 'form-control mr-3', autocomplete: :off
-
-          = label_tag :allowed_filter, class: 'form-check-label' do
-            %input#allowed_filter.form-check-input{ type: 'checkbox',
-              checked: true, autocomplete: 'off' }
-            &nbsp;Show only allowed games
+          .row
+            .col-12.col-sm-4
+              -# = label_tag :difficulty_filter, 'Difficulty', class: 'mx-2'
+              = select_tag :difficulty_filter, options_for_select(Game.difficulties),
+                class: 'form-control mr-3', autocomplete: :off, prompt: 'Difficulty'
+            .col-12.col-sm-4.my-2.my-sm-0
+              -# = label_tag :age_filter, 'Grade', class: 'mx-2'
+              = select_tag :age_filter, options_for_select(Grade.pluck(:name, :id)),
+                prompt: 'Grade', class: 'form-control mr-3', autocomplete: :off
+            .col-12.col-sm-4
+              = label_tag :allowed_filter, class: 'form-check-label' do
+                %input#allowed_filter.form-check-input{ type: 'checkbox',
+                  checked: true, autocomplete: 'off' }
+                &nbsp;Show only allowed games
 
       #games-user-list.row= render @games
