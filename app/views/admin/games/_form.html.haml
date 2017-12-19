@@ -7,8 +7,8 @@
           %li= msg
   .form-row
     .form-group.col-10
-      = f.label :name
-      = f.text_field :name, class: 'form-control'
+      = f.label :name, class: 'required'
+      = f.text_field :name, class: 'form-control', required: true
     .form-group.col-2
       .form-check.mt-4
         = f.label :visible, class: 'form-check-label' do
@@ -46,7 +46,7 @@
           = b.label(class: 'form-check-label') { b.check_box(class: 'form-check-input mr-2') + b.text }
     .form-group.col-4
       %label.required TIme allotted to complete the game
-      = f.text_field :time_length, class: 'form-control'
+      = f.text_field :time_length, class: 'form-control', required: true
 
   %fieldset.border.border-primary.rounded.p-4
     %legend Assets

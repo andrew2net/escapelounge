@@ -2,11 +2,11 @@
   .row
     .col-6
       .form-group
-        = f.label :description
-        = f.text_area :description, class: 'form-control', rows: 8
+        = f.label :description, class: 'required'
+        = f.text_area :description, class: 'form-control', rows: 8, required: true
       .form-group
-        = f.label :value
-        = f.number_field :value, class: 'form-control'
+        = f.label :value, class: 'required'
+        = f.number_field :value, class: 'form-control', required: true
     .col-6
       .form-group
         = f.label :image

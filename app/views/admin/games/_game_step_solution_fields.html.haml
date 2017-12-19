@@ -1,6 +1,6 @@
 .nested-fields
   .form-group
-    = f.label :solution
-    = f.text_area :solution, class: 'form-control'
+    = f.label :solution, class: 'required'
+    = f.text_area :solution, class: 'form-control', required: true
 
   = link_to_remove_association 'remove solution', f, class: 'btn btn-danger'

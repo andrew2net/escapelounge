@@ -7,17 +7,17 @@
           %li= msg
 
   .form-group
-    = f.label :name
-    = f.text_field :name, class: "form-control"
+    = f.label :name, class: 'required'
+    = f.text_field :name, class: 'form-control', required: true
   .form-group
-    = f.label :stripe_id, 'Stripe ID'
-    = f.text_field :stripe_id, class: 'form-control'
+    = f.label :stripe_id, 'Stripe ID', class: 'required'
+    = f.text_field :stripe_id, class: 'form-control', required: true
   .form-group
     = f.label :period
     = f.select :period, options_for_select(SubscriptionPlan.periods.map { |k, _v| k }), {}, class: 'form-control'
   .form-group
-    = f.label :price, 'Price $'
-    = f.text_field :price, class: 'form-control'
+    = f.label :price, 'Price $', class: 'required'
+    = f.text_field :price, class: 'form-control', required: true
   .form-group
     %div
       = f.label :grade_ids, 'Grades', class: 'mb-0'

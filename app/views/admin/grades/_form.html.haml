@@ -7,7 +7,7 @@
           %li= message
 
   .form-group
-    = f.label :name
-    = f.text_field :name, class: 'form-control'
+    = f.label :name, class: 'required'
+    = f.text_field :name, class: 'form-control', required: true
   .actions
     = f.submit 'Save', class: 'btn btn-primary'

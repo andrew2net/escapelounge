@@ -4,10 +4,11 @@
     .card-header{ role: 'tab', id: "header-#{f.object.id}" }
       = f.text_field :position, hidden: true
       .form-inline
-        = f.text_field :name, class: "form-control col-md-11"
-        = link_to "#collapse-#{f.object.id}", class: 'float-right ml-3', data: { parent: '#game_steps', toggle: 'collapse' } do
+        = f.text_field :name, class: 'form-control col-md-11', required: true
+        = link_to "#collapse-#{f.object.id}", class: 'float-right ml-3',
+            data: { parent: '#game_steps', toggle: 'collapse' } do
           = icon 'caret-down'
-        %a.sortable-handle.float-right.ml-2{:href => "#"}
+        %a.sortable-handle.float-right.ml-2{ href: '#' }
           = icon 'arrows'
 
     .collapse{ id: "collapse-#{f.object.id}", role: 'tabpanel', data: { parent: '#game_steps' } }

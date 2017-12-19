@@ -1,8 +1,8 @@
 .nested-fields
   .form-row
     .form-group.col-6
-      = f.label :name
-      = f.text_field :name, class: 'form-control'
+      = f.label :name, class: 'required'
+      = f.text_field :name, class: 'form-control', required: true
     .form-group.col-6
       = f.label :file
       %br
