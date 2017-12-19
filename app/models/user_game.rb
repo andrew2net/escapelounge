@@ -21,7 +21,11 @@ class UserGame < ApplicationRecord
   def progress_deg
     total_steps = game.game_steps.joins(:game_step_solutions).distinct.count
     answered_steps = step_answers.count
-    (180 * answered_steps / total_steps).round
+    if total_steps > 0
+      (180 * answered_steps / total_steps).round
+    else
+      0
+    end
   end
 
   # Return step next after last answered

@@ -45,7 +45,7 @@
         .form-check.form-check-inline
           = b.label(class: 'form-check-label') { b.check_box(class: 'form-check-input mr-2') + b.text }
     .form-group.col-4
-      %label TIme allotted to complete the game
+      %label.required TIme allotted to complete the game
       = f.text_field :time_length, class: 'form-control'
 
   %fieldset.border.border-primary.rounded.p-4

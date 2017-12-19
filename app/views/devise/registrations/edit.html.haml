@@ -8,8 +8,8 @@
         = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
           = devise_error_messages!
           .form-group
-            = f.label :email
-            = f.email_field :email, autofocus: true, class: 'form-control'
+            = f.label :email, class: 'required'
+            = f.email_field :email, autofocus: true, class: 'form-control', required: 'true'
           - if devise_mapping.confirmable? && resource.pending_reconfirmation?
             %div
               Currently waiting confirmation for: #{resource.unconfirmed_email}
@@ -26,7 +26,7 @@
             = f.label :password_confirmation
             = f.password_field :password_confirmation, autocomplete: 'off', class: 'form-control'
           .form-group
-            = f.label :current_password
+            = f.label :current_password, class: 'required'
             %i (we need your current password to confirm your changes)
             = f.password_field :current_password, autocomplete: 'off', class: 'form-control'
           .actions.mb-5

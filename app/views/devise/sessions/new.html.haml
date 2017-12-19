@@ -6,10 +6,10 @@
   .col-12
     = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
       .form-group
-        = f.label :email, 'User'
+        = f.label :email, 'User', class: 'required'
         = f.email_field :email, autofocus: true, class: 'form-control'
       .form-group
-        = f.label :password
+        = f.label :password, class: 'required'
         = f.password_field :password, autocomplete: 'off', class: 'form-control'
       -# - if devise_mapping.rememberable?
         .form-group
