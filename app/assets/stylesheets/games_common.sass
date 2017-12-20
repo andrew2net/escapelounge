@@ -1,0 +1,156 @@
+img.game-back-img
+  position: absolute
+
+.game-footer
+  position: absolute
+  top: 205px
+  left: 0
+  right: 0
+  text-align: center
+
+.game-step-subnav
+  position: sticky
+  background-color: white
+  padding: 20px
+  top: 5px
+  z-index: 1000
+
+section
+  .container
+    background-color: white
+    box-shadow: 0px 0px 10px -5px $blue
+    .page-bar
+      height: 25px
+      background-color: $gray-200
+      margin-bottom: 2em
+    h4.step-title
+      text-transform: uppercase
+      font-weight: bold
+      color: $gray-700
+    &.pattern-bottom
+      background-image: image-url("pattern-question2.png")
+      background-repeat: repeat-x
+      background-position: bottom
+    p.step-description
+      font-family: $font-family-base
+      font-size: 18pt
+      font-style: italic
+      text-align: center
+.step-container
+  background-color: white
+  padding: 2em 1em
+  margin-bottom: 2em
+  position: relative
+  box-shadow: $boxShadow
+  border-radius: $borderRadius
+  h4
+    margin: 0 0 0.5em
+    font-weight: 400
+  .step-value
+    position: absolute
+    top: 10px
+    right: 10px
+    background: linear-gradient(90deg, #56b055, #65c7ac)
+    color: white
+    padding: 0.5em
+    border-radius: $borderRadius
+
+  .hint-container
+    position: relative
+    height: 35px
+    line-height: 35px
+    padding-left: 4em
+    margin-top: 2em
+    span
+      position: absolute
+      left: 0
+      top: 0
+      background: linear-gradient(90deg, #56b055, #65c7ac)
+      color: white
+      padding: 0 0.3em
+      border-radius: $borderRadius
+    p
+      margin: 0
+
+#hint-link
+  position: relative
+  bottom: 40px
+  left: 40px
+  a
+    color: $orange
+  #hint-pop
+    background-color: white
+    position: absolute
+    bottom: 40px
+    left: -50px
+    font-size: 12px
+    box-shadow: 0px 0 10px 0px $orange
+    &:before
+      position: absolute
+      height: 20px
+      width: 20px
+      box-shadow: 0px 0 10px 0px $orange
+      content: ''
+      transform: rotate(45deg)
+      bottom: -10px
+      background-color: white
+      left: 75px
+    .hint-title
+      background-color: $orange
+      text-transform: uppercase
+      color: white
+      text-align: center
+      letter-spacing: 4px
+      font-size: 14px
+      font-weight: bold
+    .hint-body
+      position: relative
+      background-color: white
+      z-index: 10
+      height: 170px
+      width: 300px
+      text-align: center
+      color: $gray-600
+      #hints-carousel
+        overflow-y: scroll
+        height: 170px
+      ol.carousel-indicators
+        li
+          background-color: rgba(239, 121, 24, 0.2)
+          &.active
+            background-color: rgba(239, 121, 24, 0.4)
+      .carousel-item
+        min-height: 170px
+        p
+          padding: 1rem 1rem 0
+          font-family: 'Cormorant Garamond'
+          font-size: 12pt
+          font-style: italic
+        a
+          top: 70px
+          position: relative
+    .hint-footer
+      height: 20px
+      text-align: center
+      background-color: white
+      z-index: 1
+      position: relative
+
+.hints-bar
+  position: fixed
+  height: 10px
+  left: 0
+  bottom: 0
+  width: 100%
+  .container
+    height: 10px
+    background-color: $orange !important
+
+.game-whitespace
+  @media (min-width: $screen-md-min)
+    padding-left: 100px
+    padding-right: 100px
+
+  @media (min-width: $screen-lg-min)
+    padding-left: 150px
+    padding-right: 150px
