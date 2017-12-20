@@ -12,7 +12,7 @@
 
 #game-show{ style: "background-image: url(#{image_url(@game.background.url)})" }
 
-  %section
+  %section#game-step
     .container.full-vh-minus-nav.pattern-bottom
       .row.page-bar
 
@@ -25,13 +25,15 @@
 
         = image_tag 'divider-orange.svg'
 
-        .row.mt-4
+        .row.mt-4.row-v-space
           .col-md-12
             %p.step-description
               = @step.description
 
-            - if @step.image.present?
-              %p.text-center= image_tag @step.image.url :thumb
+        - if @step.image.present?
+          .row.row-v-space
+            .col-md-12.text-center
+              = image_tag @step.image.url, class: "rounded img-fluid mx-auto d-block"
 
         -# .row
           #hints-container.col-md-12.text-center
@@ -64,8 +66,6 @@
                     - elsif !@next_step && !has_solutions
                       = link_to 'Finish the Game', user_game_step_url(@user_game, @step),
                       class: 'btn btn-primary', method: :post
-
-
 
                 .col-md-4
                   -# if @next_step
