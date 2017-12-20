@@ -49,7 +49,7 @@
 
               .row
                 .col-md-4
-                  - if previous_step = @step.previous(current_user.id)
+                  -# if previous_step = @step.previous(current_user.id)
                     = link_to 'Previous step', user_game_step_url(@user_game, previous_step),
                       class: 'btn btn-primary float-md-left'
 
@@ -58,12 +58,17 @@
                     - if has_solutions && !@answered
                       = link_to 'Confirm', user_game_step_url(@user_game, @step),
                         class: 'btn btn-primary', id: 'answer-btn'
+                    - elsif @next_step
+                      = link_to 'Next Step', user_game_step_url(@user_game, @next_step),
+                        class: 'btn btn-primary'
                     - elsif !@next_step && !has_solutions
-                      = link_to 'Finish the game', user_game_step_url(@user_game, @step),
+                      = link_to 'Finish the Game', user_game_step_url(@user_game, @step),
                       class: 'btn btn-primary', method: :post
 
+
+
                 .col-md-4
-                  - if @next_step
+                  -# if @next_step
                     = link_to 'Next step', user_game_step_url(@user_game, @next_step),
                       class: 'btn btn-primary float-md-right'
 
