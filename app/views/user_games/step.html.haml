@@ -77,31 +77,33 @@
             -# %hr
 
       -# Hints
-      .hints-bar
-        .container
-          - if @step.hints.any?
-            #hint-link
-              = link_to '#' do
-                = image_tag 'icon-hint.svg', height: 20
-                Hint
-              #hint-pop
-                -# Retrive opened hints
-                - hints = @user_game.hints.where(game_step_id: @step.id)
+      - if @step.hints.any?
+        :ruby
+          # Retrive opened hints
+          hints = @user_game.hints.where(game_step_id: @step.id)
+          next_hint = @step.hints.covered(@user_game).first
+          show_next_hint = !@answered && !@user_game.finished_at && next_hint
 
-                -# Show animation if there aren't opened hints
-                - if hints.blank? && @step.hints.any?
-                  = render 'hints_animation', hint: @step.hints.first, user_game: @user_game, step: @step
+        #hint-bar.hint-bar-hidden{ class: show_next_hint ? 'hint-bar-animate' : '' }
+          .container
+            .hint-title.text-center
+              %i.fa.fa-caret-up
+              Hint
+              %i.fa.fa-caret-up
 
-                .hint-title
-                  Hint
-                .hint-body
-                  #hints-carousel.carousel.slide{ data: { interval: 'false' } }
-                    = render 'hints', user_game: @user_game, answered: @answered, step: @step,
-                      hints: hints
-                  -# Show navigation buttons
-                  %a.carousel-control-prev{ href: '#hints-carousel', role: 'button', data: { slide: 'prev' } }
-                    %span.fa.fa-chevron-left{ aria: { hidden: true } }
-                    %span.sr-only Previous
-                  %a.carousel-control-next{ href: '#hints-carousel', role: 'button', data: { slide: 'next' } }
-                    %span.fa.fa-chevron-right{ aria: { hidden: true } }
-                    %span.sr-only Previous
+            -# Show animation if there aren't opened hints
+            - if hints.blank? && @step.hints.any?
+              = render 'hints_animation', hint: @step.hints.first, user_game: @user_game, step: @step
+
+            .hint-body
+              #hints-carousel.carousel.slide{ data: { interval: 'false' } }
+                = render 'hints', user_game: @user_game, step: @step, hints: hints
+
+              - if @step.hints.size > 1
+                -# Show navigation buttons
+                %a.carousel-control-prev{ href: '#hints-carousel', role: 'button', data: { slide: 'prev' } }
+                  %span.fa.fa-chevron-left{ aria: { hidden: true } }
+                  %span.sr-only Previous
+                %a.carousel-control-next{ href: '#hints-carousel', role: 'button', data: { slide: 'next' } }
+                  %span.fa.fa-chevron-right{ aria: { hidden: true } }
+                  %span.sr-only Previous

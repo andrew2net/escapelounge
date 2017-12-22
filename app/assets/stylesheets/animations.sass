@@ -65,15 +65,17 @@ g#pupil-in-keyhole
   height: 0px !important
 
 #hint-open-animation
-  position: absolute
-  top: 1px
-  z-index: 99
-  height: 190px
+  // position: absolute
+  // top: 1px
+  // z-index: 99
+  // height: 190px
   overflow: hidden
   transition-property: height
   transition-duration: 1s
   transition-delay: 2.5s
   transition-timing-function: linear
+  svg
+    padding-top: 10px
 
 @keyframes hideHintBubble
   0%
@@ -115,3 +117,20 @@ g#pupil-in-keyhole
   100%
     transform: rotate(-50deg)
     opacity: 0
+
+.hint-bar-animate
+  animation-name: hintsBarBounce
+  animation-duration: 5s
+  animation-iteration-count: infinite
+
+@keyframes hintsBarBounce
+  0%, 88%
+    min-height: 32px
+  92%
+    min-height: 36px
+  96%
+    min-height: 32px
+  98%
+    min-height: 34px
+  100%
+    min-height: 32px

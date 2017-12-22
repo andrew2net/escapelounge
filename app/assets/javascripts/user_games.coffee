@@ -4,8 +4,11 @@ $ ->
   $form           = $ '#step-form'
   $modal          = $ '#result-modal'
   $modalMessage   = $modal.find 'h2'
-  $hintLink       = $ '#hint-link > a'
-  $hintPop        = $ '#hint-pop'
+  # $hintLink       = $ '#hint-link > a'
+  $hintBar        = $ '#hint-bar'
+  $hintBarTitle   = $ $hintBar.find '.hint-title'
+  $hintBarCaret   = $hintBarTitle.find('.fa')
+  # $hintPop        = $ '#hint-pop'
   $eyeInKeyhole   = $ '#eye-in-keyhole'
   $keyInKeyhole   = $ '#key-in-keyhole'
 
@@ -79,9 +82,13 @@ $ ->
           , 2000
 
   # Toggle hints window
-  $hintLink.click (e)->
-    e.preventDefault()
-    $hintPop.fadeToggle() # 'd-none'
+  $hintBarTitle.click (e)->
+    $hintBar.toggleClass('hint-bar-hidden').removeClass('hint-bar-animate')
+    $hintBarCaret.toggleClass('fa-caret-up').toggleClass('fa-caret-down')
+    
+  # $hintLink.click (e)->
+  #   e.preventDefault()
+  #   $hintPop.fadeToggle() # 'd-none'
 
   # Submit form
   $answerBtn.click submit
