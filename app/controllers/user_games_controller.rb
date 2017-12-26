@@ -35,8 +35,9 @@ class UserGamesController < ApplicationController
       if @step.game_step_solutions.any?
         solution = @step.game_step_solutions.find_by solution: params[:answer]
         if solution
-          StepAnswer.create user_game_id: @user_game.id, game_step_id: @step.id,
-            answer: params[:answer]
+          sa = StepAnswer.find_or_initialize_by user_game_id: @user_game.id, game_step_id: @step.id
+          sa.answer = params[:answer]
+          sa.save
           next_step = @step.next(@user_game.id)
           url = if next_step
             user_game_step_url(@user_game, next_step)

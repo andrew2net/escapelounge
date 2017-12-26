@@ -3,8 +3,8 @@
     .col-md-2= card[:brand]
     .col-md-2= card[:last4]
     .col-md-2= card[:exp]
-    .col-md-2= card[:default]
-    .col-md-3{ data: { card_id: card[:id] } }
+    .col-md-1= card[:default]
+    .col-md-4{ data: { card_id: card[:id] } }
       = button_tag 'Delete', class: 'btn btn-primary btn-sm delete-card-btn',
         type: 'button'
       = button_tag 'Set default', class: 'btn btn-primary btn-sm set-default-btn',

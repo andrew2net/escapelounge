@@ -1,0 +1,30 @@
+%svg{ version: '1.1', baseProfile: 'full', xmlns: 'http://www.w3.org/2000/svg' }
+  %defs
+    %g{ id: 'KeyHole' }
+      %polygon{ points: '125 105 175 105 185 170 115 170' }
+      %circle{ cx: 150, cy: 85, r: 32 }
+
+    %clipPath{ id: 'holeClip' }
+      %circle{ cx: 150, cy: 85, r: 32 }
+
+    %g{ id: 'KeyHoleShadow' }
+      %circle{ cx: 150, cy: 85, r: 37 }
+      %polygon{ points: '120 105 180 105 190 175 110 175' }
+
+    %filter{ id: 'shadow' }
+      %feOffset{ result: 'offOut', in: 'SourceAlpha', dx: 1, dy: 1 }
+      %feColorMatrix{ result: 'matrixOut', in: 'offOut', type: 'matrix',
+        values: '0.2 0 0 0 0 0 0.2 0 0 0 0 0 0.2 0 0 0 0 0 1 0' }
+      %feGaussianBlur{ result: 'blurOut', in: 'matrixOut', stdDeviation: 2 }
+      %feBlend{ in: 'SourceGraphic', in2: 'blurOut', mode: 'normal' }
+    
+    %radialGradient{ id: 'yellowBeam', fy: 1 }
+      %stop{ offset: 0, 'stop-color' => 'yellow' }
+      %stop{ offset: 2, 'stop-color' => '#ef7918' }
+
+    %radialGradient{ id: 'blueBeam', fy: 1 }
+      %stop{ offset: 0, 'stop-color' => '#BDDAFD' }
+      %stop{ offset: 2, 'stop-color' => '#0074FF' }
+
+    %filter{ id: 'beamBlur' }
+      %feGaussianBlur{ stdDeviation: 6 }

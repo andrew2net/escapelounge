@@ -23,7 +23,7 @@ $ ->
   $changePlanBtn.click (event)->
     @disabled = true
     $.post "/subscriptions/#{$subscriptionPlan.val()}/subscribe", ->
-      @.setAttribute 'data-current-plan', $subscriptionPlan.val()
+      event.target.setAttribute 'data-current-plan', $subscriptionPlan.val()
       $cancelSubscriptionBtn.prop 'disabled', false
       $subscriptionWillCancelWarn.addClass 'd-none'
 
