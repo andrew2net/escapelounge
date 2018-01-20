@@ -1,2 +1,9 @@
 %h1 Pages#home
 %p Find me in app/views/pages/home.html.haml
+
+#padlock-container
+  = render 'padlock'
+
+= text_field_tag :n0, 0, readonly: true, autocomplete: :off
+= text_field_tag :n1, 0, readonly: true, autocomplete: :off
+= text_field_tag :n2, 0, readonly: true, autocomplete: :off
