@@ -88,7 +88,7 @@ $ ->
     $next.css('transform', 'rotateX(-36deg)')
     $this.css('transform', 'rotateX(-72deg)')
     # Move buttom number to up.
-    $parent.find("g.pdln-#{decrease10(nextN, 2)}").addClass('notransition')
+    $parent.find("g.pdln-#{decrease10(nextN, 3)}").addClass('notransition')
       .css 'transform', 'rotateX(72deg)'
 
   $('g.pdln-9').click moveDown
