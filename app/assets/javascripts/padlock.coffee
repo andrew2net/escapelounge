@@ -1,47 +1,51 @@
 $ ->
   $input = $ '#padlock_code'
 
+  # Return x + n. If result is greater then 9 then return last digit.
+  # Values of x and n should be from 0 to 9.
   increase10 = (x, n = 1) -> if x + n <= 9 then x + n else x + n - 10
+  
+  # Return x - n. If result is less then 0 then return addition up to 10.
+  # Values of x and n should be from 0 to 9.
   decrease10 = (x, n = 1) -> if x - n >= 0 then x - n else 10 - n + x
 
+  # Padlock code.
   code = {
     values: [0, 0, 0]
+    # Increase value with index - idx.
     increase: (idx) ->
       @values[idx] = increase10 @values[idx]
       $input.val @values.join('')
       @values[idx]
+    # Decrease value with index - idx.
     decrease: (idx) ->
       @values[idx] = decrease10 @values[idx]
       $input.val @values.join('')
       @values[idx]
   }
 
-  noTransitionTimer = null
+  # Remove notransition class from digits which shouldn't animated when moves up or down.
   removeNoTransition = ->
-    clearTimeOut(noTransitionTimer) if noTransitionTimer
     noTransitionTimer = setTimeout ->
       $('.notransition').removeClass 'notransition'
-      noTransitionTimer = null
-    , 100
+    , 20
 
-  moveUp = ->
-    # Get index of number.
-    codeIdx = parseInt @parentElement.id.match(/\d$/)[0]
+  # Move digits up.
+  moveUp = ($parent) ->
     # Cacl new current value.
-    n = code.decrease codeIdx
+    n = code.decrease $parent.data('code-idx')
     # Calc new next value.
     nextN = decrease10 n
     # Calc new prev value.
     prevN = increase10 n
     # Remove current up event listener.
-    $this = $(@).off 'click'
-    $parent = $ @parentElement
+    $this = $parent.find("g.pdln-#{increase10(prevN)}").off 'click'
     # Add another up event listener.
-    $prev = $parent.find("g.pdln-#{prevN}").click moveUp
+    $prev = $parent.find("g.pdln-#{prevN}").click -> moveUp $(@parentElement)
     # Remove current down event listener.
     $current = $parent.find("g.pdln-#{n}").off 'click'
     # Add another down event listener.
-    $next = $parent.find("g.pdln-#{nextN}").click moveDown
+    $next = $parent.find("g.pdln-#{nextN}").click -> moveDown $(@parentElement)
     # Rotate visible numbers up.
     $this.css 'transform', 'rotateX(72deg)'
     $prev.css('transform', 'rotateX(36deg)')
@@ -52,24 +56,22 @@ $ ->
       .css 'transform', 'rotateX(-72deg)'
     removeNoTransition()
 
-  $('g.pdln-1').click moveUp
+  $('g.pdln-1').click -> moveUp $(@parentElement)
 
-  moveDown = ->
-    # Get index of number.
-    codeIdx = parseInt @parentElement.id.match(/\d$/)[0]
+  # Move digits down.
+  moveDown = ($parent) ->
     # Increase code number.
-    n = code.increase codeIdx
+    n = code.increase $parent.data('code-idx')
     nextN = decrease10 n
     prevN = increase10 n
     # Remove current down event listener.
-    $this = $(@).off 'click'
-    $parent = $ @parentElement
+    $this = $parent.find("g.pdln-#{decrease10(nextN)}").off 'click'
     # Add another down event listener.
-    $next = $parent.find("g.pdln-#{nextN}").click moveDown
+    $next = $parent.find("g.pdln-#{nextN}").click -> moveDown $(@parentElement)
     # Remove current up event listener.
     $current = $parent.find("g.pdln-#{n}").off 'click'
     # Add another up event listener.
-    $prev = $parent.find("g.pdln-#{prevN}").click moveUp
+    $prev = $parent.find("g.pdln-#{prevN}").click -> moveUp $(@parentElement)
     # Rotate visible numbers down.
     $prev.css 'transform', 'rotateX(36deg)'
     $current.css 'transform', 'rotateX(0)'
@@ -80,5 +82,30 @@ $ ->
       .css 'transform', 'rotateX(72deg)'
     removeNoTransition()
 
-  $('g.pdln-9').click moveDown
+  $('g.pdln-9').click -> moveDown $(@parentElement)
   
+  $debug = $ '#debug'
+  mouseStartY = null
+  $('g.pdl').on 'mousedown touchstart', (event) ->
+    if event.touches && event.touches.length == 1
+      mouseStartY = event.touches[0].pageY
+      $debug.html "touch at #{mouseStartY}"
+    else if event.which == 1
+      mouseStartY = event.pageY
+      $debug.html "click at #{mouseStartY}"
+
+  $(document).on 'mouseup touchend', -> mouseStartY = null
+
+  $('g[data-code-idx]').on 'mousemove touchmove', (event) ->
+    event.preventDefault()
+    if mouseStartY
+      if event.touches && event.touches.length == 1
+        mouseScrollY = mouseStartY - event.touches[0].pageY
+      else
+        mouseScrollY = mouseStartY -  event.pageY
+      if mouseScrollY > 15
+        mouseStartY -= 30
+        moveUp($(@))
+      else if mouseScrollY < -15
+        mouseStartY += 30
+        moveDown($(@))

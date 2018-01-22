@@ -1,12 +1,13 @@
 .notransition
   transition: none !important
 
-g#pdl-0, g#pdl-1, g#pdl-2
+g[data-code-idx]
   perspective: 7.5cm
   > g
     transform-origin: 150px 115px -49px
     transition: transform 1s
     cursor: default
+    user-select: none
 
 g.pdln-7
   transform: rotateX(72deg)

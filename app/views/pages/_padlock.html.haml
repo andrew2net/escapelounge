@@ -10,7 +10,7 @@
 
   %rect{ width: "100%", height: "100%", fill: "white" }
 
-  %g#pdl-0{ transform: 'translate(-30,0)' }
+  %g#pdl-0.pdl{ transform: 'translate(-30,0)', data: { code_idx: 0 } }
     %g.pdln-0
       %use{ 'xlink:href' => '#NumRect' }
       %text{ x: 145, y: 120 } 0
@@ -42,7 +42,7 @@
       %use{ 'xlink:href' => '#NumRect' }
       %text{ x: 145, y: 120 } 9
       
-  %g#pdl-1
+  %g#pdl-1.pdl{ data:{ code_idx: 1 } }
     %g.pdln-0
       %use{ 'xlink:href' => '#NumRect' }
       %text{ x: 145, y: 120 } 0
@@ -74,7 +74,7 @@
       %use{ 'xlink:href' => '#NumRect' }
       %text{ x: 145, y: 120 } 9
 
-  %g#pdl-2{ transform: 'translate(30,0)' }
+  %g#pdl-2.pdl{ transform: 'translate(30,0)', data: { code_idx: 2 } }
     %g.pdln-0
       %use{ 'xlink:href' => '#NumRect' }
       %text{ x: 145, y: 120 } 0
