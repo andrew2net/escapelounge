@@ -84,15 +84,12 @@ $ ->
 
   $('g.pdln-9').click -> moveDown $(@parentElement)
   
-  $debug = $ '#debug'
   mouseStartY = null
   $('g.pdl').on 'mousedown touchstart', (event) ->
     if event.touches && event.touches.length == 1
       mouseStartY = event.touches[0].pageY
-      $debug.html "touch at #{mouseStartY}"
     else if event.which == 1
       mouseStartY = event.pageY
-      $debug.html "click at #{mouseStartY}"
 
   $(document).on 'mouseup touchend', -> mouseStartY = null
 
