@@ -1,5 +1,5 @@
 $ ->
-  $input = $ '#padlock_code'
+  $input = $ '#answer'
 
   # Return x + n. If result is greater then 9 then return last digit.
   # Values of x and n should be from 0 to 9.

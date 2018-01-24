@@ -15,6 +15,8 @@ class GameStep < ApplicationRecord
 
   default_scope { order :game_id, :position }
 
+  enum answer_input_type: [:text_field, :combo_lock]
+
   scope :answered, ->(user_id) { joins(step_answers: :user_game)
       .where(step_answers: { user_games: { user_id: user_id }})
   }

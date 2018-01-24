@@ -23,6 +23,11 @@
               = f.label :image
               = f.file_field :image
             = image_tag f.object.image.url :thumb
+        .form-group.row
+          = f.label :answer_input_type, class: 'col-2 col-for-label'
+          .col-4
+            = f.select :answer_input_type, options_for_select({ 'Text field' => :text_field, 'Combo lock' => :combo_lock },
+              f.object.answer_input_type), {}, class: 'form-control'
 
         .hints
           %fieldset.border.border-primary.rounded.p-4

@@ -49,10 +49,15 @@
             = form_tag user_game_step_url(@user_game, @step), id: 'step-form' do
               %p
                 - if has_solutions = @step.game_step_solutions.any?
-                  .form-group
-                    -# = label_tag :answer
-                    = text_field_tag :answer, @answer, class: 'form-control', disabled: @answered,
-                      placeholder: 'Put your answer here...'
+                  - if @step.text_field?
+                    .form-group
+                      -# = label_tag :answer
+                      = text_field_tag :answer, @answer, class: 'form-control', disabled: @answered,
+                        placeholder: 'Put your answer here...'
+                  - else
+                    .d-flex.justify-content-center
+                      = render 'pages/padlock'
+                    = hidden_field_tag :answer, '000', autocomplete: :off
 
               .row
                 .col-md-4
