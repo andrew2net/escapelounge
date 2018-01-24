@@ -1,37 +1,37 @@
-%svg{ version: "1.1", baseProfile: "full", width: "500", height: "500", xmlns: "http://www.w3.org/2000/svg" }
+%svg{ version: "1.1", baseProfile: "full", width: "360", height: "515", xmlns: "http://www.w3.org/2000/svg" }
   %defs
-    %rect#NumRect{ x: 0, y: 0, width: 30, height: 30, 'fill-opacity' => 0 }
+    %rect#NumRect{ x: 0, y: 0, width: 40, height: 40, 'fill-opacity' => 0 }
 
     %g#Num-0
       %use{ 'xlink:href' => '#NumRect' }
-      %text{ x: 10, y: 20 } 0
+      %text{ x: 10, y: 29, 'font-size' => 28, 'font-weight' => 'bold' } 0
     %g#Num-1
       %use{ 'xlink:href' => '#NumRect' }
-      %text{ x: 10, y: 20 } 1
+      %text{ x: 10, y: 29, 'font-size' => 28, 'font-weight' => 'bold' } 1
     %g#Num-2
       %use{ 'xlink:href' => '#NumRect' }
-      %text{ x: 10, y: 20 } 2
+      %text{ x: 10, y: 29, 'font-size' => 28, 'font-weight' => 'bold' } 2
     %g#Num-3
       %use{ 'xlink:href' => '#NumRect' }
-      %text{ x: 10, y: 20 } 3
+      %text{ x: 10, y: 29, 'font-size' => 28, 'font-weight' => 'bold' } 3
     %g#Num-4
       %use{ 'xlink:href' => '#NumRect' }
-      %text{ x: 10, y: 20 } 4
+      %text{ x: 10, y: 29, 'font-size' => 28, 'font-weight' => 'bold' } 4
     %g#Num-5
       %use{ 'xlink:href' => '#NumRect' }
-      %text{ x: 10, y: 20 } 5
+      %text{ x: 10, y: 29, 'font-size' => 28, 'font-weight' => 'bold' } 5
     %g#Num-6
       %use{ 'xlink:href' => '#NumRect' }
-      %text{ x: 10, y: 20 } 6
+      %text{ x: 10, y: 29, 'font-size' => 28, 'font-weight' => 'bold' } 6
     %g#Num-7
       %use{ 'xlink:href' => '#NumRect' }
-      %text{ x: 10, y: 20 } 7
+      %text{ x: 10, y: 29, 'font-size' => 28, 'font-weight' => 'bold' } 7
     %g#Num-8
       %use{ 'xlink:href' => '#NumRect' }
-      %text{ x: 10, y: 20 } 8
+      %text{ x: 10, y: 29, 'font-size' => 28, 'font-weight' => 'bold' } 8
     %g#Num-9
       %use{ 'xlink:href' => '#NumRect' }
-      %text{ x: 10, y: 20 } 9
+      %text{ x: 10, y: 29, 'font-size' => 28, 'font-weight' => 'bold' } 9
 
     %linearGradient#NumGradient{ x2: '0%', y2: '100%' }
       %stop{ offset: '0%', 'stop-color' => '#333' }
@@ -39,18 +39,18 @@
       %stop{ offset: '100%', 'stop-color' => '#333' }
 
     %clipPath#LockClip
-      %rect{ x: 0, y: 0, height: 269, width: 500 }
-      %rect{ x: 0, y: 269, height: 62, width: 172 }
-      %rect{ x: 203, y: 269, height: 62, width: 32 }
-      %rect{ x: 265, y: 269, height: 62, width: 32 }
-      %rect{ x: 328, y: 269, height: 62, width: 172 }
-      %rect{ x: 0, y: 331, height: 169, width: 500 }
+      %rect{ x: 0, y: 0, height: 304, width: '100%' }
+      %rect{ x: 0, y: 304, height: 100, width: 56 }
+      %rect{ x: 103, y: 304, height: 100, width: 53 }
+      %rect{ x: 204, y: 304, height: 100, width: 53 }
+      %rect{ x: 305, y: 304, height: 100, width: 55 }
+      %rect{ x: 0, y: 404, height: 169, width: '100%' }
 
   %rect{ width: "100%", height: "100%", fill: "white" }
 
-  %rect{ x: 0, y: 267, width: '100%', height: 67, fill: 'url(#NumGradient)' }
+  %rect{ x: 10, y: 304, width: '90%', height: 100, fill: 'url(#NumGradient)' }
 
-  %g#pdl-0.pdl{ transform: 'translate(172,285)', data: { code_idx: 0 } }
+  %g#pdl-0.pdl{ transform: 'translate(60,337)', data: { code_idx: 0 } }
     %g.pdln-0
       %use{ 'xlink:href' => '#Num-0'}
     %g.pdln-1
@@ -72,7 +72,7 @@
     %g.pdln-9
       %use{ 'xlink:href' => '#Num-9'}
       
-  %g#pdl-1.pdl{ transform: 'translate(235,285)', data:{ code_idx: 1 } }
+  %g#pdl-1.pdl{ transform: 'translate(160,337)', data:{ code_idx: 1 } }
     %g.pdln-0
       %use{ 'xlink:href' => '#Num-0'}
     %g.pdln-1
@@ -94,7 +94,7 @@
     %g.pdln-9
       %use{ 'xlink:href' => '#Num-9'}
 
-  %g#pdl-2.pdl{ transform: 'translate(298,285)', data: { code_idx: 2 } }
+  %g#pdl-2.pdl{ transform: 'translate(261,337)', data: { code_idx: 2 } }
     %g.pdln-0
       %use{ 'xlink:href' => '#Num-0'}
     %g.pdln-1
@@ -116,4 +116,4 @@
     %g.pdln-9
       %use{ 'xlink:href' => '#Num-9'}
   
-  %image{ 'xlink:href' => image_url('combo-lock.png'), height: 500, width: 500, 'clip-path' => 'url(#LockClip)' }
+  %image{ 'xlink:href' => image_url('combo-lock.png'), height: 515, width: 360, 'clip-path' => 'url(#LockClip)' }
