@@ -29,3 +29,5 @@
 /config/database.yml
 
 .DS_Store
+.vscode/
+erd.pdf

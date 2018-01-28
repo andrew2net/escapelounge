@@ -1,5 +1,5 @@
-.nested-fields
-
+.nested-fields{ data: { game_step: true } }
+  -# = f.hidden_field :image_solution_id, data: { image_solution_id: true }
   .card
     .card-header{ role: 'tab', id: "header-#{f.object.id}" }
       = f.text_field :position, hidden: true
@@ -22,26 +22,36 @@
             .form-group
               = f.label :image
               = f.file_field :image
-            = image_tag f.object.image.url :thumb
+            = image_tag f.object.image.url(:thumb), width: '60%', class: 'mx-auto d-block'
         .form-group.row
           = f.label :answer_input_type, class: 'col-2 col-for-label'
           .col-4
-            = f.select :answer_input_type, options_for_select({ 'Text field' => :text_field, 'Combo lock' => :combo_lock },
-              f.object.answer_input_type), {}, class: 'form-control'
+            = f.select :answer_input_type, options_for_select({ 'Text field' => :text_field, 'Combo lock' => :combo_lock,
+              'Image options' => :image_options }, f.object.answer_input_type), {}, class: 'form-control', data: { input_type: true }
+
+        .solutions
+          %fieldset.border.border-primary.rounded.p-4
+            %legend Solutions
+            = f.fields_for :game_step_solutions do |game_step_solution|
+              - render 'game_step_solution_fields', f: game_step_solution
+            .links
+              = link_to_add_association 'add solution', f, :game_step_solutions, class: 'btn btn-primary mt-3'
+        
+        .image-options
+          %fieldset.border.border-primary.rounded.p-4
+            %legend Image options
+            .row
+              = f.fields_for :image_response_options do |image_response_option|
+                - render 'image_response_option_fields', f: image_response_option, sf: f
+            .links
+              = link_to_add_association 'add image option', f, :image_response_options, class: 'btn btn-primary', render_options: {locals: { sf: f } }
 
         .hints
           %fieldset.border.border-primary.rounded.p-4
             %legend Hints
             = f.fields_for :hints do |hint|
-              = render 'hint_fields', f: hint
+              - render 'hint_fields', f: hint
             .links
               = link_to_add_association 'add hint', f, :hints, class: 'btn btn-primary'
-
-          %fieldset.border.border-primary.rounded.p-4
-            %legend Solutions
-            = f.fields_for :game_step_solutions do |game_step_solution|
-              = render 'game_step_solution_fields', f: game_step_solution
-            .links
-              = link_to_add_association 'add solution', f, :game_step_solutions, class: 'btn btn-primary mt-3'
 
         = link_to_remove_association 'remove game step', f, class: 'btn btn-danger mt-3'

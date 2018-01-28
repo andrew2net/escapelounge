@@ -1,6 +1,8 @@
 class GameStep < ApplicationRecord
   include Attachable
 
+  attr_accessor :image_solution_id
+
   belongs_to :game
   has_many :step_answers, dependent: :delete_all
 
@@ -10,12 +12,15 @@ class GameStep < ApplicationRecord
   has_many :game_step_solutions, dependent: :destroy
   accepts_nested_attributes_for :game_step_solutions, reject_if: :all_blank, allow_destroy: true
 
+  has_many :image_response_options, inverse_of: :game_step, dependent: :destroy
+  accepts_nested_attributes_for :image_response_options, reject_if: :all_blank, allow_destroy: true
+
   has_attached_file :image, attachment_opts(styles: { thumb: "260x260#" })
   validates_attachment :image, content_type: { content_type: /\Aimage\/.*\z/ }
 
   default_scope { order :game_id, :position }
 
-  enum answer_input_type: [:text_field, :combo_lock]
+  enum answer_input_type: [:text_field, :combo_lock, :image_options]
 
   scope :answered, ->(user_id) { joins(step_answers: :user_game)
       .where(step_answers: { user_games: { user_id: user_id }})
@@ -35,6 +40,16 @@ class GameStep < ApplicationRecord
     if allow_next
       # if it's answered then retirn next step.
       self.class.where(game_id: game_id).where('position > ?', position).first
+    end
+  end
+
+  def update_image_solution(id)
+    solution = game_step_solutions.first
+    if solution
+      solution.update solution: id
+      game_step_solutions.where.not(id: solution.id).delete_all
+    else
+      game_step_solutions.create solution: id
     end
   end
 

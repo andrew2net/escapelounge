@@ -32,6 +32,14 @@ class Admin::GamesController < ApplicationController
   # GET /admin/games/:id/edit
   def edit
     authorize @game
+    @game.game_steps.each do |step|
+      if step.image_options?
+        solution = step.game_step_solutions.first
+        if solution&.solution
+          step.image_solution_id = solution&.solution
+        end
+      end
+    end
   end
 
   # PATCH/PUT /admin/games/:id
@@ -39,6 +47,7 @@ class Admin::GamesController < ApplicationController
     authorize @game
     respond_to do |format|
       if @game.update(game_params)
+        # @game.game_steps.where(answer_input_type: :image_options).each { |step| step.update_image_option_solution }
         format.html { redirect_to @game, notice: 'Game was successfully updated.' }
         format.json { render :show, status: :ok, location: @game }
       else
@@ -70,7 +79,8 @@ class Admin::GamesController < ApplicationController
                                     :time_length, :instructions, :banner, :background, :visible,
                                     game_assets_attributes: [:id, :name, :file, :_destroy],
                                     game_steps_attributes: [:id, :name, :description, :game_id,
-                                      :_destroy, :position, :image, :answer_input_type,
+                                      :_destroy, :position, :image, :answer_input_type, :image_solution_id,
+                                      image_response_options_attributes: [:id, :image, :image_solution_id, :_destroy],
                                       hints_attributes: [:id, :description, :value, :game_step_id, :_destroy, :image],
                                       game_step_solutions_attributes: [:id, :solution, :game_step_id, :_destroy],
                                     ]

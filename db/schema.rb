@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180124120642) do
+ActiveRecord::Schema.define(version: 20180126104125) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -113,6 +113,17 @@ ActiveRecord::Schema.define(version: 20180124120642) do
     t.index ["user_game_id"], name: "index_hints_user_games_on_user_game_id"
   end
 
+  create_table "image_response_options", force: :cascade do |t|
+    t.bigint "game_step_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "image_file_name"
+    t.string "image_content_type"
+    t.integer "image_file_size"
+    t.datetime "image_updated_at"
+    t.index ["game_step_id"], name: "index_image_response_options_on_game_step_id"
+  end
+
   create_table "step_answers", force: :cascade do |t|
     t.bigint "game_step_id", null: false
     t.bigint "user_game_id", null: false
@@ -169,6 +180,7 @@ ActiveRecord::Schema.define(version: 20180124120642) do
 
   add_foreign_key "game_assets", "games"
   add_foreign_key "game_step_solutions", "game_steps"
+  add_foreign_key "image_response_options", "game_steps"
   add_foreign_key "step_answers", "game_steps"
   add_foreign_key "step_answers", "user_games"
   add_foreign_key "users", "subscription_plans"

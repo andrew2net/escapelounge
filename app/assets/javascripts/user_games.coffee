@@ -89,6 +89,13 @@ $ ->
             modalTimeOut = null
           , 2000
 
+  $image_options = $('input[type="radio"][name="image_option"]')
+  $image_options.change ->
+    $('#answer').val @value
+  
+  if $image_options.length > 0
+    $('#answer').val $image_options.filter(':checked').val()
+
   # Toggle hints window
   $hintBarTitle.click (e) ->
     $hintBar.toggleClass('hint-bar-hidden').removeClass('hint-bar-animate')

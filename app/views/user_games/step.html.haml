@@ -48,16 +48,26 @@
           .col-md-12
             = form_tag user_game_step_url(@user_game, @step), id: 'step-form' do
               %p
+                -# Show answer input if there is any solution.
                 - if has_solutions = @step.game_step_solutions.any?
                   - if @step.text_field?
+                    .d-flex.justify-content-center
+                      = render 'pages/padlock'
+                    = hidden_field_tag :answer, '000', autocomplete: :off
+                  - elsif @step.image_options?
+                    .d-flex.justify-content-around
+                      - @step.image_response_options.each do |option|
+                        .d-block.text-center
+                          = label_tag "image_option_#{option.id}" do
+                            = image_tag option.image.url(:thumb), height: 150, width: 150
+                          %div
+                            = radio_button_tag :image_option, option.id
+                    = hidden_field_tag :answer, '', autocomplete: :off
+                  - else
                     .form-group
                       -# = label_tag :answer
                       = text_field_tag :answer, @answer, class: 'form-control', disabled: @answered,
                         placeholder: 'Put your answer here...'
-                  - else
-                    .d-flex.justify-content-center
-                      = render 'pages/padlock'
-                    = hidden_field_tag :answer, '000', autocomplete: :off
 
               .row
                 .col-md-4

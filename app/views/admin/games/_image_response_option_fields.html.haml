@@ -1,0 +1,13 @@
+.nested-fields.col-4
+  = f.hidden_field :image_solution_id, data: { image_solution_id: true }
+  .form-group
+    = f.file_field :image, class: 'form-control-file'
+
+  .text-center
+    = image_tag f.object.image.url(:thumb), width: 200, height: 200
+
+  .form-check.text-center
+    = sf.radio_button :image_solution_id, f.object.id
+
+  .text-center
+    = link_to_remove_association 'remove option', f, class: 'btn btn-danger mb-3'
