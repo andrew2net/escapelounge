@@ -50,7 +50,7 @@
               %p
                 -# Show answer input if there is any solution.
                 - if has_solutions = @step.game_step_solutions.any?
-                  - if @step.text_field?
+                  - if @step.combo_lock?
                     .d-flex.justify-content-center
                       = render 'pages/padlock'
                     = hidden_field_tag :answer, '000', autocomplete: :off
