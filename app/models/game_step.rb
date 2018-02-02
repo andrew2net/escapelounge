@@ -18,6 +18,9 @@ class GameStep < ApplicationRecord
   has_attached_file :image, attachment_opts(styles: { thumb: "260x260#" })
   validates_attachment :image, content_type: { content_type: /\Aimage\/.*\z/ }
 
+  has_attached_file :video, attachment_opts()
+  validates_attachment :video, content_type: { content_type: /\Avideo\/.*\z/}
+
   default_scope { order :game_id, :position }
 
   enum answer_input_type: [:text_field, :combo_lock, :image_options]

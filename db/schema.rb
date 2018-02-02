@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180126104125) do
+ActiveRecord::Schema.define(version: 20180202174921) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,10 @@ ActiveRecord::Schema.define(version: 20180126104125) do
     t.integer "image_file_size"
     t.datetime "image_updated_at"
     t.integer "answer_input_type", default: 0, null: false
+    t.string "video_file_name"
+    t.string "video_content_type"
+    t.integer "video_file_size"
+    t.datetime "video_updated_at"
   end
 
   create_table "games", id: :serial, force: :cascade do |t|

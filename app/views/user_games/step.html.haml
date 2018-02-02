@@ -39,6 +39,11 @@
           .row.row-v-space
             .col-md-12.text-center
               = image_tag @step.image.url, class: "rounded img-fluid mx-auto d-block"
+        
+        - if @step.video.present?
+          .row.row-v-space
+            .col-12.text-center
+              = video_tag @step.video.url, controls: true, size: '638x360'
 
         -# .row
           #hints-container.col-md-12.text-center
