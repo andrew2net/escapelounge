@@ -15,7 +15,7 @@ gem 'haml-rails', '~> 1.0'
 # Use SASS for stylesheets
 gem 'sass-rails', '~> 5.0', '>= 5.0.6'
 # Use bootstrap for front-end framework
-gem 'bootstrap', '~> 4.0.0.beta2.1'
+gem 'bootstrap', '~> 4.0.0'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.1.0'

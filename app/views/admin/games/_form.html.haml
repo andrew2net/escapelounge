@@ -13,7 +13,17 @@
       .form-check.mt-4
         = f.label :visible, class: 'form-check-label' do
           = f.check_box :visible, class: 'form-check-input'
-          Visible
+          Publish Game
+  .form-row
+    .form-group.col-6
+      = f.label :description
+      = f.text_area :description, class: 'form-control', rows: 3
+    .form-group.col-6
+      = f.label :short_description
+      = f.text_area :short_description, class: 'form-control', rows: 3
+  .form-group
+    = f.label :instructions
+    = f.text_area :instructions, class: 'form-control'
   .row.mb-3
     .col-6
       .form-group
@@ -25,15 +35,6 @@
         = f.label :background
         = f.file_field :background
       = image_tag @game.background.url :thumb
-  .form-group
-    = f.label :description
-    = f.text_area :description, class: 'form-control'
-  .form-group
-    = f.label :short_description
-    = f.text_area :short_description, class: 'form-control'
-  .form-group
-    = f.label :instructions
-    = f.text_area :instructions, class: 'form-control'
   .form-row
     .form-group.col-4
       = f.label :difficulty
@@ -45,7 +46,7 @@
         .form-check.form-check-inline
           = b.label(class: 'form-check-label') { b.check_box(class: 'form-check-input mr-2') + b.text }
     .form-group.col-4
-      %label.required TIme allotted to complete the game
+      %label.required Time allotted to complete the game
       = f.text_field :time_length, class: 'form-control', required: true
 
   %fieldset.border.border-primary.rounded.p-4

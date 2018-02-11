@@ -1,10 +1,15 @@
-= content_for :title, 'Account Settings'
+-# = content_for :title, 'Account Settings'
 
-%section
-  .container.full-vh-minus-nav
-    .row.page-bar
-    .row.mx-2
-      .col-12
+%section.page-content
+  .container
+
+    .card
+      .card-header
+        .row
+          .col-md-12
+            %h3.card-title Account Settings
+      .card-body
+
         = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
           = devise_error_messages!
           .form-group
@@ -17,11 +22,11 @@
             = f.label :password
             %i (leave blank if you don't want to change it)
             = f.password_field :password, autocomplete: 'off', class: 'form-control'
-            - if @minimum_password_length
-              %br/
-              %em
-                = @minimum_password_length
-                characters minimum
+            -# - if @minimum_password_length
+            -#   %br/
+            -#   %em
+            -#     = @minimum_password_length
+            -#     characters minimum
           .form-group
             = f.label :password_confirmation
             = f.password_field :password_confirmation, autocomplete: 'off', class: 'form-control'
@@ -32,6 +37,8 @@
           .actions.mb-5
             = f.submit 'Update', class: 'btn btn-primary'
 
-        %p.float-left.mr-2 Unhappy?
+      .card-footer
+
+        %span.float-left.mr-2 Unhappy?
         = button_to "Cancel my account", registration_path(resource_name), class: 'btn btn-default',
           data: { confirm: "Are you sure?" }, method: :delete

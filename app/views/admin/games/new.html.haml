@@ -1,13 +1,15 @@
 #game-new
 
-  .page-head
+  %section.page-content
     .container
-      .row
-        .col-md-10
-          %h4 New Game
-        .col-md-2
-          = link_to 'Cancel', admin_games_path, class: "btn btn-sm btn-primary"
 
-  %section
-    .container
-      = render 'form'
+
+      .card
+        .card-header
+          .row
+            .col-md-8
+              %h3.card-title New Game
+            .col-md-4
+              = link_to 'Cancel', admin_games_path, class: "btn btn-sm btn-primary"
+        .card-body
+          = render 'form'
