@@ -1,39 +1,45 @@
 .nested-fields{ data: { game_step: true } }
   -# = f.hidden_field :image_solution_id, data: { image_solution_id: true }
+
   .card
     .card-header{ role: 'tab', id: "header-#{f.object.id}" }
       = f.text_field :position, hidden: true
-      .form-inline
-        = f.text_field :name, class: 'form-control col-md-11', required: true
-        = link_to "#collapse-#{f.object.id}", class: 'float-right ml-3',
-            data: { parent: '#game_steps', toggle: 'collapse' } do
-          -# = icon 'caret-down'
-        %a.sortable-handle.float-right.ml-2{ href: '#' }
-          -# = icon 'arrows'
+      .form-row
+        .col-md-7
+          .form-group
+            = f.label :game_step_name
+            = f.text_field :name, class: 'form-control', required: true
+        .col-md-5.game-step-actions
+          = link_to "#collapse-#{f.object.id}", class: 'btn btn-sm btn-primary align-middle', data: { parent: '#game_steps', toggle: 'collapse' } do
+            Toggle Open / Close
+          %a.sortable-handle.btn.btn-sm.btn-primary{ href: '#' }
+            Sort Position
+
 
     .collapse{ id: "collapse-#{f.object.id}", role: 'tabpanel', data: { parent: '#game_steps' } }
       .card-body
-        .row
-          .col-6
+        .form-row
+          .col-md-8
             .form-group
               = f.label :description
-              = f.text_area :description, class: 'form-control', rows: 12
+              = f.text_area :description, class: 'form-control', rows: 3
+          .col-md-4
+            .form-group
+              = f.label :answer_input_type
+              = f.select :answer_input_type, options_for_select({ 'Text field' => :text_field, 'Combo lock' => :combo_lock,
+                'Image options' => :image_options }, f.object.answer_input_type), {}, class: 'form-control', data: { input_type: true }
+
+        .form-row
           .col-6
             .form-group
               = f.label :image
-              = f.file_field :image
-            = image_tag f.object.image.url(:thumb), width: '60%', class: 'mx-auto d-block'
-        .form-group.row
-          = f.label :video, class: 'col-2 col-form-label'
-          .col-8
-            = f.file_field :video, class: 'form-control-file'
-        = video_tag f.object.video.url, controls: true, size: '638x360'
-
-        .form-group.row
-          = f.label :answer_input_type, class: 'col-2 col-for-label'
-          .col-4
-            = f.select :answer_input_type, options_for_select({ 'Text field' => :text_field, 'Combo lock' => :combo_lock,
-              'Image options' => :image_options }, f.object.answer_input_type), {}, class: 'form-control', data: { input_type: true }
+              = f.file_field :image, class: "form-control-file"
+            = image_tag f.object.image.url(:thumb), width: '60%'
+          .col-md-6
+            .form-group
+              = f.label :video
+              = f.file_field :video, class: 'form-control-file'
+            = video_tag f.object.video.url, controls: true, size: '500x375'
 
         .solutions
           %fieldset.border.border-primary.rounded.p-4

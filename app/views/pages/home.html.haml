@@ -1,9 +1,51 @@
-%h1 Pages#home
-%p Find me in app/views/pages/home.html.haml
+#landing
 
-.d-flex.justify-content-center
-  #padlock-container
-    = render 'padlock'
+  %section
+    .container
+      = image_tag 'logo-ridlz-color.png', class: 'logo'
+      %h5 Powered by the creators of the award-winning Escape Lounge breakout games, Ridlz™ is an interactive gaming platform that challenges players to solve mysteries virtually anywhere!
 
-.d-flex.justify-content-center
-  = text_field_tag :answer, '000', readonly: true, autocomplete: :off
+    .bottom-content
+      .row{style:"margin:0"}
+        .col-md-6.blue
+          .content-container
+            = image_tag 'icon-chair.png'
+            %p From classrooms to living rooms - libraries and offices too. Turn any space into a live escape game in just minutes!
+        .col-md-6.orange
+          .content-container
+            = image_tag 'icon-magnifier.png'
+            %p Uncover clues, solve puzzles, and decode riddles in a thrilling test of wits that will challenge even the most clever minds.
+
+
+  %section
+    %h4 Be the First to Play!
+    %h3 Sign up to get clued in:
+    %h6 Launch: 2018
+
+    / Begin MailChimp Signup Form
+    %link{:href => "//cdn-images.mailchimp.com/embedcode/slim-10_7.css", :rel => "stylesheet", :type => "text/css"}/
+    #mc_embed_signup
+      %form#mc-embedded-subscribe-form.validate{:action => "https://ridlz.us16.list-manage.com/subscribe/post?u=9782155d481ca0c05e5cc3ec9&id=682a036223", :method => "post", :name => "mc-embedded-subscribe-form", :novalidate => "", :target => "_blank"}
+        #mc_embed_signup_scroll
+          %input#mce-EMAIL.email{:name => "EMAIL", :placeholder => "Email address", :required => "", :type => "email", :value => ""}/
+          / real people should not fill this in and expect good things - do not remove this or risk form bot signups
+          %div{"aria-hidden" => "true", :style => "position: absolute; left: -5000px;"}
+            %input{:name => "b_9782155d481ca0c05e5cc3ec9_682a036223", :tabindex => "-1", :type => "text", :value => ""}/
+          .clear
+            %input#mc-embedded-subscribe.button{:name => "subscribe", :type => "submit", :value => "Submit"}/
+    / End mc_embed_signup
+
+  %section.footer
+    %ul
+      %li
+        = link_to 'www.facebook.com/ridlzgames', target: "_blank" do
+          %i.fa.fa-facebook
+      %li
+        = link_to 'https://twitter.com/ridlzgames', target: "_blank" do
+          %i.fa.fa-twitter
+      %li
+        = link_to 'https://www.instagram.com/ridlzgames/', target: "_blank" do
+          %i.fa.fa-instagram
+      %li
+        = link_to 'https://www.pinterest.com/ridlzgames/', target: "_blank" do
+          %i.fa.fa-pinterest

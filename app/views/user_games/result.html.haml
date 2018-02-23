@@ -4,7 +4,6 @@
 #game-show{ style: "background-image: url(#{image_url(@user_game.game.background.url)})" }
   %section
     .container.pattern-bottom
-      .row.page-bar
       .game-step-subnav
         .progress.mb-4
           .progress-bar{ style: "width:#{@progress_pescent}" }
@@ -14,7 +13,7 @@
         .col-md-12
 
           %h2.mt-4
-            Result
+            Completed in: 
             = @user_game.formated_result
 
-          = link_to 'Game description', game_path(@user_game.game)
+          = link_to 'Back To Game', game_path(@user_game.game)

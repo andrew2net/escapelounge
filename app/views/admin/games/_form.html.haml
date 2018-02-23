@@ -5,66 +5,95 @@
       %ul
         - @game.errors.full_messages.each do |msg|
           %li= msg
-  .form-row
-    .form-group.col-10
-      = f.label :name, class: 'required'
-      = f.text_field :name, class: 'form-control', required: true
-    .form-group.col-2
-      .form-check.mt-4
-        = f.label :visible, class: 'form-check-label' do
-          = f.check_box :visible, class: 'form-check-input'
-          Publish Game
-  .form-row
-    .form-group.col-6
-      = f.label :description
-      = f.text_area :description, class: 'form-control', rows: 3
-    .form-group.col-6
-      = f.label :short_description
-      = f.text_area :short_description, class: 'form-control', rows: 3
-  .form-group
-    = f.label :instructions
-    = f.text_area :instructions, class: 'form-control'
-  .row.mb-3
-    .col-6
-      .form-group
-        = f.label :banner
-        = f.file_field :banner
-      = image_tag @game.banner.url :thumb
-    .col-6
-      .form-group
-        = f.label :background
-        = f.file_field :background
-      = image_tag @game.background.url :thumb
-  .form-row
-    .form-group.col-4
-      = f.label :difficulty
-      = f.select :difficulty, Game.difficulties.to_a.map { |w| [w[0], w[0]] }, {}, class: 'form-control'
-    .form-group.col-4
-      %div
-        = f.label :grade_ids, 'Grades', class: 'mb-0'
-      = f.collection_check_boxes :grade_ids, Grade.all, :id, :name do |b|
-        .form-check.form-check-inline
-          = b.label(class: 'form-check-label') { b.check_box(class: 'form-check-input mr-2') + b.text }
-    .form-group.col-4
-      %label.required Time allotted to complete the game
-      = f.text_field :time_length, class: 'form-control', required: true
 
-  %fieldset.border.border-primary.rounded.p-4
-    %legend Assets
-    #game_assets
-      = f.fields_for :game_assets do |game_asset|
-        = render 'game_asset_fields', f: game_asset
-      .links.my-2
-        = link_to_add_association 'add asset', f, :game_assets, class: 'btn btn-primary'
+  .card
+    .card-header
+      .row
+        .col-md-8
+          %h3.card-title
+            - if current_page?(controller: 'admin/games', action: 'new')
+              New Game
+            - else
+              Edit Game
+        .col-md-4
+          = link_to 'Cancel', admin_games_path, class: 'btn btn-sm btn-primary'
+    .card-body
+      .form-row
+        .form-group.col-10
+          = f.label :name, class: 'required'
+          = f.text_field :name, class: 'form-control', required: true
+        .form-group.col-2
+          .form-check.mt-4
+            = f.label :visible, class: 'form-check-label' do
+              = f.check_box :visible, class: 'form-check-input'
+              Publish Game
+      .form-row
+        .form-group.col-6
+          = f.label :description
+          = f.text_area :description, class: 'form-control', rows: 3
+        .form-group.col-6
+          = f.label :short_description
+          = f.text_area :short_description, class: 'form-control', rows: 3
+      .form-row
+        .form-group.col-12
+          = f.label :instructions
+          = f.text_area :instructions, class: 'form-control', rows: 3
+      .form-row
+        .form-group.col-4
+          = f.label :difficulty
+          = f.select :difficulty, Game.difficulties.to_a.map { |w| [w[0], w[0]] }, {}, class: 'form-control'
+        .form-group.col-4
+          %label.required Time allotted to complete the game
+          = f.text_field :time_length, class: 'form-control', required: true
+        .form-group.col-4
+          %div
+            = f.label :grade_ids, 'Grades', class: 'mb-0'
+          = f.collection_check_boxes :grade_ids, Grade.all, :id, :name do |b|
+            .form-check.form-check-inline
+              = b.label(class: 'form-check-label') { b.check_box(class: 'form-check-input mr-2') + b.text }
 
-  %fieldset.border.border-primary.rounded.p-4
-    %legend Game Steps
-    #game_steps{ role: 'tablist' }
-      #sortable
-        = f.fields_for :game_steps do |game_step|
-          = render 'game_step_fields', f: game_step
-        .links
-          = link_to_add_association 'add game step', f, :game_steps, class: 'btn btn-primary mt-3'
+
+      .form-row
+        .col-6
+          .form-group
+            = f.label :banner
+            = f.file_field :banner
+          = image_tag @game.banner.url :thumb
+        .col-6
+          .form-group
+            = f.label :background
+            = f.file_field :background
+          = image_tag @game.background.url :thumb
+
+
+
+  .card
+    .card-header
+      .row
+        .col-md-12
+          %h3.card-title Assets
+    .card-body
+      #game_assets
+        .form-row
+          = f.fields_for :game_assets do |game_asset|
+            = render 'game_asset_fields', f: game_asset
+        .links.my-2
+          = link_to_add_association 'add asset', f, :game_assets, class: 'btn btn-primary'
+
+
+
+  .card
+    .card-header
+      .row
+        .col-md-12
+          %h3.card-title Game Steps
+    .card-body
+      #game_steps{ role: 'tablist' }
+        #sortable
+          = f.fields_for :game_steps do |game_step|
+            = render 'game_step_fields', f: game_step
+          .links
+            = link_to_add_association 'add game step', f, :game_steps, class: 'btn btn-primary mt-3'
 
   .actions.py-4
     = f.submit 'Save', class: 'btn btn-primary'

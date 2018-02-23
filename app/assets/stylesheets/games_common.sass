@@ -1,179 +1,262 @@
 #game-show
-  .card
-    background: rgba(0,0,0,0.7)
-    .card-header h3
-      color: white
-    .card-body
-      p
-        color: #f2f2f2
-        margin: 0
-      .card-content-container
-        background: rgba(6, 163, 204,0.8)
-        text-align: center
-        padding: 1em 0.5em
-        h5
-          color: white
-          font-weight: bold
+	min-height: 93vh
+	.card
+		&.game-show-card
+			max-width: 800px
+			margin: auto
+			border: none
+			.card-header
+				text-align: center
+				padding: 0
+				.card-header-content
+					background: rgba(0,0,0,0.5)
+					border-radius: 4px 4px 0 0
+					padding: 2em
+					h2, span
+						color: white
+					span
+						font-style: italic
+		.card-body
+			hr
+				margin: 0.5em auto
+			p
+				margin: 0
+			.card-content-container
+				background: rgba(6, 163, 204,0.8)
+				text-align: center
+				padding: 1em 0.5em
+				h5
+					font-weight: bold
+					margin-bottom: 0
 
-      .game-details
-        margin: 2em 0
-      .game-actions
-        margin: 3em 0 1em
-        text-align: center
-        a.btn
-          margin: 0 0.5em
+			.game-details
+				padding: 0 2em
+			.game-actions
+				margin: 3em 0 1em
+				text-align: center
+				a.btn
+					margin: 0 0.5em
 
 
 #games-admin-list
-  .card
-    h5, p
-      color: #333
+	.card
+		h5, p
+			color: #333
 
 
 #games-list
-  #games-user-list
-    margin: 2em 0
+	#games-user-list
+		margin: 2em 0
+
+		.card
+			.card-header
+				min-height: 200px
+				background-size: cover
+				background-position: center
+				background-repeat: no-repeat
+				padding: 0
+
+				.card-header-content
+					background: rgba(0,0,0,0.5)
+					border-radius: 4px 4px 0 0
+					padding: 1em
+					min-height: 200px
+					display: flex
+					flex-direction: column
+					justify-content: flex-end
+
+					h3, span
+						color: white
+
+					span.game-difficulty
+						float: right
+
+
+#game-new, #game-edit
+	.card
+		margin-bottom: 2em
+
+	#game_assets
+		.col-md-4
+				display: inline-block
+				vertical-align: top
+			.card-header, .card-body
+				padding: 1em
+			.card-footer
+				padding: 0.5em 1em
+				a.btn
+					float: right
+
+	#game_steps
+		.card-header, .card-body
+			padding: 1em
+		.card-header
+			.form-group
+				margin: 0
+			.game-step-actions
+				line-height: 64px
+				text-align: right
+				a.btn
+					margin: 0 3px
+
+		.nested-fields
+			&.col-md-6, &.col-md-4
+				display: inline-block
+				vertical-align: top
+			.solution-card-header
+				input
+					width: 85%
+					display: inline-block
+				a.btn
+					float: right
+
+		.solutions, .image-options, .hints
+			margin-top: 2em
+
+		.image-options
+			.nested-fields
+				.card-footer a
+					float: right
 
 
 
 img.game-back-img
-  position: absolute
+	position: absolute
 
 .game-footer
-  position: absolute
-  top: 205px
-  left: 0
-  right: 0
-  text-align: center
+	position: absolute
+	top: 205px
+	left: 0
+	right: 0
+	text-align: center
 
 .game-step-subnav
-  position: sticky
-  background-color: white
-  padding: 20px
-  top: 5px
-  z-index: 1000
+	position: sticky
+	background-color: white
+	padding: 20px
+	top: 5px
+	z-index: 1000
 
 section
-  .container
-    .page-bar
-      height: 25px
-      background-color: $gray-200
-      margin-bottom: 2em
-    h4.step-title
-      text-transform: uppercase
-      font-weight: bold
-      color: $gray-700
-    &.pattern-bottom
-      background-image: image-url("pattern-question2.png")
-      background-repeat: repeat-x
-      background-position: bottom
-    p.step-description
-      font-family: $font-family-base
-      font-size: 18pt
-      font-style: italic
-      text-align: center
+	.container
+		.page-bar
+			height: 25px
+			background-color: $gray-200
+			margin-bottom: 2em
+		h4.step-title
+			text-transform: uppercase
+			font-weight: bold
+			color: $gray-700
+		&.pattern-bottom
+			background-image: image-url("pattern-question2.png")
+			background-repeat: repeat-x
+			background-position: bottom
+		p.step-description
+			font-family: $font-family-base
+			font-size: 18pt
+			font-style: italic
+			text-align: center
 .step-container
-  background-color: white
-  padding: 2em 1em
-  margin-bottom: 2em
-  position: relative
-  box-shadow: $boxShadow
-  border-radius: $borderRadius
-  h4
-    margin: 0 0 0.5em
-    font-weight: 400
-  .step-value
-    position: absolute
-    top: 10px
-    right: 10px
-    background: linear-gradient(90deg, #56b055, #65c7ac)
-    color: white
-    padding: 0.5em
-    border-radius: $borderRadius
+	background-color: white
+	padding: 2em 1em
+	margin-bottom: 2em
+	position: relative
+	box-shadow: $boxShadow
+	border-radius: $borderRadius
+	h4
+		margin: 0 0 0.5em
+		font-weight: 400
+	.step-value
+		position: absolute
+		top: 10px
+		right: 10px
+		background: linear-gradient(90deg, #56b055, #65c7ac)
+		color: white
+		padding: 0.5em
+		border-radius: $borderRadius
 
 // #hint-link
-  // position: relative
-  // bottom: 40px
-  // left: 40px
-  // a
-  //   color: $orange
+	// position: relative
+	// bottom: 40px
+	// left: 40px
+	// a
+	//   color: $orange
 .hint-body
-  font-size: 12px
-  position: relative
-  color: $gray-100
-  #hints-carousel
-    height: 198px
-    ol.carousel-indicators
-      bottom: 7px
-      margin: 0
-      li
-        background-color: $gray-500
-        &.active
-          background-color: $gray-200
-  .carousel-inner
-    overflow-y: scroll
-    height: 180px
-    .carousel-item
-      min-height: 170px
-      p
-        padding: 1rem 1rem 0
-        font-family: 'Cormorant Garamond'
-        font-size: 12pt
-        font-style: italic
-      a
-        top: 70px
-        position: relative
-        color: white
-        &:hover
-          color: $gray-200
+	font-size: 12px
+	position: relative
+	color: $gray-100
+	#hints-carousel
+		height: 198px
+		ol.carousel-indicators
+			bottom: 7px
+			margin: 0
+			li
+				background-color: $gray-500
+				&.active
+					background-color: $gray-200
+	.carousel-inner
+		overflow-y: scroll
+		height: 180px
+		.carousel-item
+			min-height: 170px
+			p
+				padding: 1rem 1rem 0
+				font-family: 'Cormorant Garamond'
+				font-size: 12pt
+				font-style: italic
+			a
+				top: 70px
+				position: relative
+				color: white
+				&:hover
+					color: $gray-200
 .hint-footer
-  height: 20px
-  text-align: center
-  background-color: white
-  z-index: 1
-  position: relative
+	height: 20px
+	text-align: center
+	background-color: white
+	z-index: 1
+	position: relative
 
 #hint-bar
-  position: fixed
-  height: 230px
-  left: 0
-  bottom: 0
-  width: 100%
-  transition: height 0.5s
-  &.hint-bar-hidden
-    height: 32px
-  .container
-    text-align: center
-    height: 100%
-    background-color: $orange !important
-    overflow-y: hidden
-    .hint-title
-      color: white
-      text-align: center
-      letter-spacing: 4px
-      font-size: 14px
-      font-weight: bold
-      line-height: 2.2em
-      cursor: pointer
+	position: fixed
+	height: 230px
+	left: 0
+	bottom: 0
+	width: 100%
+	transition: height 0.5s
+	&.hint-bar-hidden
+		height: 32px
+	.container
+		text-align: center
+		height: 100%
+		background-color: $orange !important
+		overflow-y: hidden
+		.hint-title
+			color: white
+			text-align: center
+			letter-spacing: 4px
+			font-size: 14px
+			font-weight: bold
+			line-height: 2.2em
+			cursor: pointer
 
 .game-whitespace
-  @media (min-width: $screen-md-min)
-    padding-left: 100px
-    padding-right: 100px
+	@media (min-width: $screen-md-min)
+		padding-left: 100px
+		padding-right: 100px
 
-  @media (min-width: $screen-lg-min)
-    padding-left: 150px
-    padding-right: 150px
+	@media (min-width: $screen-lg-min)
+		padding-left: 150px
+		padding-right: 150px
 
 #game-step
-  .form-group
-    max-width: 300px
-    margin-left: auto
-    margin-right: auto
+	.form-group
+		max-width: 300px
+		margin-left: auto
+		margin-right: auto
 
-  .row-v-space
-    margin-bottom: 30px
+	.row-v-space
+		margin-bottom: 30px
 
-  #answer-btn
-    margin-top: 10px
-    padding: 0.4rem 1.7rem
+	#answer-btn
+		margin-top: 10px

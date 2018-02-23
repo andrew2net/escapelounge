@@ -1,5 +1,144 @@
-// #padlock-container
-//   margin: 0
-//   canvas
-//     width: 100%
-//     height: 50%
+@mixin backgroundImage($image, $height, $textAlign)
+  background-size: cover
+  background-position: center
+  background-repeat: no-repeat
+  background-image: $image
+  min-height: $height
+  text-align: $textAlign
+
+
+
+#landing
+
+  section:nth-of-type(1)
+    background-size: cover
+    background-position: center
+    background-repeat: no-repeat
+    background-image: image-url('background.jpg')
+    min-height: 98vh
+    text-align: center
+    position: relative
+
+    .container
+      min-height: 80vh
+      display: flex
+      flex-direction: column
+      justify-content: center
+      padding-bottom: 4em
+
+      img.logo
+        max-width: 450px
+        margin: 0 auto 2em
+      img.logo-dark
+        max-width: 100px
+        position: absolute
+        top: 30px
+        left: 40px
+      h5
+        max-width: 800px
+        margin: 0 auto
+        font-weight: 200
+        line-height: 1.4em
+        color: #333
+        font-size: 1.5em
+
+    .bottom-content
+      position: absolute
+      bottom: 0
+      left: 0
+      right: 0
+
+      .content-container
+        max-width: 400px
+        margin: 0 auto
+        padding: 2em
+        img
+          width: 50px
+          height: 50px
+          margin-bottom: 1em
+
+        p
+          color: white
+          font-size: 1em
+          font-weight: 300
+          margin-bottom: 0
+
+      .blue
+        background-color: rgba(5,163,204,0.8)
+      .orange
+        background-color: rgba(239,121,24,0.8)
+
+
+  section:nth-of-type(2)
+    text-align: center
+    padding: 6em 2em
+
+    h3, h4
+      color: rgb(5,163,204)
+
+    h4
+      font-style: italic
+      font-weight: 300
+      color: #333
+      letter-spacing: 2px
+      font-size: 1.8em
+    h3
+      text-transform: uppercase
+      font-weight: 300
+      letter-spacing: 4px
+      margin-bottom: 0.5em
+      font-size: 1.1em
+    h6
+      margin-bottom: 1em
+      color: #bbb
+      font-weight: 400
+
+    #mc_embed_signup
+      input.email
+        margin: auto
+        max-width: 600px
+        height: 40px
+        padding-left: 0.75rem
+        border-color: #ef791a
+      .clear input.button
+        background-color: rgb(239,121,24)
+        color: white
+        margin: 1em auto 0
+        max-width: 200px
+        height: 40px
+
+
+
+
+  section:nth-of-type(3)
+    background-color: rgb(5,163,204)
+    height: 50px
+    text-align: center
+    ul
+      list-style: none
+      padding-left: 0
+      margin-bottom: 0
+      li
+        display: inline-block
+        line-height: 50px
+        a
+          color: white
+          font-size: 1.5em
+          margin: 0 0.5em
+
+
+
+  @media (max-width: 768px)
+    section:nth-of-type(1)
+      .container
+        padding-bottom: 0
+        img.logo-dark
+          left: 0
+          right: 0
+          width: 100%
+          margin: auto
+        img.logo
+          max-width: 200px
+
+      .bottom-content
+        position: relative

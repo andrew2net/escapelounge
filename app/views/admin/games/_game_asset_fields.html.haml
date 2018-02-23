@@ -1,13 +1,15 @@
-.nested-fields
-  .form-row
-    .form-group.col-6
-      = f.label :name, class: 'required'
-      = f.text_field :name, class: 'form-control', required: true
-    .form-group.col-6
-      = f.label :file
-      %br
-      = f.file_field :file
-  %p
-    = f.object.file_file_name
-
-  = link_to_remove_association 'remove asset', f, class: 'btn btn-danger'
+.col-md-4.nested-fields
+  .card
+    .card-header
+      = f.text_field :name, class: 'form-control', required: true, placeholder: "Asset Name"
+    - if !f.object.file_file_name
+      .card-body
+        .form-group.col-6
+          = f.file_field :file
+        = link_to_remove_association f, class: 'btn btn-sm btn-danger' do
+          %i.fa.fa-trash
+    - else
+      .card-footer
+        %span= "File: #{f.object.file_file_name}"
+        = link_to_remove_association f, class: 'btn btn-sm btn-danger' do
+          %i.fa.fa-trash

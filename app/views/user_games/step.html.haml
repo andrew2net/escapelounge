@@ -19,7 +19,6 @@
 
   %section#game-step
     .container.pattern-bottom
-      .row.page-bar
 
       .game-whitespace
         .row.pt-5
@@ -39,7 +38,7 @@
           .row.row-v-space
             .col-md-12.text-center
               = image_tag @step.image.url, class: "rounded img-fluid mx-auto d-block"
-        
+
         - if @step.video.present?
           .row.row-v-space
             .col-12.text-center

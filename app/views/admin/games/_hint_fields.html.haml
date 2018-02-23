@@ -1,16 +1,18 @@
 .nested-fields
-  .row
-    .col-6
-      .form-group
-        = f.label :description, class: 'required'
-        = f.text_area :description, class: 'form-control', rows: 8, required: true
-      .form-group
-        = f.label :value, class: 'required'
-        = f.number_field :value, class: 'form-control', required: true
-    .col-6
-      .form-group
-        = f.label :image
-        = f.file_field :image
-      = image_tag f.object.image.url(:thumb), width: '60%', class: 'd-block mx-auto'
-
-  = link_to_remove_association 'remove hint', f, class: 'btn btn-danger mb-3'
+  .card
+    .card-body
+      .form-row
+        .col-md-8
+          .form-group
+            = f.label :description, class: 'required'
+            = f.text_area :description, class: 'form-control', rows: 3, required: true
+          .form-group
+            = f.label :hint_deduction_value, class: 'required'
+            = f.number_field :value, class: 'form-control', required: true
+          .form-group
+            = link_to_remove_association 'remove hint', f, class: 'btn btn-danger mb-3'
+        .col-md-3.offset-md-1
+          .form-group
+            = f.label :image
+            = f.file_field :image
+            = image_tag f.object.image.url(:thumb), width: '80%'

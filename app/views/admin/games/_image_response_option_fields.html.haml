@@ -1,13 +1,17 @@
-.nested-fields.col-4
-  = f.hidden_field :image_solution_id, data: { image_solution_id: true }
-  .form-group
-    = f.file_field :image, class: 'form-control-file'
+.col-md-4.nested-fields
 
-  .text-center
-    = image_tag f.object.image.url(:thumb), width: 200, height: 200
+  .card
+    .card-body
+      = f.hidden_field :image_solution_id, data: { image_solution_id: true }
+      .form-group
+        = f.file_field :image, class: 'form-control-file'
 
-  .form-check.text-center
-    = sf.radio_button :image_solution_id, f.object.id
+      .text-center
+        = image_tag f.object.image.url(:thumb), width: 200, height: 200
 
-  .text-center
-    = link_to_remove_association 'remove option', f, class: 'btn btn-danger mb-3'
+    .card-footer
+      %span
+        = sf.radio_button :image_solution_id, f.object.id
+        Select For Answer
+      = link_to_remove_association f, class: 'btn btn-sm btn-danger' do
+        %i.fa.fa-trash

@@ -13,24 +13,38 @@ legend
   padding-left: 5px
   padding-right: 5px
 
+p, span
+  font-size: 0.9em
+
+.form-group
+  margin-bottom: 1em
 .form-group
   label, em
-    font-family: $font-family-base
     color: $blue
-    font-size: 14pt
-    font-weight: bold
+    font-size: 12pt
     margin-bottom: 0
+.form-control
+  box-shadow: inset 0 1px 2px rgba(0,0,0,.18)
+  min-height: 40px
+  height: auto
+  border-radius: $borderRadius
+  padding: 0.5em
+
+select.form-control
+  height: 40px !important
 
 .btn
   text-transform: uppercase
-  letter-spacing: 1px
-
-.form-control
-  background-color: $gray-100
-  border-color: $blue
+  letter-spacing: 0.1em
   height: 40px
+  line-height: 40px
+  padding: 0 14px
   border-radius: $borderRadius
-  padding: 0.5em
+  &.btn-sm
+    height: 35px
+    line-height: 35px
+    padding: 0 10px
+
 
 .page-head
   background-color: white
@@ -61,3 +75,11 @@ table.table th
     margin: 0
   .col-md-4
     text-align: right
+
+
+
+
+// Billing
+#billing
+  .card
+    margin-bottom: 2em

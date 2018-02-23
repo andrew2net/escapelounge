@@ -27,24 +27,24 @@ module GamesHelper
         return html if bar
 
         if @display_pause_buttons
-          html += content_tag :div, class: elem_class do
+          html += content_tag :div do
             link_to 'Pause game', game_pause_url(@game), id: 'pause-game-btn',
               class: 'btn btn-primary mb-1', style: "#{@paused_at ? 'display:none' : ''}"
           end
 
-          html += content_tag :div, class: elem_class do
+          html += content_tag :div do
             link_to 'Resume game', game_resume_url(@game), id: 'resume-game-btn',
               class: "btn btn-primary mb-1 #{@running ? 'disabled' : ''}",
               style: "#{@paused_at ? '' : 'display:none'}"
           end
         else
-          html += content_tag :div, class: elem_class do
+          html += content_tag :div do
             link_to "Game description", game_path(@game)
           end
         end
 
         if user_game
-          html += content_tag :div, class: elem_class do
+          html += content_tag :div do
             link_to 'End game', user_game_end_url(user_game), id: 'end-game-button',
               class: "btn btn-primary", style: "#{@running || @paused_at ? '' : 'display:none'}"
           end
