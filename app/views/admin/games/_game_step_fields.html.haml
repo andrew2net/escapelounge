@@ -7,9 +7,9 @@
         = f.text_field :name, class: 'form-control col-md-11', required: true
         = link_to "#collapse-#{f.object.id}", class: 'float-right ml-3',
             data: { parent: '#game_steps', toggle: 'collapse' } do
-          = icon 'caret-down'
+          -# = icon 'caret-down'
         %a.sortable-handle.float-right.ml-2{ href: '#' }
-          = icon 'arrows'
+          -# = icon 'arrows'
 
     .collapse{ id: "collapse-#{f.object.id}", role: 'tabpanel', data: { parent: '#game_steps' } }
       .card-body
@@ -28,7 +28,7 @@
           .col-8
             = f.file_field :video, class: 'form-control-file'
         = video_tag f.object.video.url, controls: true, size: '638x360'
-          
+
         .form-group.row
           = f.label :answer_input_type, class: 'col-2 col-for-label'
           .col-4
@@ -42,7 +42,7 @@
               - render 'game_step_solution_fields', f: game_step_solution
             .links
               = link_to_add_association 'add solution', f, :game_step_solutions, class: 'btn btn-primary mt-3'
-        
+
         .image-options
           %fieldset.border.border-primary.rounded.p-4
             %legend Image options

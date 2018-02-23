@@ -1,19 +1,25 @@
-= content_for :title, 'Game History'
-%section
-  .container.full-vh-minus-nav
-    .row.page-bar
-    %table.table.table-striped
-      %thead
-        %tr
-          %th Game
-          %th Finished at
-          %th Result
-      %tbody
-        - @user_games.each do |g|
-          %tr
-            %td= g.game.name
-            %td= g.finished_at
-            %td= g.formated_result
+-# = content_for :title, 'Game History'
+%section.page-content
+  .container
 
-    .pagination.justify-content-center
-      = paginate @user_games
+    .card
+      .card-header
+        .row
+          .col-md-12
+            %h3.card-title Game History
+      .card-body
+        %table.table
+          %thead
+            %tr
+              %th Game
+              %th Finished at
+              %th Result
+          %tbody
+            - @user_games.each do |g|
+              %tr
+                %td= g.game.name
+                %td= g.finished_at
+                %td= g.formated_result
+
+        .pagination.justify-content-center
+          = paginate @user_games

@@ -1,25 +1,29 @@
-= content_for :title, 'Subscription plans'
+-# = content_for :title, 'Subscription plans'
 
-%section
-  .container.full-vh-minus-nav
-    .row.page-bar
-    .row.mb-3
-      .col-md-8
-      .col-md-4
-        = link_to 'New Subscription plan', new_admin_subscription_plan_path, class: "btn btn-sm btn-primary"
-    %table.table.table-striped
-      %thead
-        %tr
-          %th Name
-          %th Period
-          %th Price $
-          %th Actions
-      %tbody
-        - @subscription_plans.each do |p|
-          %tr
-            %td= p.name
-            %td= p.period
-            %td= p.price
-            %td
-              = link_to 'Edit', edit_admin_subscription_plan_path(p)
-              = link_to 'Destroy', admin_subscription_plan_path(p), :method => :delete, :data => { :confirm => 'Are you sure?' }
+%section.page-content
+  .container
+
+    .card
+      .card-header
+        .row
+          .col-md-8
+            %h3.card-title Subscription Plans
+          .col-md-4
+            = link_to 'New Subscription plan', new_admin_subscription_plan_path, class: "btn btn-sm btn-primary"
+      .card-body
+        %table.table.table-striped
+          %thead
+            %tr
+              %th Name
+              %th Period
+              %th Price
+              %th Actions
+          %tbody
+            - @subscription_plans.each do |p|
+              %tr
+                %td= p.name
+                %td= p.period
+                %td= "$#{p.price}"
+                %td
+                  = link_to 'Edit', edit_admin_subscription_plan_path(p)
+                  = link_to 'Delete', admin_subscription_plan_path(p), :method => :delete, :data => { :confirm => 'Are you sure?' }

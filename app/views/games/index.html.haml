@@ -1,14 +1,17 @@
-= content_for :title do
-  All Games
+-# = content_for :title do
+-#   All Games
 #games-list
-  %section
-    .container.full-vh-minus-nav
-      .row.page-bar
-      .row.py-3
-        .col-md-12.mb-4
+  %section.page-content
+    .container
+
+      .card
+        .card-header
+          .row
+            .col-md-12
+              %h3.card-title All Games
+        .card-body
           %label.mr-3
             %strong Filter:
-
           .row
             .col-12.col-sm-4
               -# = label_tag :difficulty_filter, 'Difficulty', class: 'mx-2'
@@ -24,4 +27,4 @@
                   checked: true, autocomplete: 'off' }
                 &nbsp;Show only allowed games
 
-      #games-user-list.row= render @games
+          #games-user-list.row= render @games
