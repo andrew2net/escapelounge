@@ -1,5 +1,16 @@
 #game-show
 	min-height: 93vh
+	#game-step
+		padding-top: 8em
+		#hints-carousel
+			.carousel-inner
+				.carousel-item
+					display: flex
+					flex-direction: column
+					justify-content: center
+					p
+						font-size: 2em
+						margin: 0
 	.card
 		&.game-show-card
 			max-width: 800px
@@ -16,6 +27,7 @@
 						color: white
 					span
 						font-style: italic
+						font-size: 1em
 		.card-body
 			hr
 				margin: 0.5em auto
@@ -38,6 +50,38 @@
 					margin: 0 0.5em
 
 
+	#game-result-content
+		text-align: center
+		min-height: 400px
+		padding-top: 4em
+		padding-bottom: 2em
+		h1
+			margin: 0
+			font-weight: bold
+			color: $blue
+			letter-spacing: 4px
+		img
+			max-width: 400px
+		p
+			font-size: 1em
+			color: #999
+
+		.game-step-subnav
+			max-width: 600px
+			margin: 2em auto
+			.progress
+				height: 40px
+				font-size: 1.1em
+
+
+.game-step-subnav
+	position: sticky
+	padding: 20px
+	top: 5px
+	z-index: 1000
+
+
+
 #games-admin-list
 	.card
 		h5, p
@@ -45,6 +89,38 @@
 
 
 #games-list
+
+	#games-list-header
+		min-height: 200px
+		background-image: image-url('bg-sign-in-80.jpg')
+		background-size: cover
+		background-position: center
+		background-repeat: no-repeat
+		#games-list-header-content
+			min-height: 200px
+			display: flex
+			flex-direction: column
+			justify-content: flex-end
+			padding: 2em 0
+
+	#games-list-filters
+		background: white
+		padding: 1em 0
+		#difficulty_filter, #age_filter
+			border-top: none
+			border-left: none
+			border-right: none
+			box-shadow: none
+			width: 200px
+		label
+			line-height: 40px
+			margin: 0 1em 0 0
+		label.form-check-label
+			margin-left: 1em
+			input
+				margin-top: 12px
+
+
 	#games-user-list
 		margin: 2em 0
 
@@ -129,13 +205,6 @@ img.game-back-img
 	left: 0
 	right: 0
 	text-align: center
-
-.game-step-subnav
-	position: sticky
-	background-color: white
-	padding: 20px
-	top: 5px
-	z-index: 1000
 
 section
 	.container

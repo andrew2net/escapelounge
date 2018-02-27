@@ -48,7 +48,7 @@ class UserGame < ApplicationRecord
     if result == 0
       "Ended"
     elsif result
-      Time.at(result).utc.strftime("%H:%M:%S")
+      Time.at(result).utc.strftime("%M:%S !")
     else
       "Time expired"
     end

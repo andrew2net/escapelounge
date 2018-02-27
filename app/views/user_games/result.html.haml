@@ -3,17 +3,29 @@
 
 #game-show{ style: "background-image: url(#{image_url(@user_game.game.background.url)})" }
   %section
-    .container.pattern-bottom
-      .game-step-subnav
-        .progress.mb-4
-          .progress-bar{ style: "width:#{@progress_pescent}" }
-            = @progress_step
+    .page-content
+      #game-result-content.container.pattern-bottom
 
-      .row
-        .col-md-12
+        - if @user_game.result == 0
+          %h1 Game Ended
+          = image_tag 'divider-orange.svg'
+          %h2 Better luck next time!
 
-          %h2.mt-4
-            Completed in: 
-            = @user_game.formated_result
+        - elsif @user_game.result
+          %h1= Time.at(@user_game.result).utc.strftime("%M:%S !")
+          = image_tag 'divider-orange.svg'
+          %h2 Congratulations!
+          %p
+            You completed this game in "X" minutes and "Y" seconds
 
-          = link_to 'Back To Game', game_path(@user_game.game)
+        - else
+          %h1 Time Expired
+          = image_tag 'divider-orange.svg'
+          %h2 Uh oh! Looks like you ran out of time.
+
+        .game-step-subnav
+          .progress
+            .progress-bar{ style: "width:#{@progress_pescent}" }
+              = "#{@progress_step} steps completed"
+
+        = link_to 'Back To Game Page', game_path(@user_game.game), class: "btn btn-primary btn-sm"

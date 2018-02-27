@@ -52,16 +52,16 @@
 
           .row.game-actions
             .col-md-12
-              = link_to 'Download Instructions', @game.instructions_pdf.url, class: "btn btn-primary", target: "_blank"
+              = link_to 'Download Instructions', @game.instructions_pdf.url, class: "btn btn-primary btn-sm", target: "_blank"
               - if policy(@game).start?
                 = display_timer
-                = button_tag 'Start game', data: { target: '#start-game-modal', toggle: 'modal' }, class: "btn btn-primary", style: "#{@running || @paused_at ? 'display:none' : ''}"
+                = button_tag 'Start game', data: { target: '#start-game-modal', toggle: 'modal' }, class: "btn btn-primary btn-sm", style: "#{@running || @paused_at ? 'display:none' : ''}"
 
                 - if user_game = current_user.user_games.running.where(game_id: @game.id).first
-                  = link_to 'Go to game steps', user_game_step_url(user_game, user_game.last_allowed_step), id: 'link-to-steps', class: "btn btn-primary"
+                  = link_to 'Go to game steps', user_game_step_url(user_game, user_game.last_allowed_step), id: 'link-to-steps', class: "btn btn-primary btn-sm"
 
               - else
-                = link_to 'You have no subscription to start the game', '#', class: "btn btn-secondary disabled"
+                = link_to 'You have no subscription to start the game', '#', class: "btn btn-secondary disabled btn-sm"
 
 
         - if @game.user_games.where("result>0").count > 0
