@@ -57,7 +57,7 @@
                 - if has_solutions = @step.game_step_solutions.any?
                   - if @step.combo_lock?
                     .d-flex.justify-content-center
-                      = render 'pages/padlock'
+                      = render 'padlock'
                     = hidden_field_tag :answer, '000', autocomplete: :off
                   - elsif @step.image_options?
                     .d-flex.justify-content-around
@@ -68,6 +68,9 @@
                           %div
                             = radio_button_tag :image_option, option.id
                     = hidden_field_tag :answer, '', autocomplete: :off
+                  - elsif @step.cipher_wheel?
+                    .d-flex.justify-content-around
+                      = render 'cipher_wheel'
                   - else
                     .form-group
                       -# = label_tag :answer

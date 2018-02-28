@@ -94,7 +94,7 @@ class UserGamesControllerTest < ActionDispatch::IntegrationTest
     get user_game_result_url @user_game
     @user_game.reload
     assert_response :success
-    assert_includes response.body, "Result"
+    assert_includes response.body, "Congratulations!"
     assert @user_game.result > 0
   end
 
@@ -103,7 +103,7 @@ class UserGamesControllerTest < ActionDispatch::IntegrationTest
     get user_game_result_url @user_game
     @user_game.reload
     assert_response :success
-    assert_includes response.body, "Ended"
+    assert_includes response.body, "Game Ended"
     assert_equal @user_game.result, 0
   end
 
@@ -112,7 +112,7 @@ class UserGamesControllerTest < ActionDispatch::IntegrationTest
     get user_game_result_url @user_game
     @user_game.reload
     assert_response :success
-    assert_includes response.body, "Time expired"
+    assert_includes response.body, "Time Expired"
     assert_nil @user_game.result
   end
 end

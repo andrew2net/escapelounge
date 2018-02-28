@@ -1,0 +1,30 @@
+%svg#cipher-wheel{ version: "1.1", baseProfile: "full", width: "500", height: "500", xmlns: "http://www.w3.org/2000/svg" }
+
+  %g#cipher-outer-wheel
+    %circle{ cx: 250, cy: 250, r: 250, stroke: 'black', fill: 'white' }
+
+    - 26.times do |n|
+      %g{ transform: "rotate(#{13.85 * n} 250,250)" }
+        %text{ x: 250, y: 28, 'font-size': 30, 'text-anchor': "middle" }
+          = (65 + n).chr
+        %line{ x1: 250, y1: 250, x2: 250, y2: 0, stroke: 'black', transform: 'rotate(7 250,250)' }
+
+  %circle{ cx: 250, cy: 250, r: 215, fill: 'black' }
+  - 26.times do |n|
+    %g{ transform: "rotate(#{13.85 * n} 250,250)" }
+      %text{ x: 250, y: 60, 'font-size': 26, fill: 'white', 'text-anchor': "middle" }
+        = (n + 1).to_s.rjust 2, '0'
+
+      %text{ x: 250, y: 85, 'font-size': 22, fill: 'white', 'text-anchor': "middle" }
+        = (n + 27).to_s.rjust 2, '0'
+
+      %text{ x: 250, y: 110, 'font-size': 18, fill: 'white', 'text-anchor': "middle" }
+        = (n + 53).to_s.rjust 2, '0'
+
+      - if n < 22
+        %text{ x: 250, y: 135, 'font-size': 14, fill: 'white', 'text-anchor': "middle" }
+          = (n + 79).to_s.rjust 2, '0'
+
+      %line{ x1: 250, y1: 250, x2: 250, y2: 0, stroke: 'white', transform: 'rotate(7 250,250)' }
+
+  %circle{ cx: 250, cy: 250, r: 100, fill: 'black', stroke: 'white' }
