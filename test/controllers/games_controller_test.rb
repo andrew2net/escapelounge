@@ -15,16 +15,16 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
 
   test "should return only games with difficulty 1" do
     post games_games_url, params: { filter: { difficulty: 1 } }, xhr: true
-    assert_select '.game-container' do |element|
-      assert_select element, 'p:nth-child(4)', 'Difficulty: 2 (easy)'
+    assert_select '.card' do |element|
+      assert_select element, 'span > div.float-right', "Difficulty:\n2 (easy)"
     end
   end
 
   test "should return only games with grade 1" do
     grade = grades :two
     post games_games_url, params: { filter: { grade_id: grade.id } }, xhr: true
-    assert_select '.game-container' do |element|
-      assert_select element, 'p:nth-child(5)', "Grades: #{grade.name}"
+    assert_select '.card' do |element|
+      assert_select element, 'p:nth-child(1)', "Suitable for\n#{grade.name}"
     end
   end
 
@@ -61,7 +61,7 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
   test "should not show start button" do
     get game_url @game
     assert_response :success
-    assert_includes response.body, "You have no subscription to start the game."
+    assert_includes response.body, "You have no subscription to start the game"
   end
 
   test "should start a game" do

@@ -38,34 +38,37 @@
 
     %article.game-content-right
 
-      = form_tag user_game_step_url(@user_game, @step), id: 'step-form' do
 
-        -# Show answer input if there is any solution.
-        - if has_solutions = @step.game_step_solutions.any?
-          - if @step.combo_lock?
-            .d-flex.justify-content-center
-              = render 'pages/padlock'
-            = hidden_field_tag :answer, '000', autocomplete: :off
-          - elsif @step.image_options?
-            .d-flex.justify-content-around
-              - @step.image_response_options.each do |option|
-                .d-block.text-center
-                  = label_tag "image_option_#{option.id}" do
-                    = image_tag option.image.url(:thumb), height: 150, width: 150
-                  %div
-                    = radio_button_tag :image_option, option.id
-            = hidden_field_tag :answer, '', autocomplete: :off
-          - else
-            .form-group
-              -# = label_tag :answer
-              = text_field_tag :answer, @answer, class: 'form-control', disabled: @answered,
-                placeholder: 'Put your answer here...'
+      = form_tag user_game_step_url(@user_game, @step), id: 'step-form' do
+        %p
+          -# Show answer input if there is any solution.
+          - if has_solutions = @step.game_step_solutions.any?
+            - if @step.combo_lock?
+              .d-flex.justify-content-center
+                = render 'padlock'
+              = hidden_field_tag :answer, '000', autocomplete: :off
+            - elsif @step.image_options?
+              .d-flex.justify-content-around
+                - @step.image_response_options.each do |option|
+                  .d-block.text-center
+                    = label_tag "image_option_#{option.id}" do
+                      = image_tag option.image.url(:thumb), height: 150, width: 150
+                    %div
+                      = radio_button_tag :image_option, option.id
+              = hidden_field_tag :answer, '', autocomplete: :off
+            - elsif @step.cipher_wheel?
+              .d-flex.justify-content-around
+                = render 'cipher_wheel'
+            - else
+              .form-group
+                -# = label_tag :answer
+                = text_field_tag :answer, @answer, class: 'form-control', disabled: @answered,
+                  placeholder: 'Put your answer here...'
 
         %div
-          -# - if previous_step = @step.previous(current_user.id)
-          -#   = link_to 'Previous step', user_game_step_url(@user_game, previous_step),
-          -#     class: 'btn btn-primary float-md-left'
-
+            -# if previous_step = @step.previous(current_user.id)
+              = link_to 'Previous step', user_game_step_url(@user_game, previous_step),
+                class: 'btn btn-primary float-md-left'
           .text-center
             - if has_solutions && !@answered
               = link_to 'Confirm', user_game_step_url(@user_game, @step),
@@ -76,10 +79,9 @@
             - elsif !@next_step && !has_solutions
               = link_to 'Finish the Game', user_game_step_url(@user_game, @step),
               class: 'btn btn-primary', method: :post
-
-          -# if @next_step
-            = link_to 'Next step', user_game_step_url(@user_game, @next_step),
-              class: 'btn btn-primary float-md-right'
+            -# if @next_step
+              = link_to 'Next step', user_game_step_url(@user_game, @next_step),
+                class: 'btn btn-primary float-md-right'
 
 
       -# Hints
