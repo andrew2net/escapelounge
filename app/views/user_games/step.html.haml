@@ -18,88 +18,69 @@
 
 #game-show{ style: "background-image: url(#{image_url(@game.background.url)})" }
 
-  %section#game-step
-    .container.pattern-bottom
-
-      .game-whitespace
-        .row.pt-5
-          .col-12.text-center
-            %h4.step-title
-              = image_tag 'icon-magnifier.svg', height: 40
-              = @step.name
-
+  %section#game-step.game-content
+    %article.game-content-left
+      .game-content-info
+        %h4.step-title
+          = image_tag 'icon-magnifier.svg', height: 40
+          = @step.name
         = image_tag 'divider-orange.svg'
-
-        .row.mt-4.row-v-space
-          .col-md-12
-            %p.step-description
-              = @step.description
-
+        %p.step-description
+          = @step.description
         - if @step.image.present?
           .row.row-v-space
             .col-md-12.text-center
               = image_tag @step.image.url, class: "rounded img-fluid mx-auto d-block"
-
         - if @step.video.present?
           .row.row-v-space
             .col-12.text-center
               = video_tag @step.video.url, controls: true, size: '638x360'
 
-        -# .row
-          #hints-container.col-md-12.text-center
-            = render partial: 'hints'
+    %article.game-content-right
 
-        .row
-          .col-md-12
-            = form_tag user_game_step_url(@user_game, @step), id: 'step-form' do
-              %p
-                -# Show answer input if there is any solution.
-                - if has_solutions = @step.game_step_solutions.any?
-                  - if @step.combo_lock?
-                    .d-flex.justify-content-center
-                      = render 'pages/padlock'
-                    = hidden_field_tag :answer, '000', autocomplete: :off
-                  - elsif @step.image_options?
-                    .d-flex.justify-content-around
-                      - @step.image_response_options.each do |option|
-                        .d-block.text-center
-                          = label_tag "image_option_#{option.id}" do
-                            = image_tag option.image.url(:thumb), height: 150, width: 150
-                          %div
-                            = radio_button_tag :image_option, option.id
-                    = hidden_field_tag :answer, '', autocomplete: :off
-                  - else
-                    .form-group
-                      -# = label_tag :answer
-                      = text_field_tag :answer, @answer, class: 'form-control', disabled: @answered,
-                        placeholder: 'Put your answer here...'
+      = form_tag user_game_step_url(@user_game, @step), id: 'step-form' do
 
-              .row
-                .col-md-4
-                  -# if previous_step = @step.previous(current_user.id)
-                    = link_to 'Previous step', user_game_step_url(@user_game, previous_step),
-                      class: 'btn btn-primary float-md-left'
+        -# Show answer input if there is any solution.
+        - if has_solutions = @step.game_step_solutions.any?
+          - if @step.combo_lock?
+            .d-flex.justify-content-center
+              = render 'pages/padlock'
+            = hidden_field_tag :answer, '000', autocomplete: :off
+          - elsif @step.image_options?
+            .d-flex.justify-content-around
+              - @step.image_response_options.each do |option|
+                .d-block.text-center
+                  = label_tag "image_option_#{option.id}" do
+                    = image_tag option.image.url(:thumb), height: 150, width: 150
+                  %div
+                    = radio_button_tag :image_option, option.id
+            = hidden_field_tag :answer, '', autocomplete: :off
+          - else
+            .form-group
+              -# = label_tag :answer
+              = text_field_tag :answer, @answer, class: 'form-control', disabled: @answered,
+                placeholder: 'Put your answer here...'
 
-                .col-md-4
-                  .text-center
-                    - if has_solutions && !@answered
-                      = link_to 'Confirm', user_game_step_url(@user_game, @step),
-                        class: 'btn btn-primary', id: 'answer-btn'
-                    - elsif @next_step
-                      = link_to 'Next Step', user_game_step_url(@user_game, @next_step),
-                        class: 'btn btn-primary'
-                    - elsif !@next_step && !has_solutions
-                      = link_to 'Finish the Game', user_game_step_url(@user_game, @step),
-                      class: 'btn btn-primary', method: :post
+        %div
+          -# - if previous_step = @step.previous(current_user.id)
+          -#   = link_to 'Previous step', user_game_step_url(@user_game, previous_step),
+          -#     class: 'btn btn-primary float-md-left'
 
-                .col-md-4
-                  -# if @next_step
-                    = link_to 'Next step', user_game_step_url(@user_game, @next_step),
-                      class: 'btn btn-primary float-md-right'
+          .text-center
+            - if has_solutions && !@answered
+              = link_to 'Confirm', user_game_step_url(@user_game, @step),
+                class: 'btn btn-primary', id: 'answer-btn'
+            - elsif @next_step
+              = link_to 'Next Step', user_game_step_url(@user_game, @next_step),
+                class: 'btn btn-primary'
+            - elsif !@next_step && !has_solutions
+              = link_to 'Finish the Game', user_game_step_url(@user_game, @step),
+              class: 'btn btn-primary', method: :post
 
-        .row
-          .col-md-12{ style: 'padding-top:100px' }
-            -# %hr
+          -# if @next_step
+            = link_to 'Next step', user_game_step_url(@user_game, @next_step),
+              class: 'btn btn-primary float-md-right'
+
 
       -# Hints
       - if @step.hints.any?

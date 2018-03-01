@@ -1,7 +1,40 @@
 #game-show
 	min-height: 93vh
+
+
+	section.game-content
+		display: flex
+		flex-wrap: wrap
+		height: 100%
+		article.game-content-left
+			flex-basis: 40%
+			background: rgba(255,255,255,.9)
+			min-height: 93vh
+			box-shadow: 0 15px 35px rgba(50,50,93,.1), 0 5px 15px rgba(0,0,0,.07)
+			.game-content-info
+				padding: 1em
+		article.game-content-right
+			flex-basis: 60%
+			min-height: 93vh
+			display: flex
+			flex-direction: column
+			justify-content: center
+
+
+		@media (max-width: 991px)
+			article.game-content-left, article.game-content-right
+				flex-basis: 100%
+				min-height: auto
+
+
+
+
+
+
+
+
+
 	#game-step
-		padding-top: 8em
 		#hints-carousel
 			.carousel-inner
 				.carousel-item
