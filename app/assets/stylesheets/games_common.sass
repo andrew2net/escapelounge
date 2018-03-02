@@ -11,8 +11,64 @@
 			background: rgba(255,255,255,.9)
 			min-height: 93vh
 			box-shadow: 0 15px 35px rgba(50,50,93,.1), 0 5px 15px rgba(0,0,0,.07)
+			position: relative
 			.game-content-info
-				padding: 1em
+				padding: 2em
+				h2.step-title
+					margin: 0
+					text-align: center
+					font-weight: bold
+					color: $blue
+				img.divider-orange
+					margin-top: 1em
+					margin-bottom: 1em
+				h5.step-description
+					width: 80%
+					margin: auto
+					text-align: center
+					margin-bottom: 2em
+				video
+					display: block
+					margin: auto
+				#hint-bar
+					width: 100%
+					position: absolute
+					left: 0
+					right: 0
+					bottom: 0
+					height: 93vh
+					transition: height 0.5s
+					display: flex
+					flex-direction: column
+					justify-content: center
+					&.hint-bar-hidden
+						height: 60px
+					.container
+						text-align: center
+						height: 100%
+						background-color: $orange
+						overflow-y: hidden
+						.hint-title
+							color: white
+							font-size: 1.5em
+							font-weight: bold
+							line-height: 60px
+							cursor: pointer
+
+
+				.game-whitespace
+					@media (min-width: $screen-md-min)
+						padding-left: 100px
+						padding-right: 100px
+
+					@media (min-width: $screen-lg-min)
+						padding-left: 150px
+						padding-right: 150px
+
+
+
+
+
 		article.game-content-right
 			flex-basis: 60%
 			min-height: 93vh
@@ -20,11 +76,26 @@
 			flex-direction: column
 			justify-content: center
 
+			ul.image-options
+				text-align: center
+				list-style: none
+				padding-left: 0
+				li
+					display: inline-block
+					margin: 0 1em 0.25em
+					label
+						background: white
+						padding: 0.625em 0.625em 0.125em
+						border-radius: $borderRadius
+
 
 		@media (max-width: 991px)
 			article.game-content-left, article.game-content-right
 				flex-basis: 100%
 				min-height: auto
+			article.game-content-left
+				.game-content-info
+					margin-top: 4em
 
 
 
@@ -124,42 +195,100 @@
 #games-list
 
 	#games-list-header
-		min-height: 200px
-		background-image: image-url('bg-sign-in-80.jpg')
+		min-height: 400px
+		background-image: image-url('games-index-bg.jpg')
 		background-size: cover
 		background-position: center
 		background-repeat: no-repeat
 		#games-list-header-content
-			min-height: 200px
+			min-height: 400px
 			display: flex
 			flex-direction: column
-			justify-content: flex-end
-			padding: 2em 0
+			justify-content: center
+			align-items: center
+			h1, h2
+				color: white
+			h1
+				margin: 0.25em 0 0
+				font-size: 3em
+			h2
+				font-size: 1.25em
+				text-transform: uppercase
+				margin: 0
 
 	#games-list-filters
 		background: white
-		padding: 1em 0
-		#difficulty_filter, #age_filter
-			border-top: none
-			border-left: none
-			border-right: none
-			box-shadow: none
-			width: 200px
-		label
-			line-height: 40px
-			margin: 0 1em 0 0
-		label.form-check-label
-			margin-left: 1em
-			input
-				margin-top: 12px
+		ul
+			list-style: none
+			padding-left: 0
+			margin: 0
+			li
+				display: inline-block
+				padding: 0.5em 1em
+				border-right: 1px solid #eee
+				select
+					height: 50px
+					background-color: white
+					border-color: white
+					width: 200px
+					&:visited, &:active, &:focus
+						outline: none
+				label.form-check-label
+					margin-left: 1em
+					line-height: 50px
+					input
+						margin-top: 16px
+				span
+					font-size: 1.1em
+					&:first-of-type
+						margin-right: 1em
+					i.fa-check-circle
+						color: green
+					i.fa.fa-lock
+						color: lightblue
+				&:last-child
+					float: right
+					padding: 0
+					a
+						background: $blue
+						display: block
+						height: 66px
+						color: white
+						line-height: 66px
+						padding: 0 1em
+						transition: all 0.2s ease
+						&:hover
+							background: rgba($blue, 0.9)
+							transition: all 0.2s ease
+
+
+
 
 
 	#games-user-list
 		margin: 2em 0
 
 		.card
+			position: relative
+			box-shadow: $boxShadow
+
+			.game-allowed-indicator
+				position: absolute
+				top: 0
+				left: 0
+				right: 0
+				margin: auto
+				text-align: center
+				i.fa
+					background: green
+					line-height: 0
+					padding: 0.75em 0.25em
+					font-size: 1.5em
+					color: white
+
+
 			.card-header
-				min-height: 200px
+				min-height: 180px
 				background-size: cover
 				background-position: center
 				background-repeat: no-repeat
@@ -180,6 +309,39 @@
 					span.game-difficulty
 						float: right
 
+			.card-body
+				h4, p, span
+					color: #333
+				h4
+					font-weight: bold
+					font-size: 1.25em
+				p
+					margin-bottom: 2em
+					height: 63px
+				ul
+					list-style: none
+					padding-left: 0
+					margin: 0
+					li
+						display: inline-block
+						margin-right: 1.5em
+						&:last-child
+							margin-right: 0
+						h6
+							font-size: 1em
+							color: $blue
+							text-transform: uppercase
+							margin: 0 0 0.25em
+						span
+							font-size: 1em
+
+			.card-footer
+				font-size: 0.9em
+
+
+#game-show, #game-new, #game-edit
+	select.form-control
+		height: 40px !important
 
 #game-new, #game-edit
 	.card
@@ -319,37 +481,6 @@ section
 	z-index: 1
 	position: relative
 
-#hint-bar
-	position: fixed
-	height: 230px
-	left: 0
-	bottom: 0
-	width: 100%
-	transition: height 0.5s
-	&.hint-bar-hidden
-		height: 30px
-	.container
-		text-align: center
-		height: 100%
-		background-color: $orange !important
-		overflow-y: hidden
-		.hint-title
-			color: white
-			text-align: center
-			letter-spacing: 4px
-			font-size: 14px
-			font-weight: bold
-			line-height: 2.2em
-			cursor: pointer
-
-.game-whitespace
-	@media (min-width: $screen-md-min)
-		padding-left: 100px
-		padding-right: 100px
-
-	@media (min-width: $screen-lg-min)
-		padding-left: 150px
-		padding-right: 150px
 
 #game-step
 	.form-group

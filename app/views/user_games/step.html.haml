@@ -21,23 +21,57 @@
   %section#game-step.game-content
     %article.game-content-left
       .game-content-info
-        %h4.step-title
-          = image_tag 'icon-magnifier.svg', height: 40
+        %h2.step-title
+          -# = image_tag 'icon-magnifier.svg', height: 40
           = @step.name
-        = image_tag 'divider-orange.svg'
-        %p.step-description
+        = image_tag 'divider-orange.svg', class: "divider-orange"
+        %h5.step-description
           = @step.description
         - if @step.image.present?
-          .row.row-v-space
-            .col-md-12.text-center
-              = image_tag @step.image.url, class: "rounded img-fluid mx-auto d-block"
+          = image_tag @step.image.url, class: "img-fluid"
         - if @step.video.present?
-          .row.row-v-space
-            .col-12.text-center
-              = video_tag @step.video.url, controls: true, size: '638x360'
+          = video_tag @step.video.url, controls: true, size: '400x300'
+
+        -# Hints
+        - if @step.hints.any?
+          :ruby
+            # Retrive opened hints
+            hints = @user_game.hints.where(game_step_id: @step.id)
+            next_hint = @step.hints.covered(@user_game).first
+            show_next_hint = !@answered && !@user_game.finished_at && next_hint
+
+          #hint-bar.hint-bar-hidden{ class: show_next_hint ? 'hint-bar-animate' : '' }
+            .container
+              .hint-title
+                %i.fa.fa-arrow-alt-circle-right
+                &nbsp;&nbsp;&nbsp;
+                Need A Hint? Click Me!
+                &nbsp;&nbsp;&nbsp;
+                %i.fa.fa-arrow-alt-circle-left
+
+              -# Show animation if there aren't opened hints
+              - if hints.blank? && @step.hints.any?
+                #hint-open-animation
+                  = render 'eye_in_keyhole_animation', hint: @step.hints.first, user_game: @user_game, step: @step, color: 'yellow'
+
+              .hint-body
+                #hints-carousel.carousel.slide{ data: { interval: 'false' } }
+                  = render 'hints', user_game: @user_game, step: @step, hints: hints
+
+                - if @step.hints.size > 1
+                  -# Show navigation buttons
+                  %a.carousel-control-prev{ href: '#hints-carousel', role: 'button', data: { slide: 'prev' } }
+                    %span.fa.fa-chevron-left{ aria: { hidden: true } }
+                    %span.sr-only Previous
+                  %a.carousel-control-next{ href: '#hints-carousel', role: 'button', data: { slide: 'next' } }
+                    %span.fa.fa-chevron-right{ aria: { hidden: true } }
+                    %span.sr-only Previous
+
+
+
+
 
     %article.game-content-right
-
 
       = form_tag user_game_step_url(@user_game, @step), id: 'step-form' do
         %p
@@ -48,13 +82,13 @@
                 = render 'padlock'
               = hidden_field_tag :answer, '000', autocomplete: :off
             - elsif @step.image_options?
-              .d-flex.justify-content-around
+              %ul.image-options
                 - @step.image_response_options.each do |option|
-                  .d-block.text-center
+                  %li
                     = label_tag "image_option_#{option.id}" do
                       = image_tag option.image.url(:thumb), height: 150, width: 150
-                    %div
-                      = radio_button_tag :image_option, option.id
+                      %div
+                        = radio_button_tag :image_option, option.id
               = hidden_field_tag :answer, '', autocomplete: :off
             - elsif @step.cipher_wheel?
               .d-flex.justify-content-around
@@ -66,9 +100,9 @@
                   placeholder: 'Put your answer here...'
 
         %div
-            -# if previous_step = @step.previous(current_user.id)
-              = link_to 'Previous step', user_game_step_url(@user_game, previous_step),
-                class: 'btn btn-primary float-md-left'
+          -# if previous_step = @step.previous(current_user.id)
+            = link_to 'Previous step', user_game_step_url(@user_game, previous_step),
+              class: 'btn btn-primary float-md-left'
           .text-center
             - if has_solutions && !@answered
               = link_to 'Confirm', user_game_step_url(@user_game, @step),
@@ -79,40 +113,6 @@
             - elsif !@next_step && !has_solutions
               = link_to 'Finish the Game', user_game_step_url(@user_game, @step),
               class: 'btn btn-primary', method: :post
-            -# if @next_step
-              = link_to 'Next step', user_game_step_url(@user_game, @next_step),
-                class: 'btn btn-primary float-md-right'
-
-
-      -# Hints
-      - if @step.hints.any?
-        :ruby
-          # Retrive opened hints
-          hints = @user_game.hints.where(game_step_id: @step.id)
-          next_hint = @step.hints.covered(@user_game).first
-          show_next_hint = !@answered && !@user_game.finished_at && next_hint
-
-        #hint-bar.hint-bar-hidden{ class: show_next_hint ? 'hint-bar-animate' : '' }
-          .container
-            .hint-title.text-center
-              %i.fa.fa-caret-up
-              Hint
-              %i.fa.fa-caret-up
-
-            -# Show animation if there aren't opened hints
-            - if hints.blank? && @step.hints.any?
-              #hint-open-animation
-                = render 'eye_in_keyhole_animation', hint: @step.hints.first, user_game: @user_game, step: @step, color: 'yellow'
-
-            .hint-body
-              #hints-carousel.carousel.slide{ data: { interval: 'false' } }
-                = render 'hints', user_game: @user_game, step: @step, hints: hints
-
-              - if @step.hints.size > 1
-                -# Show navigation buttons
-                %a.carousel-control-prev{ href: '#hints-carousel', role: 'button', data: { slide: 'prev' } }
-                  %span.fa.fa-chevron-left{ aria: { hidden: true } }
-                  %span.sr-only Previous
-                %a.carousel-control-next{ href: '#hints-carousel', role: 'button', data: { slide: 'next' } }
-                  %span.fa.fa-chevron-right{ aria: { hidden: true } }
-                  %span.sr-only Previous
+          -# if @next_step
+            = link_to 'Next step', user_game_step_url(@user_game, @next_step),
+              class: 'btn btn-primary float-md-right'
