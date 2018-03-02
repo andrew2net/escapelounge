@@ -1,3 +1,15 @@
+//************************************************
+// 						Shared Game Page Styles
+//************************************************
+#game-show, #game-new, #game-edit
+	select.form-control
+		height: 40px !important
+
+
+
+//************************************************
+// 								Game View Page
+//************************************************
 #game-show
 	min-height: 93vh
 
@@ -44,10 +56,19 @@
 						font-size: 1em
 
 
+
+//************************************************
+// 								Game Step Page
+//************************************************
+#game-show
 	section.game-content
 		display: flex
 		flex-wrap: wrap
 		height: 100%
+
+		//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		// Left 1/3 of Game Step View
+		//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		article.game-content-left
 			flex-basis: 40%
 			background: rgba(255,255,255,.9)
@@ -97,7 +118,6 @@
 							line-height: 60px
 							cursor: pointer
 
-
 				.game-whitespace
 					@media (min-width: $screen-md-min)
 						padding-left: 100px
@@ -107,10 +127,9 @@
 						padding-left: 150px
 						padding-right: 150px
 
-
-
-
-
+		//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		// Right 2/3 of Game Step View
+		//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		article.game-content-right
 			flex-basis: 60%
 			min-height: 93vh
@@ -131,6 +150,9 @@
 						border-radius: $borderRadius
 
 
+		//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		// Responsive Game Step Styles
+		//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		@media (max-width: 991px)
 			article.game-content-left, article.game-content-right
 				flex-basis: 100%
@@ -196,6 +218,10 @@
 					margin: 0 0.5em
 
 
+//************************************************
+// 						Game Result Page View
+//************************************************
+#game-show
 	#game-result-content
 		text-align: center
 		min-height: 400px
@@ -228,12 +254,21 @@
 
 
 
+
+//************************************************
+// 								Admin Game List
+//************************************************
 #games-admin-list
 	.card
 		h5, p
 			color: #333
 
 
+
+
+//************************************************
+// 								User Game List
+//************************************************
 #games-list
 
 	#games-list-header
@@ -380,9 +415,11 @@
 							font-size: 1em
 
 
-#game-show, #game-new, #game-edit
-	select.form-control
-		height: 40px !important
+
+
+//************************************************
+// 						Game New & Edit Pages
+//************************************************
 
 #game-new, #game-edit
 	.card
@@ -491,7 +528,7 @@ section
 	position: relative
 	color: $gray-100
 	#hints-carousel
-		height: 198px
+		height: 80vh
 		ol.carousel-indicators
 			bottom: 7px
 			margin: 0
@@ -500,10 +537,9 @@ section
 				&.active
 					background-color: $gray-200
 	.carousel-inner
-		overflow-y: scroll
-		height: 180px
+		height: 93vh
 		.carousel-item
-			min-height: 170px
+			min-height: 80vh
 			p
 				padding: 1rem 1rem 0
 				font-family: 'Cormorant Garamond'
