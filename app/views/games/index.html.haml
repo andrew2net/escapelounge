@@ -16,10 +16,10 @@
           = select_tag :age_filter, options_for_select(Grade.pluck(:name, :id)),
             prompt: 'Choose Grade Level', autocomplete: :off
         %li
-          = label_tag :allowed_filter, class: 'form-check-label' do
-            %input#allowed_filter.form-check-input{ type: 'checkbox',
-              checked: true, autocomplete: 'off' }
-            &nbsp;Show only allowed games
+          -# = label_tag :allowed_filter, class: 'form-check-label' do
+          -#   %input#allowed_filter.form-check-input{ type: 'checkbox',
+          -#     checked: false, autocomplete: 'off' }
+          -#   &nbsp;Show only allowed games
           %span
             %i.fa.fa-check-circle
             Available
