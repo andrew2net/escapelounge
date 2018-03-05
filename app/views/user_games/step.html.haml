@@ -71,6 +71,8 @@
                   - elsif @step.cipher_wheel?
                     .d-flex.justify-content-around
                       = render 'cipher_wheel'
+                    .form-group.mt-4
+                      = text_field_tag :answer, @answer, class: 'form-control', readonly: true
                   - else
                     .form-group
                       -# = label_tag :answer
