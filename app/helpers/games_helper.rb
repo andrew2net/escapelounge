@@ -20,13 +20,11 @@ module GamesHelper
     content_tag :span, id: "container-timer", style: "#{show_timer ? "" : "display:none"}" do
       # content_tag :div, class: "row" do
         # html = content_tag :div, class: elem_class do
-        html = content_tag :span, '', id: "display-timer",
+        html = content_tag :span, '', id: "display-timer", style: bar ? '' : 'display:none',
           data: { stop_at: "#{stop_at}", paused_at: "#{@paused_at}" }
         # end
 
         return html if bar
-
-        html = ''
 
         if @display_pause_buttons
           # html += content_tag :div do

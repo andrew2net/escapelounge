@@ -36,7 +36,7 @@
             = button_tag 'Start game', data: { target: '#start-game-modal', toggle: 'modal' }, class: "btn btn-primary btn-sm ml-1", style: "#{@running || @paused_at ? 'display:none' : ''}"
 
             - if user_game = current_user.user_games.running.where(game_id: @game.id).first
-              = link_to 'Go to game steps', user_game_step_url(user_game, user_game.last_allowed_step), id: 'link-to-steps', class: "btn btn-primary btn-sm"
+              = link_to 'Go to game steps', user_game_step_url(user_game, user_game.last_allowed_step), id: 'link-to-steps', class: "btn btn-primary btn-sm ml-1"
 
           - else
             = link_to 'You have no subscription to start the game', '#', class: "btn btn-secondary disabled btn-sm"

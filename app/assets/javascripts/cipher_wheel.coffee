@@ -10,53 +10,63 @@ $( ->
   sAngle = 13.85
   $answer = $ '#answer'
 
-  position = $outerWheel.position()
+  position = $('#cipher-wheel').position()
   if position
     position.centerX = position.left + 250
     position.centerY = position.top + 250
 
-  $outerWheel.mousedown (e) ->
+  $outerWheel.on 'mousedown touchstart', (e) ->
     e.preventDefault()
-    if e.which == 1
+    if e.touches && e.touches.length == 1
+      initialX = e.touches[0].pageX
+      initialY = e.touches[0].pageY
+      drag = true
+    else if e.which == 1
       initialX = e.pageX
       initialY = e.pageY
       drag = true
 
-  $(document).mousemove (e) ->
-    # e.preventDefault()
+  $(document).on 'mousemove touchmove', (e) ->
     return unless drag
-    dx = e.pageX - initialX
+
+    if e.touches && e.touches.length == 1
+      pageX = e.touches[0].pageX
+      pageY = e.touches[0].pageY
+    else
+      pageX = e.pageX
+      pageY = e.pageY
+
+    dx = pageX - initialX
     dXabs = Math.abs dx
-    dy = e.pageY - initialY
+    dy = pageY - initialY
     dYabs = Math.abs dy
 
     if dXabs > dYabs
-      if dXabs > 3
-        initialX = e.pageX
-        initialY = e.pageY
-        if dx > 0 and e.pageY < position.centerY or dx < 0 and e.pageY > position.centerY
-          dAngle++
+      if dXabs > 6
+        initialX = pageX
+        initialY = pageY
+        if dx > 0 and pageY < position.centerY or dx < 0 and pageY > position.centerY
+          dAngle += 3
         else
-          dAngle--
+          dAngle -= 3
         $outerWheel.css 'transform', "rotateZ(#{nAngle * sAngle + dAngle}deg)"
     else
-      if dYabs > 3
-        initialX = e.pageX
-        initialY = e.pageY
-        if dy > 0 and e.pageX > position.centerX or dy < 0 and e.pageX < position.centerX
-          dAngle++
+      if dYabs > 6
+        initialX = pageX
+        initialY = pageY
+        if dy > 0 and pageX > position.centerX or dy < 0 and pageX < position.centerX
+          dAngle += 2
         else
-          dAngle--
+          dAngle -= 2
         $outerWheel.css 'transform', "rotateZ(#{nAngle * sAngle + dAngle}deg)"
 
-  $(document).mouseup (e) ->
+  $(document).on 'mouseup touchend', (e) ->
     if drag
       drag = false
       if Math.abs(dAngle) > 5
         nAngle  += Math.round dAngle / sAngle
 
       dAngle = 0
-
       $outerWheel.css 'transform', "rotateZ(#{nAngle * 13.85}deg)"
 
   $('g#cipher-inner-wheel text').click (e) ->

@@ -72,7 +72,7 @@ $ ->
       metadataInput += """<input name="#{csrfParam}" value="#{csrfToken}" type="hidden" />"""
     metadataInput
 
-  startResume = (url)->
+  startResume = (url) ->
     linkToSteps.show()
     startAt = new Date
     metadataInput = """<input name="start_at" value="#{startAt}" type="hidden" />"""
@@ -82,24 +82,24 @@ $ ->
     form.submit()
 
   # Starting game.
-  startGameBtn.click (event)->
+  startGameBtn.click (event) ->
     event.preventDefault()
     startResume event.target.href
 
   # Pause game
-  pauseGameBtn.click (event)->
+  pauseGameBtn.click (event) ->
     event.preventDefault()
     resumeGameBtn.removeClass 'disabled'
     timer.pause()
     $.post event.target.href, { seconds_remain: timer.secondsRemain }
 
   # Resume game.
-  resumeGameBtn.click (event)->
+  resumeGameBtn.click (event) ->
     event.preventDefault()
     startResume event.target.href
 
   # End the game
-  endGameBtn.click (event)->
+  endGameBtn.click (event) ->
     event.preventDefault()
     # timer.stop()
     # $.post event.target.href
