@@ -31,7 +31,7 @@ $ ->
       this.display.html this.minSec()
 
     # Show and start timer.
-    start: (timeLength)->
+    start: (timeLength) ->
       this.secondsRemain = timeLength if timeLength
       if this.secondsRemain > 0
         resumeGameBtn.hide()
@@ -47,7 +47,7 @@ $ ->
             window.location = _self.redirectTo if _self.redirectTo
         , 1000
 
-    pause: (pauseAt)->
+    pause: (pauseAt) ->
       this.secondsRemain = pauseAt if pauseAt
       pauseGameBtn.hide()
       resumeGameBtn.show()
@@ -55,7 +55,7 @@ $ ->
       this.show()
       clearInterval this.interval
 
-  seconds = (stopAt)-> Math.ceil (new Date(stopAt) - new Date) / 1000
+  seconds = (stopAt) -> Math.ceil (new Date(stopAt) - new Date) / 1000
 
   # When timer started before the page loaded then continue conutdowning.
   if stopAt = timer.display.attr('data-stop-at')

@@ -11,8 +11,9 @@ $( ->
   $answer = $ '#answer'
 
   position = $outerWheel.position()
-  position.centerX = position.left + 250
-  position.centerY = position.top + 250
+  if position
+    position.centerX = position.left + 250
+    position.centerY = position.top + 250
 
   $outerWheel.mousedown (e) ->
     e.preventDefault()
