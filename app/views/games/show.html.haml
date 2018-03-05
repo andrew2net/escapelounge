@@ -20,80 +20,78 @@
         = link_to 'Start game', game_start_url(@game), class: 'btn btn-primary',
           id: 'start-game-btn'
 
-#game-show{ style: "background-image: url(#{image_url(@game.background.url)}); background-size: cover" }
+#game-show
+
+  #game-show-header{ style: "background-image: url(#{image_url(@game.banner.url)})" }
+    #game-show-header-container
+      %h1= @game.name
+      %h5= @game.short_description.first(125)
+
+      .game-actions
+
+        = link_to 'Download Instructions', @game.instructions_pdf.url, class: "btn btn-primary btn-sm", target: "_blank"
+        - if policy(@game).start?
+          = display_timer
+          = button_tag 'Start game', data: { target: '#start-game-modal', toggle: 'modal' }, class: "btn btn-primary btn-sm", style: "#{@running || @paused_at ? 'display:none' : ''}"
+
+          - if user_game = current_user.user_games.running.where(game_id: @game.id).first
+            = link_to 'Go to game steps', user_game_step_url(user_game, user_game.last_allowed_step), id: 'link-to-steps', class: "btn btn-primary btn-sm"
+
+        - else
+          = link_to 'You have no subscription to start the game', '#', class: "btn btn-secondary disabled btn-sm"
+
   %section.page-content
     .container
+      .row
+        .col-md-6.offset-md-1
+          .card
+            .card-body
+              %ul
+                %li
+                  %h6
+                    %i.fa.fa-clock
+                    Time
+                  %span= "#{@game.time_length} min"
+                %li
+                  %h6
+                    %i.fa.fa-th-list
+                    Steps
+                  %span= "#{@game.game_steps.count} steps"
+                %li
+                  %h6
+                    %i.fa.fa-star
+                    Difficulty
+                  %span= "#{@game.difficulty}"
+              %ul
+                %li
+                  %h6
+                    %i.fa.fa-users
+                    Grade Level
+                  %span= @game.grades.map { |g| g.name}.join ', '
 
-      .card.game-show-card
-        .card-header{ style: "background-image: url(#{image_url(@game.banner.url)})" }
-          .card-header-content
-            %h2.card-title= @game.name
-            %span
-              %b= @game.time_length
-              minutes to complete
-              %b= @game.game_steps.count
-              steps for
-              %b= @game.grades.map { |g| g.name}.join ', '
-              - if current_user && current_user.admin
-                %br
-                = link_to 'Edit Game', edit_admin_game_path(@game), class: "btn btn-sm btn-primary", id: 'start-game-btn'
-        .card-body
-          .row
-            .col-md-8
-              -# = image_tag @game.banner.url :thumb, class: 'img-fluid'
-              %h3 Game Details
-              %hr
               %p= @game.description
-            .col-md-4
+
+
+            - if @game.user_games.where("result>0").count > 0
+              .card-footer
+                .row
+                  .col-md-12
+                    %h3.text-center Leaderboard - Top 10 Fastest Times
+                    %table.table
+                      %thead
+                        %tr
+                          %th Time
+                          %th E-mail
+                      %tbody
+                        - @game.user_games.includes(:user).where("result>0").order(:result).first(10).each do |user_game|
+                          %tr
+                            %td= user_game.formated_result
+                            %td= user_game.user.email
+
+        .col-md-4
+          .card
+            .card-body
               %h3 Print Outs
               %hr
               - @game.game_assets.each do |asset|
                 %p= link_to asset.name, asset.file.url, target: "_blank"
-
-          .row.game-actions
-            .col-md-12
-              = link_to 'Download Instructions', @game.instructions_pdf.url, class: "btn btn-primary btn-sm", target: "_blank"
-              - if policy(@game).start?
-                = display_timer
-                = button_tag 'Start game', data: { target: '#start-game-modal', toggle: 'modal' }, class: "btn btn-primary btn-sm", style: "#{@running || @paused_at ? 'display:none' : ''}"
-
-                - if user_game = current_user.user_games.running.where(game_id: @game.id).first
-                  = link_to 'Go to game steps', user_game_step_url(user_game, user_game.last_allowed_step), id: 'link-to-steps', class: "btn btn-primary btn-sm"
-
-              - else
-                = link_to 'You have no subscription to start the game', '#', class: "btn btn-secondary disabled btn-sm"
-
-
-        - if @game.user_games.where("result>0").count > 0
-          .card-footer
-            .row
-              .col-md-12
-                %h3.text-center Leaderboard - Top 10 Fastest Times
-                %table.table
-                  %thead
-                    %tr
-                      %th Time
-                      %th E-mail
-                  %tbody
-                    - @game.user_games.includes(:user).where("result>0").order(:result).first(10).each do |user_game|
-                      %tr
-                        %td= user_game.formated_result
-                        %td= user_game.user.email
-
-      -# - @game.game_steps.each do |step|
-        .step-container
-          %h4= step.name
-          %p= step.description
-
-          %h5 Hints
-          -# TODO: put hints into a button that triggers a modal and removes points from total score
-          - step.hints.each do |hint|
-            .hint-container
-              %p= hint.description
-              %span.hint-value= "#{hint.value} pts"
-
-          %hr
-          %h5 Solutions
-          - step.game_step_solutions.each do |game_step_solution|
-            .hint-container
-              %p= game_step_solution.solution

@@ -4,24 +4,30 @@
   %section
     #games-list-header
       .container#games-list-header-content
-        %h1 All Games
+        %h2 Uncover clues, solve puzzles, and decode riddles in a thrilling test of wits
+        %h1 Are you up to the challenge?
 
 
     #games-list-filters
-      .container
-        .row
-          %label
-            %strong Filter by:
-          -# = label_tag :difficulty_filter, 'Difficulty', class: 'mx-2'
-          = select_tag :difficulty_filter, options_for_select(Game.difficulties),
-            class: 'form-control mr-3', autocomplete: :off, prompt: 'Difficulty'
-          -# = label_tag :age_filter, 'Grade', class: 'mx-2'
+      %ul
+        %li
+          = select_tag :difficulty_filter, options_for_select(Game.difficulties), autocomplete: :off, prompt: 'Choose Difficulty Level'
+        %li
           = select_tag :age_filter, options_for_select(Grade.pluck(:name, :id)),
-            prompt: 'Grade', class: 'form-control mr-3', autocomplete: :off
-          = label_tag :allowed_filter, class: 'form-check-label' do
-            %input#allowed_filter.form-check-input{ type: 'checkbox',
-              checked: true, autocomplete: 'off' }
-            &nbsp;Show only allowed games
+            prompt: 'Choose Grade Level', autocomplete: :off
+        %li
+          -# = label_tag :allowed_filter, class: 'form-check-label' do
+          -#   %input#allowed_filter.form-check-input{ type: 'checkbox',
+          -#     checked: false, autocomplete: 'off' }
+          -#   &nbsp;Show only allowed games
+          %span
+            %i.fa.fa-check-circle
+            Available
+          %span
+            %i.fa.fa-lock
+            Unavailable
+        %li
+          = link_to 'Reset Filters', games_path
 
   .page-content
     .container

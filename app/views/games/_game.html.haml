@@ -1,26 +1,39 @@
-.col-md-6.col-xs-12
-  = link_to game do
-    .card
-      .card-header{ style: "background-image: url(#{image_url(game.banner.url)})" }
-        .card-header-content
-          %h3.card-title= game.name
-          %span
-            %b= game.time_length
-            minutes to complete
-            %b= game.game_steps.count
-            steps
-            .float-right
-              Difficulty:
-              = game.difficulty
-      .card-body
-        %p
-          Suitable for
-          = game.grades.map { |g| g.name }.join ", "
-        %p= game.short_description
-    -# .game-container{ style: "background-image: url(#{image_url(game.background.url(:thumb))});background-size:cover" }
-    -#   -# = image_tag game.background.url :thumb, class: 'img-fluid'
-    -#   %h4= game.name
-    -#   %p= game.short_description
-    -#   %p #{game.game_steps.count} Steps
-    -#   %p Difficulty: #{game.difficulty}
-    -#   %p Grades: #{game.grades.map(&:name).join ', '}
+.col-md-4.col-xs-12
+  .card
+    .game-allowed-indicator
+      %i.fa.fa-check-circle
+    .card-header{ style: "background-image: url(#{image_url(game.banner.url)})" }
+    .card-body
+      = link_to game do
+        %h4= game.name
+        %p= game.short_description.first(125)
+        %ul
+          %li
+            %h6
+              %i.fa.fa-clock
+              Time
+            %span= "#{game.time_length} min"
+          %li
+            %h6
+              %i.fa.fa-th-list
+              Steps
+            %span= "#{game.game_steps.count} steps"
+          %li
+            %h6
+              %i.fa.fa-star
+              Difficulty
+            %span= "#{game.difficulty}"
+        %ul
+          %li
+            %h6
+              %i.fa.fa-users
+              Grade Level
+            %span= game.grades.map { |g| g.name}.join ', '
+
+  -# .game-container{ style: "background-image: url(#{image_url(game.background.url(:thumb))});background-size:cover" }
+  -#   -# = image_tag game.background.url :thumb, class: 'img-fluid'
+  -#   %h4= game.name
+  -#   %p= game.short_description
+  -#   %p #{game.game_steps.count} Steps
+  -#   %p Difficulty: #{game.difficulty}
+  -#   %p Grades: #{game.grades.map(&:name).join ', '}
