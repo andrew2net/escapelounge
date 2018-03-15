@@ -33,10 +33,11 @@ class UserGamesController < ApplicationController
     else
       # check if the step is note empty (has solutions)
       if @step.game_step_solutions.any?
-        solution = @step.game_step_solutions.find_by solution: params[:answer]
+        answ = params[:answer].downcase.strip
+        solution = @step.game_step_solutions.where('LOWER(solution) = ?', answ).first
         if solution
           sa = StepAnswer.find_or_initialize_by user_game_id: @user_game.id, game_step_id: @step.id
-          sa.answer = params[:answer]
+          sa.answer = answ
           sa.save
           next_step = @step.next(@user_game.id)
           url = if next_step

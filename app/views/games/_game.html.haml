@@ -6,7 +6,7 @@
     .card-body
       = link_to game do
         %h4= game.name
-        %p= game.short_description.first(125)
+        %p= game.short_description&.first(125)
         %ul
           %li
             %h6
