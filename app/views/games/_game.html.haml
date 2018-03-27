@@ -1,7 +1,7 @@
 .col-md-4.col-xs-12
   .card
     .game-allowed-indicator
-      - if game.grades.select { |g| g.subscription_plans.select { |sp| sp.id == current_user.subscription_plan_id }.any? }.any?
+      - if game.grades.select { |g| g.subscription_plans.select { |sp| sp.id == current_user.subscription_plan_id }.any? }.any? && current_user.period_end >= DateTime.now
         %i.fa.fa-check-circle
       - else
         %i.fa.fa-times-circle
