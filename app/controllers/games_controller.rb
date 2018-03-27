@@ -4,7 +4,7 @@ class GamesController < ApplicationController
   # GET /games
   def index
     @games = if current_user&.period_end && current_user.period_end >= DateTime.now
-      Game.visible.allowed current_user
+      Game.visible.includes(grades: :subscription_plans)
     else
       []
     end

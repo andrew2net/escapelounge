@@ -5,7 +5,7 @@
   -# Progress bar
   - if @step
     .game-progress-bar
-      .circle-progress{ style: "transform: rotate(#{180-@user_game.progress_deg}deg)" }
+      .circle-progress{ style: "transform: rotate(#{180 - @user_game.progress_deg}deg)" }
       .timer-bar
         Time Remaining
         = display_timer bar: true
