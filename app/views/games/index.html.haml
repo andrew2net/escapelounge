@@ -2,17 +2,19 @@
 -#   All Games
 #games-list
   %section
-    #games-list-header
-      .container#games-list-header-content
-        %h2 Uncover clues, solve puzzles, and decode riddles in a thrilling test of wits
-        %h1 Are you up to the challenge?
+    -# #games-list-header
+    -#   .container#games-list-header-content
+    -#     %h2 Uncover clues, solve puzzles, and decode riddles in a thrilling test of wits
+    -#     %h1 Are you up to the challenge?
 
 
     #games-list-filters
       %ul
         %li
+          %i.fa.fa-star
           = select_tag :difficulty_filter, options_for_select(Game.difficulties), autocomplete: :off, prompt: 'Choose Difficulty Level'
         %li
+          %i.fa.fa-users
           = select_tag :age_filter, options_for_select(Grade.pluck(:name, :id)),
             prompt: 'Choose Grade Level', autocomplete: :off
         %li
@@ -24,7 +26,7 @@
             %i.fa.fa-check-circle
             Available
           %span
-            %i.fa.fa-lock
+            %i.fa.fa-times-circle
             Unavailable
         %li
           = link_to 'Reset Filters', games_path

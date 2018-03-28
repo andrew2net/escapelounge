@@ -6,9 +6,9 @@ class CreateGrades < ActiveRecord::Migration[5.1]
       t.timestamps
     end
 
-    Grade.create name: "ages 5-9"
-    Grade.create name: "ages 10-14"
-    Grade.create name: "ages 15-19"
+    Grade.create name: "Ages 5-9"
+    Grade.create name: "Ages 10-14"
+    Grade.create name: "Ages 15-19"
 
     create_join_table :games, :grades do |t|
       t.index :game_id
