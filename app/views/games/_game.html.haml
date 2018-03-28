@@ -1,8 +1,10 @@
 .col-md-6.col-xs-12
   .card
     .game-allowed-indicator
-      // TODO: Indicate whether a game is available or not
-      %i.fa.fa-check-circle
+      - if game.grades.select { |g| g.subscription_plans.select { |sp| sp.id == current_user.subscription_plan_id }.any? }.any? && current_user.period_end >= DateTime.now
+        %i.fa.fa-check-circle
+      - else
+        %i.fa.fa-times-circle
     .card-header{ style: "background-image: url(#{image_url(game.banner.url)})" }
     .card-body
       = link_to game do
