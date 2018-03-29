@@ -4,7 +4,7 @@ class GameStep < ApplicationRecord
   attr_accessor :image_solution_id
 
   belongs_to :game
-  has_many :step_answers, dependent: :delete_all
+  # has_many :step_answers, dependent: :delete_all
 
   has_many :hints, dependent: :destroy
   accepts_nested_attributes_for :hints, reject_if: :all_blank, allow_destroy: true
@@ -23,7 +23,7 @@ class GameStep < ApplicationRecord
 
   default_scope { order :game_id, :position }
 
-  enum answer_input_type: [:text_field, :combo_lock, :image_options, :cipher_wheel]
+  enum answer_input_type: [:text_field, :combo_lock, :image_options, :cipher_wheel, :multi_questions]
 
   scope :answered, ->(user_id) { joins(step_answers: :user_game)
       .where(step_answers: { user_games: { user_id: user_id }})
