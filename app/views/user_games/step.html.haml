@@ -69,8 +69,6 @@
 
 
 
-
-
     %article.game-content-right
 
       = form_tag user_game_step_url(@user_game, @step), id: 'step-form' do
@@ -95,6 +93,12 @@
                 = render 'cipher_wheel'
               .form-group.mt-4
                 = text_field_tag :answer, @answer, class: 'form-control'
+            - elsif @step.multi_questions?
+              - @questions.each do |q|
+                .form-group.row
+                  = label_tag "questions[#{q.id}][answer]", q.question, class: 'col-6 col-form-label'
+                  .col-6
+                    = text_field_tag "questions[#{q.id}][answer]", q.answer, class: 'form-control'
             - else
               .form-group
                 -# = label_tag :answer

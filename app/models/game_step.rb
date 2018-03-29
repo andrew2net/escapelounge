@@ -36,10 +36,11 @@ class GameStep < ApplicationRecord
   end
 
   # Return next allowed step.
+  # @param user_game_id [Integer]
   def next(user_game_id)
     # Check if the step is answered or has no solutions.
     allow_next = !game_step_solutions.any? ||
-      !step_answers.find_by(user_game_id: user_game_id).nil?
+      game_step_solutions.joins(:step_answers).where(step_answers: { user_game_id: user_game_id }).any?
     if allow_next
       # if it's answered then retirn next step.
       self.class.where(game_id: game_id).where('position > ?', position).first
