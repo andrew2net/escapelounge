@@ -98,7 +98,7 @@
                 .form-group.row
                   = label_tag "questions[#{q.id}][answer]", q.question, class: 'col-6 col-form-label'
                   .col-6
-                    = text_field_tag "questions[#{q.id}][answer]", q.answer, class: 'form-control'
+                    = text_field_tag "questions[#{q.id}][answer]", q.answer, class: 'form-control', data: { multi_answer: q.id }
             - else
               .form-group
                 -# = label_tag :answer

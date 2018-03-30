@@ -42,8 +42,8 @@ class UserGamesController < ApplicationController
           results = true
           params[:questions].each do |question_id, answer|
             solution = @step.game_step_solutions.find question_id
-            solutions = solution.solution.downcase.split
-            results &= solutions.include? answer[:answer].downcase
+            solutions = solution.solution.downcase.split(";").map(&:strip)
+            results &= solutions.include? answer[:answer].downcase.strip
           end
           if results
             params[:questions].each do |question_id, answer|
@@ -75,6 +75,10 @@ class UserGamesController < ApplicationController
         redirect_to user_game_result_url(@user_game)
       end
     end
+  end
+
+  def check_answer
+    render json: { correct: GameStepSolution.check_answer(params[:id], params[:value]) }
   end
 
   # POST /user_games/:user_game_id/end

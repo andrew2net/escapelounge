@@ -40,6 +40,16 @@ $ ->
     $hintsContainer.find('.carousel-indicators li').removeClass 'active'
     $hintsContainer.find(".carousel-indicators li[data-slide-to='#{e.to}']").addClass 'active'
 
+  $('input[data-multi-answer]').change ->
+    self = @
+    $.post "/user_games/check_answer/#{@dataset.multiAnswer}", { value: @value }, (resp) ->
+      if resp.correct
+        $(self).addClass 'is-valid'
+        $(self).removeClass 'is-invalid'
+      else
+        $(self).addClass 'is-invalid'
+        $(self).removeClass 'is-valid'
+
   modalTimeOut = null
 
   # Submit answer

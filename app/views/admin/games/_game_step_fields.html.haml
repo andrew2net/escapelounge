@@ -27,7 +27,7 @@
             .form-group
               = f.label :answer_input_type
               = f.select :answer_input_type, options_for_select({ 'Text field' => :text_field, 'Combo lock' => :combo_lock,
-                'Image options' => :image_options, 'Cipher wheel' => :cipher_wheel, 'Multu questions' => :multi_questions },
+                'Image options' => :image_options, 'Cipher wheel' => :cipher_wheel, 'Multi questions' => :multi_questions },
                 f.object.answer_input_type), {}, class: 'form-control', data: { input_type: true }
 
         .form-row
