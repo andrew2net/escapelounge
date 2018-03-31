@@ -4,31 +4,41 @@
 #start-game-modal.modal.fade
   .modal-dialog
     .modal-content
-      .modal-header
-        %h5.modal-title
-          Starting Game:
-          = "\"#{@game.name}\""
-        %button.close{ type: 'button', data: { dismiss: 'modal' } }
-          %span &times;
-      .modal-body
-        %p
-          You are about to start
-          = @game.name
-          which has
-          = @game.game_steps.count
-          steps. Each step is a puzzle you have to solve. The goal of the game is to complete it as fast as you can. When you start the game, a timer will start the countdown of time you have remaining. If you use a hint, time will be deducted. The game will be complete when you successfully finish all of the game steps.
-        = link_to 'Start game', game_start_url(@game), class: 'btn btn-primary',
-          id: 'start-game-btn'
+      %button.close{ type: 'button', data: { dismiss: 'modal' } }
+        %span &times;
+
+      %p eye image
+      %h3 Wait a second!
+      %h5 Did you remember to print out the following?
+      %p print outs
+      %p Print outs are essential and will always be available to print from the game screen before you start a new game.
+      = link_to 'Printed & Ready To Start!', game_start_url(@game), class: "btn btn-primary", id: "start-game-btn"
+
+      -# .modal-header
+      -#   %h5.modal-title
+      -#     Starting Game:
+      -#     = "\"#{@game.name}\""
+      -#   %button.close{ type: 'button', data: { dismiss: 'modal' } }
+      -#     %span &times;
+      -# .modal-body
+      -#   %p
+      -#     You are about to start
+      -#     = @game.name
+      -#     which has
+      -#     = @game.game_steps.count
+      -#     steps. Each step is a puzzle you have to solve. The goal of the game is to complete it as fast as you can. When you start the game, a timer will start the countdown of time you have remaining. If you use a hint, time will be deducted. The game will be complete when you successfully finish all of the game steps.
+      -#   = link_to 'Start game', game_start_url(@game), class: 'btn btn-primary',
+      -#     id: 'start-game-btn'
+
 
 #game-show
+  .container
+    .card
 
-  #game-show-header{ style: "background-image: url(#{image_url(@game.banner.url)})" }
-    #game-show-header-container
-      %h1= @game.name
-      %h5= @game.short_description&.first(125)
-
-      .game-actions
-
+      .card-content-left
+        = @game.name
+        %hr
+        %p= @game.short_description
         .row
           = link_to 'Download Instructions', @game.instructions_pdf.url, class: "btn btn-primary btn-sm", target: "_blank"
           - if policy(@game).start?
@@ -40,59 +50,99 @@
 
           - else
             = link_to 'You have no subscription to start the game', '#', class: "btn btn-secondary disabled btn-sm"
+        %p= @game.description
 
-  %section.page-content
-    .container
-      .row
-        .col-md-6.offset-md-1
-          .card
-            .card-body
-              %ul
-                %li
-                  %h6
-                    %i.fa.fa-clock
-                    Time
-                  %span= "#{@game.time_length} min"
-                %li
-                  %h6
-                    %i.fa.fa-th-list
-                    Steps
-                  %span= "#{@game.game_steps.count} steps"
-                %li
-                  %h6
-                    %i.fa.fa-star
-                    Difficulty
-                  %span= "#{@game.difficulty}"
-              %ul
-                %li
-                  %h6
-                    %i.fa.fa-users
-                    Grade Level
-                  %span= @game.grades.map { |g| g.name}.join ', '
-
-              %p= @game.description
+      .card-content-right
+        %h3 Print outs
+        .printouts-list
+          - @game.game_assets.each do |asset|
+            %p= link_to asset.name, asset.file.url, target: "_blank"
+        - if @game.user_games.where("result>0").count > 0
+          %h3.text-center Leaderboard - Top 10 Fastest Times
+          %table.table
+            %thead
+              %tr
+                %th Time
+                %th E-mail
+            %tbody
+              - @game.user_games.includes(:user).where("result>0").order(:result).first(10).each do |user_game|
+                %tr
+                  %td= user_game.formated_result
+                  %td= user_game.user.email
 
 
-            - if @game.user_games.where("result>0").count > 0
-              .card-footer
-                .row
-                  .col-md-12
-                    %h3.text-center Leaderboard - Top 10 Fastest Times
-                    %table.table
-                      %thead
-                        %tr
-                          %th Time
-                          %th E-mail
-                      %tbody
-                        - @game.user_games.includes(:user).where("result>0").order(:result).first(10).each do |user_game|
-                          %tr
-                            %td= user_game.formated_result
-                            %td= user_game.user.email
 
-        .col-md-4
-          .card
-            .card-body
-              %h3 Print Outs
-              %hr
-              - @game.game_assets.each do |asset|
-                %p= link_to asset.name, asset.file.url, target: "_blank"
+  -# #game-show-header{ style: "background-image: url(#{image_url(@game.banner.url)})" }
+  -#   #game-show-header-container
+  -#     %h1= @game.name
+  -#     %h5= @game.short_description&.first(125)
+  -#
+  -#     .game-actions
+  -#
+  -#       .row
+  -#         = link_to 'Download Instructions', @game.instructions_pdf.url, class: "btn btn-primary btn-sm", target: "_blank"
+  -#         - if policy(@game).start?
+  -#           = display_timer
+  -#           = button_tag 'Start game', data: { target: '#start-game-modal', toggle: 'modal' }, class: "btn btn-primary btn-sm ml-1", style: "#{@running || @paused_at ? 'display:none' : ''}"
+  -#
+  -#           - if user_game = current_user.user_games.running.where(game_id: @game.id).first
+  -#             = link_to 'Go to game steps', user_game_step_url(user_game, user_game.last_allowed_step), id: 'link-to-steps', class: "btn btn-primary btn-sm ml-1"
+  -#
+  -#         - else
+  -#           = link_to 'You have no subscription to start the game', '#', class: "btn btn-secondary disabled btn-sm"
+  -#
+  -# %section.page-content
+  -#   .container
+  -#     .row
+  -#       .col-md-6.offset-md-1
+  -#         .card
+  -#           .card-body
+  -#             %ul
+  -#               %li
+  -#                 %h6
+  -#                   %i.fa.fa-clock
+  -#                   Time
+  -#                 %span= "#{@game.time_length} min"
+  -#               %li
+  -#                 %h6
+  -#                   %i.fa.fa-th-list
+  -#                   Steps
+  -#                 %span= "#{@game.game_steps.count} steps"
+  -#               %li
+  -#                 %h6
+  -#                   %i.fa.fa-star
+  -#                   Difficulty
+  -#                 %span= "#{@game.difficulty}"
+  -#             %ul
+  -#               %li
+  -#                 %h6
+  -#                   %i.fa.fa-users
+  -#                   Grade Level
+  -#                 %span= @game.grades.map { |g| g.name}.join ', '
+  -#
+  -#             %p= @game.description
+  -#
+  -#
+  -#           - if @game.user_games.where("result>0").count > 0
+  -#             .card-footer
+  -#               .row
+  -#                 .col-md-12
+  -#                   %h3.text-center Leaderboard - Top 10 Fastest Times
+  -#                   %table.table
+  -#                     %thead
+  -#                       %tr
+  -#                         %th Time
+  -#                         %th E-mail
+  -#                     %tbody
+  -#                       - @game.user_games.includes(:user).where("result>0").order(:result).first(10).each do |user_game|
+  -#                         %tr
+  -#                           %td= user_game.formated_result
+  -#                           %td= user_game.user.email
+  -#
+  -#       .col-md-4
+  -#         .card
+  -#           .card-body
+  -#             %h3 Print Outs
+  -#             %hr
+  -#             - @game.game_assets.each do |asset|
+  -#               %p= link_to asset.name, asset.file.url, target: "_blank"

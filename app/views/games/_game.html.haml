@@ -1,16 +1,19 @@
 .col-md-6.col-xs-12
   .card
-    .game-allowed-indicator
-      - if game.grades.select { |g| g.subscription_plans.select { |sp| sp.id == current_user.subscription_plan_id }.any? }.any? && current_user.period_end >= DateTime.now
-        %i.fa.fa-check-circle
-      - else
-        %i.fa.fa-times-circle
     .card-header{ style: "background-image: url(#{image_url(game.banner.url)})" }
     .card-body
-      = link_to game do
-        %h4= game.name
+      %h4
+        - if game.grades.select { |g| g.subscription_plans.select { |sp| sp.id == current_user.subscription_plan_id }.any? }.any? && current_user.period_end >= DateTime.now
+          %i.fa.fa-check-circle
+        - else
+          %i.fa.fa-times-circle
+        = game.name
+      %hr
+      .card-body-content
         %p= game.short_description&.first(125)
+        = link_to 'Play', game, class: "btn btn-primary"
 
+    // TODO: Add a conditional CSS class IF the game is available for the user (like above);
     .card-footer
       %ul
         %li

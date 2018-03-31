@@ -312,12 +312,14 @@
 					line-height: 50px
 					input
 						margin-top: 16px
+				i.fa-star, i.fa-users
+					color: $blue
 				span
 					font-size: 1.1em
 					&:first-of-type
 						margin-right: 1em
 					i.fa-check-circle
-						color: green
+						color: $blue
 					i.fa.fa-lock
 						color: lightblue
 				&:last-child
@@ -347,24 +349,6 @@
 			box-shadow: $boxShadow
 			border-radius: $borderRadius-wide
 
-			.game-allowed-indicator
-				position: absolute
-				top: 0
-				left: 0
-				right: 0
-				margin: auto
-				text-align: center
-				i.fa
-					&.fa-check-circle
-						background: green
-					&.fa-times-circle
-						background: black
-					line-height: 0
-					padding: 0.75em 0.25em
-					font-size: 1.5em
-					color: white
-
-
 			.card-header
 				min-height: 180px
 				background-size: cover
@@ -389,14 +373,21 @@
 						float: right
 
 			.card-body
+				padding: 0
 				h4, p, span
 					color: #333
 				h4
 					font-weight: bold
 					font-size: 1.25em
-				p
-					margin-bottom: 2em
-					height: 63px
+					padding: 1em
+					margin: 0
+				hr
+					margin-top: 0
+					margin-bottom: 0
+				.card-body-content
+					padding: 1em
+					p
+						height: 45px
 
 			.card-footer
 				ul
