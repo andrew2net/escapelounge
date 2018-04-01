@@ -1,7 +1,8 @@
 .col-md-6.col-xs-12
   .card
     .game-allowed-indicator
-      - if game.grades.select { |g| g.subscription_plans.select { |sp| sp.id == current_user.subscription_plan_id }.any? }.any? && current_user.period_end >= DateTime.now
+      - available = game.grades.select { |g| g.subscription_plans.select { |sp| sp.id == current_user.subscription_plan_id }.any? }.any? && current_user.period_end >= DateTime.now
+      - if available
         %i.fa.fa-check-circle
       - else
         %i.fa.fa-times-circle
@@ -11,7 +12,7 @@
         %h4= game.name
         %p= game.short_description&.first(125)
 
-    .card-footer
+    .card-footer{ class: (available ? 'available-game' : '') }
       %ul
         %li
           %h6
