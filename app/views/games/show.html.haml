@@ -4,21 +4,40 @@
 #start-game-modal.modal.fade
   .modal-dialog
     .modal-content
-      .modal-header
+      -# .modal-header
         %h5.modal-title
           Starting Game:
           = "\"#{@game.name}\""
         %button.close{ type: 'button', data: { dismiss: 'modal' } }
           %span &times;
-      .modal-body
-        %p
-          You are about to start
-          = @game.name
-          which has
-          = @game.game_steps.count
-          steps. Each step is a puzzle you have to solve. The goal of the game is to complete it as fast as you can. When you start the game, a timer will start the countdown of time you have remaining. If you use a hint, time will be deducted. The game will be complete when you successfully finish all of the game steps.
-        = link_to 'Start game', game_start_url(@game), class: 'btn btn-primary',
-          id: 'start-game-btn'
+      .modal-body.text-center
+        .position-absolute
+          = render 'user_games/eye_in_keyhole_common'
+        #popup-animation.text-center
+          = render 'user_games/eye_in_keyhole_animation', color: 'blue'
+        %h2 WAIT A SECOND!
+        %p Did you remember to print out the following?
+        .row
+          - @game.game_assets.each do |asset|
+            .col-6
+              = link_to asset.file.url do
+                %i.fa.fa-link
+                = asset.name
+        %p.mt-3
+          Printouts are
+          %span.text-primary.font-weight-bold essential
+          and will always be available to print from the game description and leadboard screen before you start a new game.
+          -# You are about to start
+          -# = @game.name
+          -# which has
+          -# = @game.game_steps.count
+          -# steps. Each step is a puzzle you have to solve. The goal of the game is to complete it as fast as you can. When you start the game, a timer will start the countdown of time you have remaining. If you use a hint, time will be deducted. The game will be complete when you successfully finish all of the game steps.
+        = link_to 'Printed & Ready!', game_start_url(@game), class: 'btn btn-primary', data: { start_game: true }
+
+        .form-check.mt-3
+          = hidden_field_tag :not_show_popup, false, id: 'not_show_popup_hidden'
+          = check_box_tag :not_show_popup, true, !current_user.start_popup, class: 'form-check-input'
+          = label_tag :not_show_popup, "Don't show me this popup again.", class: 'form-check-label'
 
 #game-show
 
@@ -33,7 +52,10 @@
           = link_to 'Download Instructions', @game.instructions_pdf.url, class: "btn btn-primary btn-sm", target: "_blank"
           - if policy(@game).start?
             = display_timer
-            = button_tag 'Start game', data: { target: '#start-game-modal', toggle: 'modal' }, class: "btn btn-primary btn-sm ml-1", style: "#{@running || @paused_at ? 'display:none' : ''}"
+            - if current_user.start_popup
+              = button_tag 'Start game', data: { target: '#start-game-modal', toggle: 'modal' }, class: "btn btn-primary btn-sm ml-1", style: "#{@running || @paused_at ? 'display:none' : ''}"
+            - else
+              = link_to 'Start game', game_start_url(@game), class: "btn btn-primary btn-sm ml-1", style: "#{@running || @paused_at ? 'display:none' : ''}", data: { start_game: true }
 
             - if user_game = current_user.user_games.running.where(game_id: @game.id).first
               = link_to 'Go to game steps', user_game_step_url(user_game, user_game.last_allowed_step), id: 'link-to-steps', class: "btn btn-primary btn-sm ml-1"

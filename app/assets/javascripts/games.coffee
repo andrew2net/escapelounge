@@ -28,3 +28,6 @@ $ ->
     $difficultyParam.val null
     $ageParam.val null
     getTable()
+
+  $('#not_show_popup').change ->
+    $.post '/games/set_popup_not_show', { value: @value }

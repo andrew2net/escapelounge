@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     post :start
     post :pause
     post :resume
+    post :set_popup_not_show, on: :collection
   end
 
   resources :user_games, only: :index do

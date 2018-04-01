@@ -63,6 +63,12 @@ class GamesController < ApplicationController
     redirect_to user_game_step_url(user_game, user_game && user_game.last_allowed_step)
   end
 
+  # POST /games/set_popup_not_show
+  def set_popup_not_show
+    current_user.update start_popup: !params[:value]
+    head :ok
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_game
