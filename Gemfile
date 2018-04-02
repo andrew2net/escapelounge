@@ -47,6 +47,8 @@ gem 'cocoon', '~> 1.2', '>= 1.2.10'
 
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 
+gem 'ckeditor'
+
 #### Back End Gems
 
 # Use jbuilder to build JSON APIs

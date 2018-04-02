@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  mount Ckeditor::Engine => '/ckeditor'
   get 'games_history', to: 'games_history#index'
 
   devise_for :users, controllers: { registrations: "user/registrations" }

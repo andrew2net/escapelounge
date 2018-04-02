@@ -25,8 +25,8 @@
           -# = image_tag 'icon-magnifier.svg', height: 40
           = @step.name
         = image_tag 'divider-orange.svg', class: "divider-orange"
-        %h5.step-description
-          = @step.description
+        .step-description
+          = @step.description.html_safe
         - if @step.image.present?
           = image_tag @step.image.url, class: "img-fluid"
         - if @step.video.present?
