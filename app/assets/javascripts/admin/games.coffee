@@ -3,7 +3,10 @@ $ ->
 
   setPositions = ->
     $('#sortable > .nested-fields').each (i, step) ->
-      $(step).find('input[hidden]').val i + 1
+      $(step).children('input[hidden]').val i + 1
+    $('.sortable-solutions').each (i, solutions) ->
+      $(solutions).children('.nested-fields').each (n, solution) ->
+        $(solution).children('input[hidden]').val n + 1
 
   setPositions()
 
@@ -48,6 +51,11 @@ $ ->
   })
   gameSteps.on('click', '.sortable-handle', (e) -> e.preventDefault())
   # gameSteps.on('mouseenter', '.sortable-handle', (e)-> $('.collapse').collapse('hide'))
+
+  $('.sortable-solutions').sortable {
+    handle: '.sortable-handle'
+    stop: (e, ui) -> setPositions()
+  }
 
   # Show/hide solutions/image options depend on answer input type.
   showHideSolutions = ($select) ->

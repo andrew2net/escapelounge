@@ -82,7 +82,8 @@ class Admin::GamesController < ApplicationController
                                       :_destroy, :position, :image, :answer_input_type, :image_solution_id,
                                       image_response_options_attributes: [:id, :image, :image_solution_id, :_destroy],
                                       hints_attributes: [:id, :description, :value, :game_step_id, :_destroy, :image],
-                                      game_step_solutions_attributes: [:id, :question, :solution, :game_step_id, :_destroy],
+                                      game_step_solutions_attributes: [:id, :question, :solution, :game_step_id,
+                                        :_destroy, :position],
                                     ]
                                     )
     end
