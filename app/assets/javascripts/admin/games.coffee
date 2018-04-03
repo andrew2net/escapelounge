@@ -8,6 +8,7 @@ $ ->
       $(solutions).children('.nested-fields').each (n, solution) ->
         $(solution).children('input[hidden]').val n + 1
 
+
   setPositions()
 
   # Set id for new step
@@ -47,7 +48,12 @@ $ ->
 
   $('#sortable').sortable({
     handle: '.sortable-handle'
-    stop: (e, ui) -> setPositions()
+    start: (e, ui) ->
+      instance = CKEDITOR.instances[ui.item.find('.ckeditor').attr('id')]
+      CKEDITOR.remove instance if instance
+    stop: (e, ui) ->
+      CKEDITOR.replace ui.item.find('.ckeditor').attr('id')
+      setPositions()
   })
   gameSteps.on('click', '.sortable-handle', (e) -> e.preventDefault())
   # gameSteps.on('mouseenter', '.sortable-handle', (e)-> $('.collapse').collapse('hide'))
