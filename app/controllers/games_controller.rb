@@ -46,8 +46,11 @@ class GamesController < ApplicationController
 
   # POST /games/:game_id/pause
   def pause
-    user_game = !current_user.nil? && current_user.user_games.running.find_by(game_id: params[:game_id])
-    user_game.update paused_at: params[:seconds_remain] if user_game
+    user_game = current_user&.user_games&.running&.find_by(game_id: params[:game_id])
+    if user_game
+      user_game.update paused_at: params[:seconds_remain],
+        pauses_count: user_game.pauses_count.to_i + 1
+    end
     head :ok
   end
 

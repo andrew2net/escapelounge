@@ -89,6 +89,7 @@ class UserGamesController < ApplicationController
 
   # GET /user_games/:user_game_id/result
   def result
+    @pauses_duration = (@user_game.finished_at - @user_game.created_at).round - @user_game.result
   end
 
   private

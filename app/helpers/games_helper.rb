@@ -46,7 +46,7 @@ module GamesHelper
         if user_game
           # html += content_tag :div do
           html += link_to 'End game', user_game_end_url(user_game), id: 'end-game-button',
-              class: "btn btn-primary btn-sm ml-1", style: "#{@running || @paused_at ? '' : 'display:none'}"
+            class: "btn btn-primary btn-sm ml-1", style: "#{@running || @paused_at ? '' : 'display:none'}"
           # end
         end
         html.html_safe

@@ -17,6 +17,12 @@
           %h2 Congratulations!
           %p
             You completed this game in "X" minutes and "Y" seconds
+          - if @user_game.pauses_count.to_i > 0
+            %p
+              = @user_game.pauses_count
+              pauses, paused time
+              = @pauses_duration
+              seconds
 
         - else
           %h1 Time Expired
