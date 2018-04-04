@@ -1,15 +1,11 @@
+- available = game.grades.select { |g| g.subscription_plans.select { |sp| sp.id == current_user.subscription_plan_id }.any? }.any? && current_user.period_end >= DateTime.now
+
 .col-md-6.col-xs-12
-  .card
-    .game-allowed-indicator
-      - available = game.grades.select { |g| g.subscription_plans.select { |sp| sp.id == current_user.subscription_plan_id }.any? }.any? && current_user.period_end >= DateTime.now
-      - if available
-        %i.fa.fa-check-circle
-      - else
-        %i.fa.fa-times-circle
+  .card{ class: (available ? 'available-game' : '') }
     .card-header{ style: "background-image: url(#{image_url(game.banner.url)})" }
     .card-body
       %h4
-        - if game.grades.select { |g| g.subscription_plans.select { |sp| sp.id == current_user.subscription_plan_id }.any? }.any? && current_user.period_end >= DateTime.now
+        - if available
           %i.fa.fa-check-circle
         - else
           %i.fa.fa-times-circle
@@ -20,7 +16,7 @@
         .float-right
           = link_to 'Play Game', game, class: "btn btn-primary"
 
-    .card-footer{ class: (available ? 'available-game' : '') }
+    .card-footer
       %ul
         %li
           %h6
