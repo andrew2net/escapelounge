@@ -52,7 +52,6 @@
             .form-check.form-check-inline
               = b.label(class: 'form-check-label') { b.check_box(class: 'form-check-input mr-2') + b.text }
 
-
       .form-row
         .col-6
           .form-group
@@ -64,8 +63,6 @@
             = f.label :background
             = f.file_field :background
           = image_tag @game.background.url :thumb
-
-
 
   .card
     .card-header
@@ -79,8 +76,6 @@
             = render 'game_asset_fields', f: game_asset
         .links.my-2
           = link_to_add_association 'add asset', f, :game_assets, class: 'btn btn-primary'
-
-
 
   .card
     .card-header

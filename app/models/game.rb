@@ -46,9 +46,10 @@ class Game < ApplicationRecord
   def allowed_step(step_id:, user_game_id:)
     step = game_steps.where(id: step_id).first
     # Find previous answered step.
-    ps = game_steps
-      .where("game_steps.position < ?", step && step.position).last
-    if ps && (ps.step_answers.where(user_game_id: user_game_id).any? || !ps.game_step_solutions.any?)
+    ps = game_steps.where("game_steps.position < ?", step && step.position).last
+    if ps && (ps.game_step_solutions
+        .joins(:step_answers).where(step_answers: { user_game_id: user_game_id })
+        .any? || !ps.game_step_solutions.any?)
       step
     else
       nil

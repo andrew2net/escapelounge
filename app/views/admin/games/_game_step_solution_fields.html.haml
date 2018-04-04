@@ -1,6 +1,10 @@
-.col-md-6.nested-fields
+.nested-fields
   .card
     .card-header.solution-card-header
-      = f.text_field :solution, class: 'form-control', required: true, placeholder: 'Solution Answer'
-      = link_to_remove_association f, class: 'btn btn-sm btn-danger' do
-        %i.fa.fa-trash
+      .row
+        .col-6{ data: { question: true } }
+          = f.text_field :question, class: 'form-control', placeholder: 'Question'
+        .col-6
+          = f.text_field :solution, class: 'form-control', required: true, placeholder: 'Solution Answer'
+          = link_to_remove_association f, class: 'btn btn-sm btn-danger' do
+            %i.fa.fa-trash

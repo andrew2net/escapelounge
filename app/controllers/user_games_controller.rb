@@ -5,13 +5,18 @@ class UserGamesController < ApplicationController
 
   # GET /user_games/:user_game_is/step(/:step_id)
   def step
-    @game = @user_game.game
-    @next_step = @step.next(@user_game.id)
-    step_answer = @step.step_answers.find_by(user_game_id: @user_game.id)
-    if step_answer
-      @answer   = step_answer.answer
+    @game        = @user_game.game
+    @next_step   = @step.next(@user_game.id)
+    step_answers = @user_game.step_answers
+      .where(game_step_solution_id: @step.game_step_solutions.ids)
+    if step_answers.any?
+      @answer   = step_answers.first.answer
       @answered = true
     end
+    join = "LEFT JOIN step_answers ON step_answers.game_step_solution_id=game_step_solutions.id"\
+           " AND step_answers.user_game_id=#{@user_game.id}"
+    @questions = @step.game_step_solutions
+      .select("game_step_solutions.*, step_answers.answer").joins(join)
   end
 
   # POST /user_games/:user_game_id/step/:step_id/hint
@@ -33,22 +38,36 @@ class UserGamesController < ApplicationController
     else
       # check if the step is note empty (has solutions)
       if @step.game_step_solutions.any?
-        answ = params[:answer].downcase.strip
-        solution = @step.game_step_solutions.where('LOWER(solution) = ?', answ).first
-        if solution
-          sa = StepAnswer.find_or_initialize_by user_game_id: @user_game.id, game_step_id: @step.id
-          sa.answer = answ
-          sa.save
-          next_step = @step.next(@user_game.id)
-          url = if next_step
-            user_game_step_url(@user_game, next_step)
-          else
-            @user_game.finish
-            user_game_result_url @user_game
+        if @step.multi_questions?
+          results = true
+          params[:questions].each do |question_id, answer|
+            solution = @step.game_step_solutions.find question_id
+            solutions = solution.solution.downcase.split(";").map(&:strip)
+            results &= solutions.include? answer[:answer].downcase.strip
           end
-          render json: { result: "success", redirect: url }
+          if results
+            params[:questions].each do |question_id, answer|
+              sa = StepAnswer.find_or_initialize_by user_game_id: @user_game.id,
+                game_step_solution_id: question_id
+              sa.answer = answer[:answer]
+              sa.save
+            end
+            render json: { result: "success", redirect: next_url }
+          else
+            render json: { result: "fail" }
+          end
         else
-          render json: { result: "fail" }
+          answ = params[:answer].downcase.strip
+          solution = @step.game_step_solutions.where('LOWER(solution) = ?', answ).first
+          if solution
+            sa = StepAnswer.find_or_initialize_by user_game_id: @user_game.id,
+                                                  game_step_solution_id: solution.id
+            sa.answer = answ
+            sa.save
+            render json: { result: "success", redirect: next_url }
+          else
+            render json: { result: "fail" }
+          end
         end
       else
         # this step is last and empty
@@ -56,6 +75,10 @@ class UserGamesController < ApplicationController
         redirect_to user_game_result_url(@user_game)
       end
     end
+  end
+
+  def check_answer
+    render json: { correct: GameStepSolution.check_answer(params[:id], params[:value]) }
   end
 
   # POST /user_games/:user_game_id/end
@@ -83,5 +106,15 @@ class UserGamesController < ApplicationController
 
     def set_progress
       @progress_pescent, @progress_step = @user_game.progress
+    end
+
+    def next_url
+      next_step = @step.next(@user_game.id)
+      if next_step
+        user_game_step_url(@user_game, next_step)
+      else
+        @user_game.finish
+        user_game_result_url @user_game
+      end
     end
 end

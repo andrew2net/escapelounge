@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     get "step(/:step_id)", action: :step, as: :step
     post "step/:step_id", action: :answer
     post "step/:step_id/hint", action: :hint, as: :step_hint
+    post "check_answer/:id", action: :check_answer, on: :collection
     post :end
     get :result
   end

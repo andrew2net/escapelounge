@@ -32,7 +32,8 @@ class UserGame < ApplicationRecord
   def last_allowed_step
     previous_step = nil
     game.game_steps.includes(:game_step_solutions).each do |step|
-        has_answer = step.step_answers.where(user_game_id: id).any?
+        has_answer = step.game_step_solutions.joins(:step_answers)
+          .where(step_answers: { user_game_id: id }).any?
         if previous_step && !has_answer && !previous_step.game_step_solutions.any?
           return previous_step
         elsif !has_answer

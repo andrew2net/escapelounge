@@ -4,7 +4,7 @@ class GameStep < ApplicationRecord
   attr_accessor :image_solution_id
 
   belongs_to :game
-  has_many :step_answers, dependent: :delete_all
+  # has_many :step_answers, dependent: :delete_all
 
   has_many :hints, dependent: :destroy
   accepts_nested_attributes_for :hints, reject_if: :all_blank, allow_destroy: true
@@ -23,7 +23,7 @@ class GameStep < ApplicationRecord
 
   default_scope { order :game_id, :position }
 
-  enum answer_input_type: [:text_field, :combo_lock, :image_options, :cipher_wheel]
+  enum answer_input_type: [:text_field, :combo_lock, :image_options, :cipher_wheel, :multi_questions]
 
   scope :answered, ->(user_id) { joins(step_answers: :user_game)
       .where(step_answers: { user_games: { user_id: user_id }})
@@ -36,10 +36,11 @@ class GameStep < ApplicationRecord
   end
 
   # Return next allowed step.
+  # @param user_game_id [Integer]
   def next(user_game_id)
     # Check if the step is answered or has no solutions.
     allow_next = !game_step_solutions.any? ||
-      !step_answers.find_by(user_game_id: user_game_id).nil?
+      game_step_solutions.joins(:step_answers).where(step_answers: { user_game_id: user_game_id }).any?
     if allow_next
       # if it's answered then retirn next step.
       self.class.where(game_id: game_id).where('position > ?', position).first

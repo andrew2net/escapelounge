@@ -49,9 +49,6 @@ $ ->
   gameSteps.on('click', '.sortable-handle', (e) -> e.preventDefault())
   # gameSteps.on('mouseenter', '.sortable-handle', (e)-> $('.collapse').collapse('hide'))
 
-  # Answer input type select.
-  $selects = $ 'select[data-input-type]'
-
   # Show/hide solutions/image options depend on answer input type.
   showHideSolutions = ($select) ->
     $parent = $select.closest('.card-body')
@@ -61,11 +58,19 @@ $ ->
     else
       $parent.find('.solutions').show()
       $parent.find('.image-options').hide()
+    
+      if $select.val() == 'multi_questions'
+        $parent.find('div[data-question]').show().find('input').attr('required', true)
+      else
+        $parent.find('div[data-question]').hide().find('input').attr('required', false)
+
+  $(document).on 'cocoon:after-insert', '.solutions', ->
+    showHideSolutions $(@).closest('div[data-game-step]').find 'select[data-input-type]'
 
   # Change answer input type.
-  $selects.change -> showHideSolutions $(@)
+  $(document).on 'change', 'select[data-input-type]', -> showHideSolutions $(@)
 
-  showHideSolutions $selects
+  $('select[data-input-type]').each (idx, elm) -> showHideSolutions $(elm)
 
   $('.image-options .links a')
   .data('association-insertion-node', (elm) -> $(elm).closest('fieldset').children('.row'))
