@@ -9,9 +9,9 @@
       .modal-body
         %h2.text-center
         #success-animation.text-center.d-none
-          = render 'eye_in_keyhole_animation', color: 'blue'
+          = render 'eye_in_keyhole_animation', color: 'blue', height: 190, width: 300, view_box: ""
         #negative-animation.text-center.d-none
-          = render 'eye_in_keyhole_animation', color: 'red'
+          = render 'eye_in_keyhole_animation', color: 'red', height: 190, width: 300, view_box: ""
 
 #timeout-redirect-url{ hidden: true }= user_game_result_url(@user_game)
 
@@ -57,7 +57,8 @@
               -# Show animation if there aren't opened hints
               - if hints.blank? && @step.hints.any?
                 #hint-open-animation
-                  = render 'eye_in_keyhole_animation', hint: @step.hints.first, user_game: @user_game, step: @step, color: 'yellow'
+                  = render 'eye_in_keyhole_animation', hint: @step.hints.first, user_game: @user_game,
+                    step: @step, color: 'yellow', height: 760, width: 400, view_box: "65 0 170 190"
 
               .hint-body
                 #hints-carousel.carousel.slide{ data: { interval: 'false' } }
