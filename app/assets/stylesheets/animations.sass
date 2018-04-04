@@ -25,6 +25,8 @@
 svg
   .fill-gray
     fill: $gray-600
+  .fill-blue
+    fill: $blue
   .stroke-orang
     stroke: $orange
   .stroke-gray
@@ -46,7 +48,7 @@ svg
   cursor: pointer
 
 g.eye-in-keyhole
-  transform-origin: 50% 85px
+  transform-origin: 150px 85px
 
 #hint-open-animation g.eye-in-keyhole
   // cursor: pointer
@@ -91,7 +93,7 @@ g.eye-in-keyhole
   height: 0px !important
 
 #hint-open-animation
-  height: 190px
+  // height: 190px
   overflow: hidden
   transition-property: height
   transition-duration: 1s
@@ -115,6 +117,7 @@ g.eye-in-keyhole
 
 #hint-open-bubble
   transform-origin: 50% 25%
+  transform: translateY(-20px)
 
 .hide-hint-bubble
   animation-name: hideHintBubble
