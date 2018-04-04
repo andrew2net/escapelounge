@@ -1,4 +1,5 @@
 .nested-fields
+  = f.text_field :position, hidden: true
   .card
     .card-header.solution-card-header
       .row
@@ -8,3 +9,5 @@
           = f.text_field :solution, class: 'form-control', required: true, placeholder: 'Solution Answer'
           = link_to_remove_association f, class: 'btn btn-sm btn-danger' do
             %i.fa.fa-trash
+          %a.sortable-handle.btn.btn-sm.btn-primary{ href: '#'}
+            %i.fa.fa-sort

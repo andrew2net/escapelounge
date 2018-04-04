@@ -10,6 +10,12 @@
   .pupil-outline
     fill: #0074ff
 
+#popup-animation
+  .keyhole-background
+    fill: white
+  .pupil-outline
+    fill: #0074ff
+
 #negative-animation
   .keyhole-background
     fill: white
@@ -67,7 +73,7 @@ g.eye-in-keyhole
   94%, 100%
     transform: translateX(0px)
 
-#hint-open-animation, #success-animation
+#hint-open-animation, #success-animation, #popup-animation
   g.pupil-in-keyhole
     animation-name: pupilInKeyhole
     animation-duration: 5s
@@ -78,7 +84,7 @@ g.eye-in-keyhole
   transition-duration: 0.5s
   transform-origin: 50% 85px
 
-#success-animation .key-in-keyhole, .translate-up-40
+#success-animation .key-in-keyhole, .translate-up-40, #popup-animation .key-in-hole
   transform: translateY(-30px)
 
 .hint-open

@@ -20,13 +20,19 @@
 
   %section#game-step.game-content
     %article.game-content-left
+      .mt-2
+        = link_to 'Pause game', game_pause_url(@game), id: 'pause-game-btn',
+          class: 'btn btn-primary btn-sm ml-1', style: "#{@paused_at ? 'display:none' : ''}"
+        = link_to 'Resume game', game_resume_url(@game), id: 'resume-game-btn',
+            class: "btn btn-primary btn-sm ml-1 #{@running ? 'disabled' : ''}",
+            style: "#{@paused_at ? '' : 'display:none'}"
       .game-content-info
         %h2.step-title
           -# = image_tag 'icon-magnifier.svg', height: 40
           = @step.name
         = image_tag 'divider-orange.svg', class: "divider-orange"
-        %h5.step-description
-          = @step.description
+        .step-description
+          = @step.description.html_safe
         - if @step.image.present?
           = image_tag @step.image.url, class: "img-fluid"
         - if @step.video.present?

@@ -12,11 +12,21 @@
           %h2 Better luck next time!
 
         - elsif @user_game.result
-          %h1= Time.at(@user_game.result).utc.strftime("%M:%S !")
+          %h1= @result.strftime("%M:%S !")
           = image_tag 'divider-orange.svg'
           %h2 Congratulations!
           %p
-            You completed this game in "X" minutes and "Y" seconds
+            You completed this game in
+            - if @result.min > 0
+              = pluralize(@result.min, 'minute')
+              and
+            = pluralize(@result.sec, 'second')
+          - if @user_game.pauses_count.to_i > 0
+            %p
+              = @user_game.pauses_count
+              pauses, paused time
+              = @pauses_duration
+              seconds
 
         - else
           %h1 Time Expired

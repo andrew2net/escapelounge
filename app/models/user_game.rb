@@ -12,14 +12,14 @@ class UserGame < ApplicationRecord
 
   # Return percent of answered steps and steps of total
   def progress
-    total_steps = game.game_steps.joins(:game_step_solutions).distinct.count
+    total_steps = game.game_steps.distinct.count
     answered_steps = step_answers.count
     percent = answered_steps.to_f / total_steps.to_f * 100
     [ "#{percent}%", "#{answered_steps} of #{total_steps}"]
   end
 
   def progress_deg
-    total_steps = game.game_steps.joins(:game_step_solutions).distinct.count
+    total_steps = game.game_steps.distinct.count
     answered_steps = step_answers.count
     if total_steps > 0
       (180 * answered_steps / total_steps).round

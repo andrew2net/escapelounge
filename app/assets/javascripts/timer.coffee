@@ -1,12 +1,12 @@
 $ ->
-  startGameBtn  = $ '#start-game-btn'
+  startGameBtn  = $ 'a[data-start-game]'
   pauseGameBtn  = $ '#pause-game-btn'
   resumeGameBtn = $ '#resume-game-btn'
   endGameBtn    = $ '#end-game-button'
   linkToSteps   = $ '#link-to-steps'
 
   # Game timer
-  window.timer =
+  window.timer = {
     interval: null
     display: $('#display-timer')
     container: $('#container-timer')
@@ -54,6 +54,7 @@ $ ->
       linkToSteps.hide()
       this.show()
       clearInterval this.interval
+  }
 
   seconds = (stopAt) -> Math.ceil (new Date(stopAt) - new Date) / 1000
 

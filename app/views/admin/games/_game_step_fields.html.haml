@@ -1,9 +1,9 @@
 .nested-fields{ data: { game_step: true } }
+  = f.text_field :position, hidden: true
   -# = f.hidden_field :image_solution_id, data: { image_solution_id: true }
 
   .card
     .card-header{ role: 'tab', id: "header-#{f.object.id}" }
-      = f.text_field :position, hidden: true
       .form-row
         .col-md-7
           .form-group
@@ -22,7 +22,7 @@
           .col-md-8
             .form-group
               = f.label :description
-              = f.text_area :description, class: 'form-control', rows: 3
+              = f.cktext_area :description, class: 'form-control ckeditor', rows: 3
           .col-md-4
             .form-group
               = f.label :answer_input_type
@@ -45,8 +45,9 @@
         .solutions
           %fieldset.border.border-primary.rounded.p-4
             %legend Solutions
-            = f.fields_for :game_step_solutions do |game_step_solution|
-              - render 'game_step_solution_fields', f: game_step_solution
+            .sortable-solutions
+              = f.fields_for :game_step_solutions do |game_step_solution|
+                - render 'game_step_solution_fields', f: game_step_solution
             .links
               = link_to_add_association 'add solution', f, :game_step_solutions, class: 'btn btn-primary mt-3'
 

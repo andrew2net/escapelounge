@@ -6,7 +6,7 @@ module Attachable
   S3_OPTS = {
     storage:          :s3,
     s3_region:        'us-east-1', # TODO set your S3 region here
-    s3_storage_class: { thumb: :REDUCED_REDUNDANCY },
+    s3_storage_class: { thumb: :REDUCED_REDUNDANCY, content: :REDUCED_REDUNDANCY },
     s3_credentials:   "#{Rails.root}/config/s3.yml"
   }
 
@@ -15,9 +15,10 @@ module Attachable
     # Make attachments to be stored with s3 in production
     def attachment_opts(**opts)
       if Rails.env.production?
-        opts.merge! S3_OPTS
+        opts.except(:path, :url).merge S3_OPTS
+      else
+        opts
       end
-      opts
     end
   end
 end

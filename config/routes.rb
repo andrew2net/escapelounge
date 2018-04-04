@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  mount Ckeditor::Engine => '/ckeditor'
   get 'games_history', to: 'games_history#index'
 
   devise_for :users, controllers: { registrations: "user/registrations" }
@@ -13,6 +14,7 @@ Rails.application.routes.draw do
     post :start
     post :pause
     post :resume
+    post :set_popup_not_show, on: :collection
   end
 
   resources :user_games, only: :index do
