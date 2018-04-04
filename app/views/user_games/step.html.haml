@@ -27,9 +27,8 @@
             class: "btn btn-primary btn-sm ml-1 #{@running ? 'disabled' : ''}",
             style: "#{@paused_at ? '' : 'display:none'}"
       .game-content-info
-        %h2.step-title
-          -# = image_tag 'icon-magnifier.svg', height: 40
-          = @step.name
+        = image_tag 'icon-magnifier.svg', class: "magnifier-icon"
+        %h2.step-title= @step.name
         = image_tag 'divider-orange.svg', class: "divider-orange"
         .step-description
           = @step.description.html_safe

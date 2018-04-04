@@ -4,6 +4,9 @@ body
   color: $gray-700
   font-family: $font-family-sans-serif
 
+.modal.fade.show
+  background: rgba(0,0,0,0.6)
+
 label.required::after
   content: '*'
   color: red
@@ -33,18 +36,25 @@ p, span
 .btn
   text-transform: uppercase
   letter-spacing: 0.1em
-  height: 30px
-  line-height: 30px
+  height: 40px
+  line-height: 40px
   padding: 0 2em
   border-radius: 50px
+  font-size: 0.9em
   &.btn-sm
-    height: 35px
-    line-height: 35px
+    height: 30px
+    line-height: 30px
     padding: 0 10px
+    font-size: 0.8em
   &.btn-primary
     background-color: $orange
     border-color: $orange
     box-shadow: 0 4px 10px rgb(249, 206, 172), 0 3px 6px rgba(0, 0, 0, 0.08)
+  &.btn-default
+    background-color: $blue
+    border-color: $blue
+    box-shadow: 0 4px 10px #5fcae6, 0 3px 6px rgba(0, 0, 0, 0.08)
+    color: white
 
 
 .page-head
