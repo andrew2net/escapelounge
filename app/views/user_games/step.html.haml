@@ -9,9 +9,9 @@
       .modal-body
         %h2.text-center
         #success-animation.text-center.d-none
-          = render 'eye_in_keyhole_animation', color: 'blue', height: 190, width: 300, view_box: ""
+          = render 'eye_in_keyhole_animation', color: 'blue', height: 317, width: 500, view_box: ""
         #negative-animation.text-center.d-none
-          = render 'eye_in_keyhole_animation', color: 'red', height: 190, width: 300, view_box: ""
+          = render 'eye_in_keyhole_animation', color: 'red', height: 317, width: 500, view_box: ""
 
 #timeout-redirect-url{ hidden: true }= user_game_result_url(@user_game)
 
@@ -118,13 +118,13 @@
           .text-center
             - if has_solutions && !@answered
               = link_to 'Confirm', user_game_step_url(@user_game, @step),
-                class: 'btn btn-primary', id: 'answer-btn'
+                class: 'btn btn-default', id: 'answer-btn'
             - elsif @next_step
               = link_to 'Next Step', user_game_step_url(@user_game, @next_step),
-                class: 'btn btn-primary'
+                class: 'btn btn-default'
             - elsif !@next_step && !has_solutions
               = link_to 'Finish the Game', user_game_step_url(@user_game, @step),
-              class: 'btn btn-primary', method: :post
+              class: 'btn btn-default', method: :post
           -# if @next_step
             = link_to 'Next step', user_game_step_url(@user_game, @next_step),
               class: 'btn btn-primary float-md-right'

@@ -37,100 +37,135 @@
 
 #game-show
 	min-height: 93vh
+	background: $blue
 
 	.card.game-details-card
 		flex-direction: row
 		border-radius: $borderRadius-wide
 		box-shadow: $boxShadow
-		margin-top: 4em
+		border: none
 		.card-content-left, .card-content-right
 			width: 50%
+
+		@media (max-width: 991px)
+			flex-direction: column
+			.card-content-left, .card-content-right
+				width: 100%
 
 		// Left half content
 		.card-content-left
 			position: relative
-			padding: 2.5em 2.5em 6em
-			background: lightblue
-			border-radius: 10px 0 0 10px
-			h2
-				text-align: center
-				color: white
-				font-style: italic
-				font-size: 1.75em
-			hr
-				margin-top: 0.5rem
-				border-top: 2px solid $blue
-				width: 80%
-			h5
-				text-align: center
-				color: white
-				font-size: 0.9em
+			border-radius: 20px 0 0 20px
+			background-size: cover
+			background-position: center
+			background-repeat: no-repeat
+			.card-content-left-overlay
+				position: relative
+				background: rgba(37, 17, 2, 0.8)
+				padding: 2.5em 2.5em 6em
+				border-radius: 20px 0 0 20px
+				h2, h3
+					font-family: $font-family-cursive
+					font-weight: 400
+					letter-spacing: 1px
+				h2
+					text-align: center
+					color: white
+					font-style: italic
+					font-size: 1.75em
+				hr
+					margin-top: 0.5rem
+					border-top: 2px solid $blue
+					width: 80%
+				h5
+					text-align: center
+					color: white
+					font-size: 0.9em
 
-			.row.game-actions
-				margin: 3em 0
-				justify-content: center
+				.row.game-actions
+					margin: 3em 0
+					justify-content: center
 
-			h3
-				text-align: center
-				color: $blue
-				font-style: italic
-			p
-				color: #eee
+				h3
+					text-align: center
+					color: $blue
+					font-style: italic
+				p
+					color: #eee
 
 
-			.game-details-footer
-				position: absolute
-				bottom: 10px
-				left: 0
-				right: 0
-				width: 100%
-				ul
-					list-style: none
-					padding-left: 2.5em
-					padding-right: 2em
-					margin: 0
-					display: flex
-					align-items: flex-start
-					flex-wrap: nowrap
-					li
-						width: 100%
-						// text-align: center
-						h6
-							font-size: 0.9em
-							color: $blue
-							text-transform: uppercase
-							margin: 0 0 0.25em
-						span
-							font-size: 1em
+				.game-details-footer
+					position: absolute
+					bottom: 0
+					left: 0
+					right: 0
+					width: 100%
+					ul
+						list-style: none
+						margin: 0
+						display: flex
+						align-items: flex-start
+						flex-wrap: nowrap
+						align-items: center
+						padding: 0
+						li
+							width: 100%
+							text-align: center
+							border-right: 1px solid
+							border-image: linear-gradient(to top, #a3ddea, rgba(0, 0, 0, 0)) 1 100%
+							padding-bottom: 1em
+							&:last-child
+								border-right: none
+							h6
+								font-size: 0.9em
+								color: #a3dcea
+								text-transform: uppercase
+								margin: 0 0 0.25em
+								i.fa
+									margin-right: 0.25em
+							span
+								font-size: 0.9em
+								color: #a3dcea
 
 		// Right half game content
 		.card-content-right
-			border-radius: 0 10px 10px 0
+			border-radius: 0 20px 20px 0
 			h3
-				padding: 0.5em 0.5em 0.5em 2em
+				padding: 1em 1em 1em 2em
 				background: #eee
 				margin: 0
+				font-size: 1.5em
+				border-radius: 0 20px 0 0
 				i.fa
 					margin-right: 0.5em
-			ul
+			ul.printouts-list
 				list-style: none
 				padding: 1em 1em 1em 3em
 				margin: 0
-				background: $blue
+				background: $lightblue
+				box-shadow: 0 4px 10px #5fcae6, 0 3px 6px rgba(0, 0, 0, 0.08)
 				li
 					display: inline-block
 					width: 45%
+					margin: 0.25em 0
 					a
 						color: white
 						font-style: italic
-					i.fa
-						margin-right: 0.5em
+						border-bottom: 2px solid #379cc7
+						padding-bottom: 2px
+						i.fa
+							color: #379cc7
+							margin-right: 0.25em
 
 			.game-leaderboard
 				padding: 2em 2em 2em 3em
 				h3
 					background: white
 					padding: 0
+					margin: 1em 0
+				table.table tbody
+					tr:first-of-type td
+						color: $blue
 
 
 
@@ -152,6 +187,8 @@
 			min-height: 93vh
 			box-shadow: 0 15px 35px rgba(50,50,93,.1), 0 5px 15px rgba(0,0,0,.07)
 			position: relative
+			div.mt-2
+				text-align: center
 			.game-content-info
 				padding: 2em 4em
 				img.magnifier-icon
@@ -252,7 +289,10 @@
 					flex-direction: column
 					justify-content: center
 					p
-						font-size: 2em
+						font-size: 3em
+						line-height: 1.2em
+						font-family: $font-family-cursive
+						font-weight: 400
 						margin: 0
 	.card
 		&.game-show-card
@@ -297,28 +337,33 @@
 // 						Game Result Page View
 //************************************************
 #game-show
-	#game-result-content
-		text-align: center
-		min-height: 400px
-		padding-top: 4em
-		padding-bottom: 2em
-		h1
-			margin: 0
-			font-weight: bold
-			color: $blue
-			letter-spacing: 4px
-		img
-			max-width: 400px
-		p
-			font-size: 1em
-			color: #999
+	#game-result
+		display: flex
+		flex-direction: column
+		justify-content: center
+		min-height: 93vh
+		#game-result-content
+			text-align: center
+			padding-top: 4em
+			padding-bottom: 2em
+			background: white
+			h1
+				margin: 0
+				font-weight: bold
+				color: $blue
+				letter-spacing: 4px
+			img
+				max-width: 400px
+			p
+				font-size: 1em
+				color: #999
 
-		.game-step-subnav
-			max-width: 600px
-			margin: 2em auto
-			.progress
-				height: 40px
-				font-size: 1.1em
+			.game-step-subnav
+				max-width: 600px
+				margin: 2em auto
+				.progress
+					height: 40px
+					font-size: 1.1em
 
 
 .game-step-subnav
@@ -345,6 +390,7 @@
 // 								User Game List
 //************************************************
 #games-list
+	background: $lightblue
 
 	#games-list-filters
 		background: white
@@ -400,13 +446,19 @@
 
 		.card
 			position: relative
-			box-shadow: $boxShadow
+			box-shadow: 0 10px 14px 4px rgba(50, 50, 93, 0.2), 0 3px 6px rgba(0, 0, 0, 0.1)
 			border-radius: $borderRadius-wide
+			border: none
 
 			&.available-game
+				.card-body
+					h4, h4 i.fa-check-circle
+						color: $lightblue
+				.card-footer
+					background: $lightblue
 
 			.card-header
-				min-height: 180px
+				min-height: 225px
 				background-size: cover
 				background-position: center
 				background-repeat: no-repeat
@@ -434,9 +486,14 @@
 					color: #333
 				h4
 					font-weight: bold
-					font-size: 1.25em
-					padding: 1em
+					font-size: 1.5em
+					padding: 1em 1em 0.75em
 					margin: 0
+					font-family: $font-family-cursive
+					font-weight: 400
+					letter-spacing: 1px
+					i.fa
+						margin-right: 0.5em
 				hr
 					margin-top: 0
 					margin-bottom: 0
@@ -448,6 +505,8 @@
 						margin-bottom: 1.5em
 
 			.card-footer
+				background: #333
+				border-radius: 0 0 10px 10px
 				ul
 					list-style: none
 					padding-left: 0
@@ -459,11 +518,12 @@
 						width: 100%
 						h6
 							font-size: 0.9em
-							color: $blue
+							color: white
 							text-transform: uppercase
 							margin: 0 0 0.25em
 						span
-							font-size: 1em
+							font-size: 0.9em
+							color: white
 
 
 
@@ -621,3 +681,19 @@ section
 
 	#answer-btn
 		margin-top: 10px
+
+
+
+// Result modal
+#result-modal
+	.modal-dialog
+		display: flex
+		flex-direction: column
+		justify-content: center
+		min-height: 93vh
+		.modal-content
+			background: transparent
+			box-shadow: none
+			border: none
+			.modal-body svg
+				border-radius: $borderRadius-wide

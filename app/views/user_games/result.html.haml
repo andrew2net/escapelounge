@@ -1,41 +1,43 @@
-= content_for :title do
-  = @user_game.game.name
+-# = content_for :title do
+-#   = @user_game.game.name
 
 #game-show{ style: "background-image: url(#{image_url(@user_game.game.background.url)})" }
   %section
-    .page-content
-      #game-result-content.container.pattern-bottom
+    #game-result.container
+      .row
+        .col-md-8.offset-md-2
+          #game-result-content
 
-        - if @user_game.result == 0
-          %h1 Game Ended
-          = image_tag 'divider-orange.svg'
-          %h2 Better luck next time!
+            - if @user_game.result == 0
+              %h1 Game Ended
+              = image_tag 'divider-orange.svg'
+              %h2 Better luck next time!
 
-        - elsif @user_game.result
-          %h1= @result.strftime("%M:%S !")
-          = image_tag 'divider-orange.svg'
-          %h2 Congratulations!
-          %p
-            You completed this game in
-            - if @result.min > 0
-              = pluralize(@result.min, 'minute')
-              and
-            = pluralize(@result.sec, 'second')
-          - if @user_game.pauses_count.to_i > 0
-            %p
-              = @user_game.pauses_count
-              pauses, paused time
-              = @pauses_duration
-              seconds
+            - elsif @user_game.result
+              %h1= @result.strftime("%M:%S !")
+              = image_tag 'divider-orange.svg'
+              %h2 Congratulations!
+              %p
+                You completed this game in
+                - if @result.min > 0
+                  = pluralize(@result.min, 'minute')
+                  and
+                = pluralize(@result.sec, 'second')
+              - if @user_game.pauses_count.to_i > 0
+                %p
+                  = @user_game.pauses_count
+                  pauses, paused time
+                  = @pauses_duration
+                  seconds
 
-        - else
-          %h1 Time Expired
-          = image_tag 'divider-orange.svg'
-          %h2 Uh oh! Looks like you ran out of time.
+            - else
+              %h1 Time Expired
+              = image_tag 'divider-orange.svg'
+              %h2 Uh oh! Looks like you ran out of time.
 
-        .game-step-subnav
-          .progress
-            .progress-bar{ style: "width:#{@progress_pescent}" }
-              = "#{@progress_step} steps completed"
+            .game-step-subnav
+              .progress
+                .progress-bar{ style: "width:#{@progress_pescent}" }
+                  = "#{@progress_step} steps completed"
 
-        = link_to 'Back To Game Page', game_path(@user_game.game), class: "btn btn-primary btn-sm"
+            = link_to 'Back To Game Page', game_path(@user_game.game), class: "btn btn-primary btn-sm"

@@ -53,53 +53,57 @@
 
 #game-show
   .container
+    %br
+    %br
+    %br
     .card.game-details-card
 
-      .card-content-left
-        %h2= @game.name
-        %hr
-        %h5= @game.short_description
+      .card-content-left{ style: "background-image: url(#{image_url(@game.background.url)})" }
+        .card-content-left-overlay
+          %h2= @game.name
+          %hr
+          %h5= @game.short_description
 
-        .row.game-actions
-          = link_to 'Download Instructions', @game.instructions_pdf.url, class: "btn btn-default btn-sm", target: "_blank"
-          - if policy(@game).start?
-            = display_timer
-            - if current_user.start_popup
-              = button_tag 'Start game', data: { target: '#start-game-modal', toggle: 'modal' }, class: "btn btn-default btn-sm ml-1", style: "#{@running || @paused_at ? 'display:none' : ''}"
+          .row.game-actions
+            = link_to 'Download Instructions', @game.instructions_pdf.url, class: "btn btn-default btn-sm", target: "_blank"
+            - if policy(@game).start?
+              = display_timer
+              - if current_user.start_popup
+                = button_tag 'Start game', data: { target: '#start-game-modal', toggle: 'modal' }, class: "btn btn-default btn-sm ml-1", style: "#{@running || @paused_at ? 'display:none' : ''}"
+              - else
+                = link_to 'Start game', game_start_url(@game), class: "btn btn-default btn-sm ml-1", style: "#{@running || @paused_at ? 'display:none' : ''}", data: { start_game: true }
+
+              - if user_game = current_user.user_games.running.where(game_id: @game.id).first
+                = link_to 'Go to game steps', user_game_step_url(user_game, user_game.last_allowed_step), id: 'link-to-steps', class: "btn btn-default btn-sm ml-1"
+
             - else
-              = link_to 'Start game', game_start_url(@game), class: "btn btn-default btn-sm ml-1", style: "#{@running || @paused_at ? 'display:none' : ''}", data: { start_game: true }
+              = link_to 'You have no subscription to start the game', '#', class: "btn btn-secondary disabled btn-sm ml-1"
 
-            - if user_game = current_user.user_games.running.where(game_id: @game.id).first
-              = link_to 'Go to game steps', user_game_step_url(user_game, user_game.last_allowed_step), id: 'link-to-steps', class: "btn btn-default btn-sm ml-1"
+          %h3 Description
+          %p= @game.description
 
-          - else
-            = link_to 'You have no subscription to start the game', '#', class: "btn btn-secondary disabled btn-sm ml-1"
-
-        %h3 Description
-        %p= @game.description
-
-        .game-details-footer
-          %ul
-            %li
-              %h6
-                %i.fa.fa-clock
-                Time
-              %span= "#{@game.time_length} min"
-            %li
-              %h6
-                %i.fa.fa-th-list
-                Steps
-              %span= "#{@game.game_steps.count} steps"
-            %li
-              %h6
-                %i.fa.fa-users
-                Grade
-              %span= @game.grades.map { |g| g.name}.join ', '
-            %li
-              %h6
-                %i.fa.fa-star
-                Difficulty
-              %span= "#{@game.difficulty}"
+          .game-details-footer
+            %ul
+              %li
+                %h6
+                  %i.fa.fa-clock
+                  Time
+                %span= "#{@game.time_length} min"
+              %li
+                %h6
+                  %i.fa.fa-th-list
+                  Steps
+                %span= "#{@game.game_steps.count} steps"
+              %li
+                %h6
+                  %i.fa.fa-users
+                  Grade
+                %span= @game.grades.map { |g| g.name}.join ', '
+              %li
+                %h6
+                  %i.fa.fa-star
+                  Difficulty
+                %span= "#{@game.difficulty}"
 
       .card-content-right
         %h3
@@ -108,13 +112,14 @@
         %ul.printouts-list
           - @game.game_assets.each do |asset|
             %li
-              %i.fa.fa-link
-              = link_to asset.name, asset.file.url, target: "_blank"
+              = link_to asset.file.url, target: "_blank" do
+                %i.fa.fa-link
+                = asset.name
         - if @game.user_games.where("result>0").count > 0
           .game-leaderboard
             %h3
               %i.fa.fa-trophy
-              Leaderboard - Top 10
+              Leaderboard - Top 10 Fastest Times
             %table.table
               %thead
                 %tr
@@ -125,6 +130,10 @@
                   %tr
                     %td= user_game.formated_result
                     %td= user_game.user.email
+
+    %br
+    %br
+    %br
 
 
 
