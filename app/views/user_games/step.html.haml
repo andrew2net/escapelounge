@@ -9,9 +9,9 @@
       .modal-body
         %h2.text-center
         #success-animation.text-center.d-none
-          = render 'eye_in_keyhole_animation', color: 'blue', height: 317, width: 500, view_box: ""
+          = render 'eye_in_keyhole_animation', color: 'blue', height: 225, width: 300, view_box: ""
         #negative-animation.text-center.d-none
-          = render 'eye_in_keyhole_animation', color: 'red', height: 317, width: 500, view_box: ""
+          = render 'eye_in_keyhole_animation', color: 'red', height: 225, width: 300, view_box: ""
 
 #timeout-redirect-url{ hidden: true }= user_game_result_url(@user_game)
 
