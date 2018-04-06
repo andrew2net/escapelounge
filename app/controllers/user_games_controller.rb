@@ -36,8 +36,10 @@ class UserGamesController < ApplicationController
     if @user_game.finished_at
       render json: { result: "finish", redirect: user_game_result_url(@user_game) }
     else
+      if @user_game.paused_at
+        render json: { result: "paused" }
       # check if the step is not empty (has solutions)
-      if @step.game_step_solutions.any?
+      elsif @step.game_step_solutions.any?
         if @step.multi_questions?
           results = true
           params[:questions].each do |question_id, answer|

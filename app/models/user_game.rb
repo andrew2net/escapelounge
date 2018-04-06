@@ -31,18 +31,7 @@ class UserGame < ApplicationRecord
 
   # Return step next after last answered
   def last_allowed_step
-    previous_step = nil
-    game.game_steps.includes(:game_step_solutions).each do |step|
-        has_answer = step.game_step_solutions.joins(:step_answers)
-          .where(step_answers: { user_game_id: id }).any?
-        if previous_step && !has_answer && !previous_step.game_step_solutions.any?
-          return previous_step
-        elsif !has_answer
-          return step
-        end
-        previous_step = step
-      end
-      # .where("NOT step_answers.id IS NULL AND step_answers.user_game_id=? OR game_step_solutions.id IS NULL", id).last
+    game.game_steps.where.not(id: passed_game_steps.map(&:game_step_id)).first
   end
 
   # Returen result in "hh:MM:ss" format.

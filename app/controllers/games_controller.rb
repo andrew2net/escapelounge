@@ -63,7 +63,7 @@ class GamesController < ApplicationController
       user_game.update started_at: started_at, paused_at: nil
     end
     # head :ok
-    redirect_to user_game_step_url(user_game, user_game && user_game.last_allowed_step)
+    redirect_to user_game_step_url(user_game, user_game&.last_allowed_step)
   end
 
   # POST /games/set_popup_not_show

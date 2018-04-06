@@ -12,6 +12,7 @@ $ ->
     container: $('#container-timer')
     secondsRemain: 0
     redirectTo: $('#timeout-redirect-url').html()
+    paused: false
 
     # Return remaning time in format MM:ss
     minSec: ->
@@ -32,6 +33,7 @@ $ ->
 
     # Show and start timer.
     start: (timeLength) ->
+      @paused = false
       this.secondsRemain = timeLength if timeLength
       if this.secondsRemain > 0
         resumeGameBtn.hide()
@@ -48,6 +50,7 @@ $ ->
         , 1000
 
     pause: (pauseAt) ->
+      @paused = true
       this.secondsRemain = pauseAt if pauseAt
       pauseGameBtn.hide()
       resumeGameBtn.show()

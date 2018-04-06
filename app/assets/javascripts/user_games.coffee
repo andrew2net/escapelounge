@@ -100,6 +100,12 @@ $ ->
           , 2000
         when 'next'
           window.location = resp.redirect
+        when 'paused'
+          $modalMessage.html 'Game is paused!'
+          $modalMessage.removeClass 'text-danger'
+          $modalMessage.removeClass 'text-success'
+          $modalMessage.addClass 'text-info'
+          $modal.modal 'show'
 
   $image_options = $('input[type="radio"][name="image_option"]')
   $image_options.change ->
