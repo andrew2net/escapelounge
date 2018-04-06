@@ -6,21 +6,22 @@ class UserGame < ApplicationRecord
   belongs_to :game
   has_many :step_answers, dependent: :delete_all
   has_and_belongs_to_many :hints
+  has_many :passed_game_steps, dependent: :delete_all
 
   scope :running, -> { where(paused_at: nil, finished_at: nil) }
   scope :paused, -> { where.not(paused_at: nil).where(finished_at: nil) }
 
   # Return percent of answered steps and steps of total
   def progress
-    total_steps = game.game_steps.distinct.count
-    answered_steps = step_answers.count
+    total_steps = game.game_steps.count
+    answered_steps = passed_game_steps.count
     percent = answered_steps.to_f / total_steps.to_f * 100
     [ "#{percent}%", "#{answered_steps} of #{total_steps}"]
   end
 
   def progress_deg
-    total_steps = game.game_steps.distinct.count
-    answered_steps = step_answers.count
+    total_steps = game.game_steps.count
+    answered_steps = passed_game_steps.count
     if total_steps > 0
       (180 * answered_steps / total_steps).round
     else

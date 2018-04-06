@@ -3,7 +3,7 @@ class UserGamesController < ApplicationController
   before_action :set_step, only: [:step, :answer, :hint]
   before_action :set_progress, only: [:step, :result]
 
-  # GET /user_games/:user_game_is/step(/:step_id)
+  # GET /user_games/:user_game_id/step(/:step_id)
   def step
     @game        = @user_game.game
     @next_step   = @step.next(@user_game.id)
@@ -36,7 +36,7 @@ class UserGamesController < ApplicationController
     if @user_game.finished_at
       render json: { result: "finish", redirect: user_game_result_url(@user_game) }
     else
-      # check if the step is note empty (has solutions)
+      # check if the step is not empty (has solutions)
       if @step.game_step_solutions.any?
         if @step.multi_questions?
           results = true
@@ -52,6 +52,7 @@ class UserGamesController < ApplicationController
               sa.answer = answer[:answer]
               sa.save
             end
+            @user_game.passed_game_steps.find_or_create_by game_step: @step
             render json: { result: "success", redirect: next_url }
           else
             render json: { result: "fail" }
@@ -64,15 +65,19 @@ class UserGamesController < ApplicationController
                                                   game_step_solution_id: solution.id
             sa.answer = answ
             sa.save
+            @user_game.passed_game_steps.find_or_create_by game_step: @step
             render json: { result: "success", redirect: next_url }
           else
             render json: { result: "fail" }
           end
         end
       else
+        @user_game.passed_game_steps.find_or_create_by game_step: @step
+        render json: { result: "next", redirect: next_url }
         # this step is last and empty
-        @user_game.finish
-        redirect_to user_game_result_url(@user_game)
+      #  redirect_to next_url
+        # @user_game.finish
+        # redirect_to user_game_result_url(@user_game)
       end
     end
   end

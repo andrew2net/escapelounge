@@ -98,6 +98,8 @@ $ ->
             window.location = resp.redirect
             modalTimeOut = null
           , 2000
+        when 'next'
+          window.location = resp.redirect
 
   $image_options = $('input[type="radio"][name="image_option"]')
   $image_options.change ->

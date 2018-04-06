@@ -15,6 +15,8 @@ class GameStep < ApplicationRecord
   has_many :image_response_options, inverse_of: :game_step, dependent: :destroy
   accepts_nested_attributes_for :image_response_options, reject_if: :all_blank, allow_destroy: true
 
+  has_many :passed_game_steps, dependent: :delete_all
+
   has_attached_file :image, attachment_opts(styles: { thumb: "260x260#" })
   validates_attachment :image, content_type: { content_type: /\Aimage\/.*\z/ }
 

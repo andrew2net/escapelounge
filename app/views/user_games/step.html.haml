@@ -1,6 +1,6 @@
 = content_for :title do
   = @game.name
-.position-absolute
+.position-absolute{ style: 'z-index:-100' }
   = render 'eye_in_keyhole_common'
 
 #result-modal.modal.fade
@@ -120,11 +120,11 @@
               = link_to 'Confirm', user_game_step_url(@user_game, @step),
                 class: 'btn btn-default', id: 'answer-btn'
             - elsif @next_step
-              = link_to 'Next Step', user_game_step_url(@user_game, @next_step),
-                class: 'btn btn-default'
+              = link_to 'Next Step', user_game_step_url(@user_game, @step),
+                class: 'btn btn-default', id: 'answer-btn'
             - elsif !@next_step && !has_solutions
               = link_to 'Finish the Game', user_game_step_url(@user_game, @step),
-              class: 'btn btn-default', method: :post
+              class: 'btn btn-default', id: 'answer-btn'
           -# if @next_step
             = link_to 'Next step', user_game_step_url(@user_game, @next_step),
               class: 'btn btn-primary float-md-right'

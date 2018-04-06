@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180403172617) do
+ActiveRecord::Schema.define(version: 20180406093730) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -143,6 +143,16 @@ ActiveRecord::Schema.define(version: 20180403172617) do
     t.index ["game_step_id"], name: "index_image_response_options_on_game_step_id"
   end
 
+  create_table "passed_game_steps", force: :cascade do |t|
+    t.bigint "user_game_id"
+    t.bigint "game_step_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_step_id"], name: "index_passed_game_steps_on_game_step_id"
+    t.index ["user_game_id", "game_step_id"], name: "index_passed_game_steps_on_user_game_id_and_game_step_id", unique: true
+    t.index ["user_game_id"], name: "index_passed_game_steps_on_user_game_id"
+  end
+
   create_table "step_answers", force: :cascade do |t|
     t.bigint "user_game_id", null: false
     t.datetime "created_at", null: false
@@ -202,6 +212,8 @@ ActiveRecord::Schema.define(version: 20180403172617) do
   add_foreign_key "game_assets", "games"
   add_foreign_key "game_step_solutions", "game_steps"
   add_foreign_key "image_response_options", "game_steps"
+  add_foreign_key "passed_game_steps", "game_steps"
+  add_foreign_key "passed_game_steps", "user_games"
   add_foreign_key "step_answers", "game_step_solutions"
   add_foreign_key "step_answers", "user_games"
   add_foreign_key "users", "subscription_plans"

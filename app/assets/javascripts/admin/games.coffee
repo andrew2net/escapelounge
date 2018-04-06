@@ -29,6 +29,7 @@ $ ->
 
   # Expand new game step.
   gameSteps.on('cocoon:after-insert', (e, item) ->
+    setPositions()
     newStep = $(item).find('.collapse')
     if newStep.length
       $('.collapse').collapse("hide")
