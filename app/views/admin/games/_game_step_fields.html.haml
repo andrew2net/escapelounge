@@ -33,7 +33,7 @@
         .form-row
           .col-6
             .form-group
-              = f.label :image
+              = f.label :image, 'Background'
               = f.file_field :image, class: "form-control-file"
             = image_tag f.object.image.url(:thumb), width: '60%'
           .col-md-6
