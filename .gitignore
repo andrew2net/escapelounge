@@ -27,6 +27,7 @@
 /config/application.yml
 
 /config/database.yml
+/config/s3.yml
 
 .DS_Store
 .vscode/
