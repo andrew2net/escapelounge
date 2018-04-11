@@ -85,5 +85,9 @@ group :development, :test do
   gem 'listen'
 end
 
+group :production do
+  gem 'sendgrid-ruby'
+end
+
 # Access an IRB console on exception pages or by using <%= console %> in views
 gem 'web-console', '~> 3.5', '>= 3.5.1', group: :development
