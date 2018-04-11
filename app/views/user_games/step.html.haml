@@ -13,6 +13,12 @@
         #negative-animation.text-center.d-none
           = render 'eye_in_keyhole_animation', color: 'red', height: 225, width: 300, view_box: ""
 
+#timeout-modal.modal.fade
+  .modal-dialog
+    .modal-content
+      .modal-body
+        %h2.text-center Run out of time
+
 #timeout-redirect-url{ hidden: true }= user_game_result_url(@user_game)
 
 

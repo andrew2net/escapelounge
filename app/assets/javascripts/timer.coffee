@@ -1,9 +1,9 @@
 $ ->
-  startGameBtn  = $ 'a[data-start-game]'
-  pauseGameBtn  = $ '#pause-game-btn'
-  resumeGameBtn = $ '#resume-game-btn'
-  endGameBtn    = $ '#end-game-button'
-  linkToSteps   = $ '#link-to-steps'
+  $startGameBtn  = $ 'a[data-start-game]'
+  $pauseGameBtn  = $ '#pause-game-btn'
+  $resumeGameBtn = $ '#resume-game-btn'
+  $endGameBtn    = $ '#end-game-button'
+  $linkToSteps   = $ '#link-to-steps'
 
   # Game timer
   window.timer = {
@@ -23,11 +23,11 @@ $ ->
     # Hide and stop timer.
     stop: ->
       this.container.hide()
-      startGameBtn.show()
+      $startGameBtn.show()
       clearInterval this.interval
 
     show: ->
-      startGameBtn.hide()
+      $startGameBtn.hide()
       this.container.show()
       this.display.html this.minSec()
 
@@ -36,8 +36,8 @@ $ ->
       @paused = false
       this.secondsRemain = timeLength if timeLength
       if this.secondsRemain > 0
-        resumeGameBtn.hide()
-        pauseGameBtn.show()
+        $resumeGameBtn.hide()
+        $pauseGameBtn.show()
         this.show()
         _self = this
         this.interval = setInterval ->
@@ -46,15 +46,18 @@ $ ->
             _self.display.html _self.minSec()
           else
             _self.stop()
-            window.location = _self.redirectTo if _self.redirectTo
+            $('#timeout-modal').modal 'show'
+            setTimeout ->
+              window.location = _self.redirectTo if _self.redirectTo
+            , 3000
         , 1000
 
     pause: (pauseAt) ->
       @paused = true
       this.secondsRemain = pauseAt if pauseAt
-      pauseGameBtn.hide()
-      resumeGameBtn.show()
-      linkToSteps.hide()
+      $pauseGameBtn.hide()
+      $resumeGameBtn.show()
+      $linkToSteps.hide()
       this.show()
       clearInterval this.interval
   }
@@ -77,7 +80,7 @@ $ ->
     metadataInput
 
   startResume = (url) ->
-    linkToSteps.show()
+    $linkToSteps.show()
     startAt = new Date
     metadataInput = """<input name="start_at" value="#{startAt}" type="hidden" />"""
     metadataInput += formMetadata()
@@ -86,24 +89,24 @@ $ ->
     form.submit()
 
   # Starting game.
-  startGameBtn.click (event) ->
+  $startGameBtn.click (event) ->
     event.preventDefault()
     startResume event.target.href
 
   # Pause game
-  pauseGameBtn.click (event) ->
+  $pauseGameBtn.click (event) ->
     event.preventDefault()
-    resumeGameBtn.removeClass 'disabled'
+    $resumeGameBtn.removeClass 'disabled'
     timer.pause()
     $.post event.target.href, { seconds_remain: timer.secondsRemain }
 
   # Resume game.
-  resumeGameBtn.click (event) ->
+  $resumeGameBtn.click (event) ->
     event.preventDefault()
     startResume event.target.href
 
   # End the game
-  endGameBtn.click (event) ->
+  $endGameBtn.click (event) ->
     event.preventDefault()
     # timer.stop()
     # $.post event.target.href
