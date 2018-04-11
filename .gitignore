@@ -22,7 +22,6 @@
 
 /public/system/
 /public/ckeditor_assets/
-/config/s3.yml
 
 # Ignore application configuration
 /config/application.yml
