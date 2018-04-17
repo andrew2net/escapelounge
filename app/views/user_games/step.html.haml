@@ -22,7 +22,7 @@
 #timeout-redirect-url{ hidden: true }= user_game_result_url(@user_game)
 
 
-#game-show{ style: "background-image: url(#{image_url(@step.image.file? ? @step.image.url : @game.background.url)});background-size:cover" }
+#game-show
 
   %section#game-step.game-content
     %article.game-content-left
@@ -81,7 +81,7 @@
 
 
 
-    %article.game-content-right
+    %article.game-content-right{ style: "background-image: url(#{image_url(@step.image.file? ? @step.image.url : @game.background.url)});background-size:cover" }
 
       = form_tag user_game_step_url(@user_game, @step), id: 'step-form' do
         %p
