@@ -115,9 +115,21 @@ $ ->
     $('#answer').val $image_options.filter(':checked').val()
 
   # Toggle hints window
-  $hintBarTitle.click (e) ->
-    $hintBar.toggleClass('hint-bar-hidden').removeClass('hint-bar-animate')
-    $hintBarCaret.toggleClass('fa-caret-down')
+  # $hintBarTitle.click (e) ->
+  #   $hintBar.toggleClass('hint-bar-hidden').removeClass('hint-bar-animate')
+  #   $hintBarCaret.toggleClass('fa-caret-down')
+
+  $clue = $ '#clue'
+  $hint = $ '#hint'
+  $clue.find('.card-header').click ->
+    $clue.toggleClass 'colapse-step-screen'
+    unless $clue.hasClass 'colapse-step-screen'
+      $hint.removeClass 'colapse-step-screen'
+
+  $hint.find('.card-header').click ->
+    $hint.toggleClass 'colapse-step-screen'
+    if $hint.hasClass 'colapse-step-screen'
+      $clue.addClass 'colapse-step-screen'
 
   # Submit form
   $answerBtn.click submit

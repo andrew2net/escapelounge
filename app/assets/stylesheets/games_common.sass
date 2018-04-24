@@ -174,12 +174,40 @@
 //************************************************
 #game-show
 	section.game-content
+		position: relative
+		overflow-x: hidden
+		#clue
+			left: 90px
+			z-index: 100
+			&.colapse-step-screen
+				left: calc(100vw - 45px)
+		#hint
+			left: 45px
+			z-index: 50
+			&.colapse-step-screen
+				left: calc(100vw - 90px)
+		.card
+			position: absolute
+			transition: left 1s
+		.card-header
+			padding-left: 0
+			padding-right: 0
+			width: 45px
+			background: linear-gradient(to right, gray, white, gray)
+			h5
+				transform: rotateZ(-90deg)
+				display: inline-block
+				position: relative
+				top: 20px
+				transform-origin: 30px 20px
+		.card-body
+			width: calc(100vw - 135px)
 		// display: flex
 		// flex-wrap: wrap
 		// height: 100%
 
-		#accordion
-			min-height: calc(100vh - 55px)
+		// #accordion
+		min-height: calc(100vh - 55px)
 			// 100% minus nav
 		.card
 			flex: 1 1 100%
