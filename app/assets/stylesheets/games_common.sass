@@ -174,17 +174,34 @@
 //************************************************
 #game-show
 	section.game-content
-		display: flex
-		flex-wrap: wrap
-		height: 100%
+		// display: flex
+		// flex-wrap: wrap
+		// height: 100%
+
+		#accordion
+			min-height: calc(100vh - 55px)
+		.card
+			flex: 1 1 100%
+		.collapse
+			flex: 0 0 auto
+			// transition: all .2s
+		.collapsing
+			flex: 1 1 100%
+			// transition: flex .3s
+		.collapse.show
+			flex: 1 0 auto
+		.card .collapse.show
+			// height: 100%
+			height: calc(100vh - 325px)
+			overflow-y: scroll
 
 		//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		// Left 1/3 of Game Step View
 		//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		article.game-content-left
-			flex-basis: 40%
+			// flex-basis: 40%
 			background: white
-			min-height: 93vh
+			// min-height: 93vh
 			box-shadow: 0 15px 35px rgba(50,50,93,.1), 0 5px 15px rgba(0,0,0,.07)
 			position: relative
 			div.mt-2
@@ -249,7 +266,7 @@
 		// Right 2/3 of Game Step View
 		//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		article.game-content-right
-			flex-basis: 60%
+			// flex-basis: 60%
 			min-height: 93vh
 			display: flex
 			flex-direction: column

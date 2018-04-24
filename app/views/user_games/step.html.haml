@@ -23,114 +23,132 @@
 
 
 #game-show
-
   %section#game-step.game-content
-    %article.game-content-left
-      .mt-2
-        = link_to 'Pause game', game_pause_url(@game), id: 'pause-game-btn',
-          class: 'btn btn-primary btn-sm ml-1', style: "#{@paused_at ? 'display:none' : ''}"
-        = link_to 'Resume game', game_resume_url(@game), id: 'resume-game-btn',
-            class: "btn btn-primary btn-sm ml-1 #{@running ? 'disabled' : ''}",
-            style: "#{@paused_at ? '' : 'display:none'}"
-      .game-content-info
-        = image_tag 'icon-magnifier.svg', class: "magnifier-icon"
-        %h2.step-title= @step.name
-        = image_tag 'divider-orange.svg', class: "divider-orange"
-        .step-description
-          = @step.description.html_safe
-        -# - if @step.image.present
-          = image_tag @step.image.url, class: "img-fluid"
-        - if @step.video.present?
-          = video_tag @step.video.url, controls: true, size: '400x300'
+    #accordion.accordion.d-flex.flex-column
+      .card
+        #headingOne.card-header
+          %h5.mb-0
+            %button.btn.btn-link{"aria-controls" => "collapseOne", "aria-expanded" => "true", "data-target" => "#collapseOne", "data-toggle" => "collapse", :type => "button"}
+              = @step.name
+        #collapseOne.collapse.show{"aria-labelledby" => "headingOne", "data-parent" => "#accordion"}
+          .card-body
+            %article.game-content-left
+              .mt-2
+                = link_to 'Pause game', game_pause_url(@game), id: 'pause-game-btn',
+                  class: 'btn btn-primary btn-sm ml-1', style: "#{@paused_at ? 'display:none' : ''}"
+                = link_to 'Resume game', game_resume_url(@game), id: 'resume-game-btn',
+                    class: "btn btn-primary btn-sm ml-1 #{@running ? 'disabled' : ''}",
+                    style: "#{@paused_at ? '' : 'display:none'}"
+              .game-content-info
+                = image_tag 'icon-magnifier.svg', class: "magnifier-icon"
+                %h2.step-title= @step.name
+                = image_tag 'divider-orange.svg', class: "divider-orange"
+                .step-description
+                  = @step.description.html_safe
+                -# - if @step.image.present
+                  = image_tag @step.image.url, class: "img-fluid"
+                - if @step.video.present?
+                  = video_tag @step.video.url, controls: true, size: '400x300'
 
-        -# Hints
-        - if @step.hints.any?
-          :ruby
-            # Retrive opened hints
-            hints = @user_game.hints.where(game_step_id: @step.id)
-            next_hint = @step.hints.covered(@user_game).first
-            show_next_hint = !@answered && !@user_game.finished_at && next_hint
+      .card
+        #headingTwo.card-header
+          %h5.mb-0
+            %button.btn.btn-link.collapsed{"aria-controls" => "collapseTwo", "aria-expanded" => "false", "data-target" => "#collapseTwo", "data-toggle" => "collapse", :type => "button"}
+              Hint
+        #collapseTwo.collapse{"aria-labelledby" => "headingTwo", "data-parent" => "#accordion"}
+          .card-body
+            -# Hints
+            - if @step.hints.any?
+              :ruby
+                # Retrive opened hints
+                hints = @user_game.hints.where(game_step_id: @step.id)
+                next_hint = @step.hints.covered(@user_game).first
+                show_next_hint = !@answered && !@user_game.finished_at && next_hint
 
-          #hint-bar.hint-bar-hidden{ class: show_next_hint ? 'hint-bar-animate' : '' }
-            .container
-              .hint-title
-                %i.fa.fa-arrow-alt-circle-right
-                &nbsp;&nbsp;&nbsp;
-                Need A Hint? Click Me!
-                &nbsp;&nbsp;&nbsp;
-                %i.fa.fa-arrow-alt-circle-left
+              #hint-bar.hint-bar-hidden{ class: show_next_hint ? 'hint-bar-animate' : '' }
+                .container
+                  .hint-title
+                    %i.fa.fa-arrow-alt-circle-right
+                    &nbsp;&nbsp;&nbsp;
+                    Need A Hint? Click Me!
+                    &nbsp;&nbsp;&nbsp;
+                    %i.fa.fa-arrow-alt-circle-left
 
-              -# Show animation if there aren't opened hints
-              - if hints.blank? && @step.hints.any?
-                #hint-open-animation
-                  = render 'eye_in_keyhole_animation', hint: @step.hints.first, user_game: @user_game,
-                    step: @step, color: 'yellow', height: 760, width: 400, view_box: "65 0 170 190"
+                  -# Show animation if there aren't opened hints
+                  - if hints.blank? && @step.hints.any?
+                    #hint-open-animation
+                      = render 'eye_in_keyhole_animation', hint: @step.hints.first, user_game: @user_game,
+                        step: @step, color: 'yellow', height: 760, width: 400, view_box: "65 0 170 190"
 
-              .hint-body
-                #hints-carousel.carousel.slide{ data: { interval: 'false' } }
-                  = render 'hints', user_game: @user_game, step: @step, hints: hints
+                  .hint-body
+                    #hints-carousel.carousel.slide{ data: { interval: 'false' } }
+                      = render 'hints', user_game: @user_game, step: @step, hints: hints
 
-                - if @step.hints.size > 1
-                  -# Show navigation buttons
-                  %a.carousel-control-prev{ href: '#hints-carousel', role: 'button', data: { slide: 'prev' } }
-                    %span.fa.fa-chevron-left{ aria: { hidden: true } }
-                    %span.sr-only Previous
-                  %a.carousel-control-next{ href: '#hints-carousel', role: 'button', data: { slide: 'next' } }
-                    %span.fa.fa-chevron-right{ aria: { hidden: true } }
-                    %span.sr-only Previous
+                    - if @step.hints.size > 1
+                      -# Show navigation buttons
+                      %a.carousel-control-prev{ href: '#hints-carousel', role: 'button', data: { slide: 'prev' } }
+                        %span.fa.fa-chevron-left{ aria: { hidden: true } }
+                        %span.sr-only Previous
+                      %a.carousel-control-next{ href: '#hints-carousel', role: 'button', data: { slide: 'next' } }
+                        %span.fa.fa-chevron-right{ aria: { hidden: true } }
+                        %span.sr-only Previous
+      .card
+        #headingThree.card-header
+          %h5.mb-0
+            %button.btn.btn-link.collapsed{"aria-controls" => "collapseThree", "aria-expanded" => "false", "data-target" => "#collapseThree", "data-toggle" => "collapse", :type => "button"}
+              Answer
+        #collapseThree.collapse{"aria-labelledby" => "headingThree", "data-parent" => "#accordion"}
+          .card-body
+            %article.game-content-right{ style: "background-image: url(#{image_url(@step.image.file? ? @step.image.url : @game.background.url)});background-size:cover" }
 
+              = form_tag user_game_step_url(@user_game, @step), id: 'step-form' do
+                %p
+                  -# Show answer input if there is any solution.
+                  - if has_solutions = @step.game_step_solutions.any?
+                    - if @step.combo_lock?
+                      .d-flex.justify-content-center
+                        = render 'padlock'
+                      = hidden_field_tag :answer, '000', autocomplete: :off
+                    - elsif @step.image_options?
+                      %ul.image-options
+                        - @step.image_response_options.each do |option|
+                          %li
+                            = label_tag "image_option_#{option.id}" do
+                              = image_tag option.image.url(:thumb), height: 150, width: 150
+                              %div
+                                = radio_button_tag :image_option, option.id
+                      = hidden_field_tag :answer, '', autocomplete: :off
+                    - elsif @step.cipher_wheel?
+                      .d-flex.justify-content-around
+                        = render 'cipher_wheel'
+                      .form-group.mt-4
+                        = text_field_tag :answer, @answer, class: 'form-control'
+                    - elsif @step.multi_questions?
+                      - @questions.each do |q|
+                        .form-group.row
+                          = label_tag "questions[#{q.id}][answer]", q.question, class: 'col-6 col-form-label'
+                          .col-6
+                            = text_field_tag "questions[#{q.id}][answer]", q.answer, class: 'form-control', data: { multi_answer: q.id }
+                    - else
+                      .form-group
+                        -# = label_tag :answer
+                        = text_field_tag :answer, @answer, class: 'form-control', disabled: @answered,
+                          placeholder: 'Put your answer here...'
 
-
-    %article.game-content-right{ style: "background-image: url(#{image_url(@step.image.file? ? @step.image.url : @game.background.url)});background-size:cover" }
-
-      = form_tag user_game_step_url(@user_game, @step), id: 'step-form' do
-        %p
-          -# Show answer input if there is any solution.
-          - if has_solutions = @step.game_step_solutions.any?
-            - if @step.combo_lock?
-              .d-flex.justify-content-center
-                = render 'padlock'
-              = hidden_field_tag :answer, '000', autocomplete: :off
-            - elsif @step.image_options?
-              %ul.image-options
-                - @step.image_response_options.each do |option|
-                  %li
-                    = label_tag "image_option_#{option.id}" do
-                      = image_tag option.image.url(:thumb), height: 150, width: 150
-                      %div
-                        = radio_button_tag :image_option, option.id
-              = hidden_field_tag :answer, '', autocomplete: :off
-            - elsif @step.cipher_wheel?
-              .d-flex.justify-content-around
-                = render 'cipher_wheel'
-              .form-group.mt-4
-                = text_field_tag :answer, @answer, class: 'form-control'
-            - elsif @step.multi_questions?
-              - @questions.each do |q|
-                .form-group.row
-                  = label_tag "questions[#{q.id}][answer]", q.question, class: 'col-6 col-form-label'
-                  .col-6
-                    = text_field_tag "questions[#{q.id}][answer]", q.answer, class: 'form-control', data: { multi_answer: q.id }
-            - else
-              .form-group
-                -# = label_tag :answer
-                = text_field_tag :answer, @answer, class: 'form-control', disabled: @answered,
-                  placeholder: 'Put your answer here...'
-
-        %div
-          -# if previous_step = @step.previous(current_user.id)
-            = link_to 'Previous step', user_game_step_url(@user_game, previous_step),
-              class: 'btn btn-primary float-md-left'
-          .text-center
-            - if has_solutions && !@answered
-              = link_to 'Confirm', user_game_step_url(@user_game, @step),
-                class: 'btn btn-default', id: 'answer-btn'
-            - elsif @next_step
-              = link_to 'Next Step', user_game_step_url(@user_game, @step),
-                class: 'btn btn-default', id: 'answer-btn'
-            - elsif !@next_step && !has_solutions
-              = link_to 'Finish the Game', user_game_step_url(@user_game, @step),
-              class: 'btn btn-default', id: 'answer-btn'
-          -# if @next_step
-            = link_to 'Next step', user_game_step_url(@user_game, @next_step),
-              class: 'btn btn-primary float-md-right'
+                %div
+                  -# if previous_step = @step.previous(current_user.id)
+                    = link_to 'Previous step', user_game_step_url(@user_game, previous_step),
+                      class: 'btn btn-primary float-md-left'
+                  .text-center
+                    - if has_solutions && !@answered
+                      = link_to 'Confirm', user_game_step_url(@user_game, @step),
+                        class: 'btn btn-default', id: 'answer-btn'
+                    - elsif @next_step
+                      = link_to 'Next Step', user_game_step_url(@user_game, @step),
+                        class: 'btn btn-default', id: 'answer-btn'
+                    - elsif !@next_step && !has_solutions
+                      = link_to 'Finish the Game', user_game_step_url(@user_game, @step),
+                      class: 'btn btn-default', id: 'answer-btn'
+                  -# if @next_step
+                    = link_to 'Next step', user_game_step_url(@user_game, @next_step),
+                      class: 'btn btn-primary float-md-right'
