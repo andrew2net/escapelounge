@@ -1,5 +1,7 @@
-module GamesHelper
+# frozen_string_literal: true
 
+# User game helper
+module GamesHelper
   # Render timer. If inline is true then render timer in inline format.
   def display_timer(bar: false)
     # This need for finishing expired game.
@@ -18,39 +20,27 @@ module GamesHelper
     # elem_class = 'col-md-12' # inline ? "col-md-2" : "col-md-12"
 
     content_tag :span, id: "container-timer", style: "#{show_timer ? "" : "display:none"}" do
-      # content_tag :div, class: "row" do
-        # html = content_tag :div, class: elem_class do
-        html = content_tag :span, '', id: "display-timer", style: bar ? '' : 'display:none',
-          data: { stop_at: "#{stop_at}", paused_at: "#{@paused_at}" }
-        # end
+      html = content_tag :span, '', id: "display-timer", style: bar ? '' : 'display:none',
+        data: { stop_at: "#{stop_at}", paused_at: "#{@paused_at}" }
 
-        return html if bar
+      return html if bar
 
-        if @display_pause_buttons
-          # html += content_tag :div do
-          html += link_to 'Pause game', game_pause_url(@game), id: 'pause-game-btn',
-            class: 'btn btn-primary btn-sm ml-1', style: "#{@paused_at ? 'display:none' : ''}"
-          # end
+      if @display_pause_buttons
+        html += link_to 'Pause game', game_pause_url(@game), id: 'pause-game-btn',
+          class: 'btn btn-primary btn-sm ml-1', style: "#{@paused_at ? 'display:none' : ''}"
 
-          # html += content_tag :div do
-          html += link_to 'Resume game', game_resume_url(@game), id: 'resume-game-btn',
-              class: "btn btn-primary btn-sm ml-1 #{@running ? 'disabled' : ''}",
-              style: "#{@paused_at ? '' : 'display:none'}"
-          # end
-        else
-          # html += content_tag :div do
-          html += link_to "Game description", game_path(@game)
-          # end
-        end
+        html += link_to 'Resume game', game_resume_url(@game), id: 'resume-game-btn',
+            class: "btn btn-primary btn-sm ml-1 #{@running ? 'disabled' : ''}",
+            style: "#{@paused_at ? '' : 'display:none'}"
+      else
+        html += link_to "Game description", game_path(@game)
+      end
 
-        if user_game
-          # html += content_tag :div do
-          html += link_to 'End game', user_game_end_url(user_game), id: 'end-game-button',
-            class: "btn btn-primary btn-sm ml-1", style: "#{@running || @paused_at ? '' : 'display:none'}"
-          # end
-        end
-        html.html_safe
-      # end
+      if user_game
+        html += link_to 'End game', user_game_end_url(user_game), id: 'end-game-button',
+          class: "btn btn-primary btn-sm ml-1", style: "#{@running || @paused_at ? '' : 'display:none'}"
+      end
+      html.html_safe
     end
   end
 end

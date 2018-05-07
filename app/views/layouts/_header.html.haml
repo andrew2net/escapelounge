@@ -12,11 +12,17 @@
   -# Logo
   = link_to root_path, class: 'navbar-brand' do
     = image_tag 'ridlz-logo.svg'
+
   %button.navbar-toggler{ aria: { controls: 'navbarSupportedContent', expanded: 'false', label: 'Toggle navigation' },
       data: { target: '#navbarSupportedContent', toggle: 'collapse' }, type: 'button' }
     %span.navbar-toggler-icon
 
   #navbarSupportedContent.collapse.navbar-collapse
+    - if !@step && user_game = current_user&.user_games&.running&.first || current_user&.user_games&.paused&.first
+      %ul.nav.navbar-nav
+        %li.nav-item
+          = link_to 'Live Game In Progress', user_game_step_url(user_game, user_game.last_allowed_step), class: 'nav-link'
+
     %ul.nav.navbar-nav.ml-auto
 
       - if current_user && current_user.admin?

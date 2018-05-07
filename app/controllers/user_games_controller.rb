@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
+# User game controller
 class UserGamesController < ApplicationController
-  before_action :set_user_game, only: [:step, :answer, :hint, :end, :result]
-  before_action :set_step, only: [:step, :answer, :hint]
-  before_action :set_progress, only: [:step, :result]
+  before_action :set_user_game, only: %i[step answer hint end result]
+  before_action :set_step, only: %i[step answer hint]
+  before_action :set_progress, only: %i[step result]
 
   # GET /user_games/:user_game_id/step(/:step_id)
   def step
