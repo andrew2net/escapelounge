@@ -186,6 +186,8 @@
 			z-index: 50
 			&.colapse-step-screen
 				left: calc(100vw - 100px)
+			.card-body
+				background-color: rgba(249,119,72, 0.8)
 		.card
 			position: absolute
 			transition: left 1s
@@ -226,6 +228,7 @@
 			display: flex
 			flex-direction: column
 			justify-content: center
+			padding: 0
 		// display: flex
 		// flex-wrap: wrap
 		// height: 100%
@@ -256,8 +259,8 @@
 			// flex-basis: 40%
 			background: white
 			// min-height: 93vh
-			box-shadow: 0 15px 35px rgba(50,50,93,.1), 0 5px 15px rgba(0,0,0,.07)
 			position: relative
+			padding: 2em
 			div.mt-2
 				text-align: center
 			.game-content-info
@@ -319,24 +322,24 @@
 		//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		// Right 2/3 of Game Step View
 		//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-		article.game-content-right
-			// flex-basis: 60%
-			min-height: 93vh
-			display: flex
-			flex-direction: column
-			justify-content: center
-
-			ul.image-options
-				text-align: center
-				list-style: none
-				padding-left: 0
-				li
-					display: inline-block
-					margin: 0 1em 0.25em
-					label
-						background: white
-						padding: 0.625em 0.625em 0.125em
-						border-radius: $borderRadius
+		// article.game-content-right
+		// 	// flex-basis: 60%
+		// 	min-height: 93vh
+		// 	display: flex
+		// 	flex-direction: column
+		// 	justify-content: center
+		//
+		// 	ul.image-options
+		// 		text-align: center
+		// 		list-style: none
+		// 		padding-left: 0
+		// 		li
+		// 			display: inline-block
+		// 			margin: 0 1em 0.25em
+		// 			label
+		// 				background: white
+		// 				padding: 0.625em 0.625em 0.125em
+		// 				border-radius: $borderRadius
 
 
 		//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

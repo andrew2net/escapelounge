@@ -6,19 +6,19 @@
       .card-header
         .row
           .col-md-12
-            %h3.card-title Game History
+            %h3.card-title Your Game History
       .card-body
         %table.table
           %thead
             %tr
               %th Game
-              %th Finished at
+              %th Played
               %th Result
           %tbody
             - @user_games.each do |g|
               %tr
                 %td= g.game.name
-                %td= g.finished_at
+                %td= format_date_time(g.finished_at)
                 %td= g.formated_result
 
         .pagination.justify-content-center
