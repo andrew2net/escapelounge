@@ -7,7 +7,7 @@
       .form-row
         .col-md-7
           .form-group
-            = f.label :game_step_name
+            %label Clue
             = f.text_field :name, class: 'form-control', required: true
         .col-md-5.game-step-actions
           = link_to "#collapse-#{f.object.id}", class: 'btn btn-sm btn-primary align-middle', data: { parent: '#game_steps', toggle: 'collapse' } do
@@ -21,11 +21,11 @@
         .form-row
           .col-md-8
             .form-group
-              = f.label :description
+              %label Additional Clue Helper Text
               = f.cktext_area :description, class: 'form-control ckeditor', rows: 3
           .col-md-4
             .form-group
-              = f.label :answer_input_type
+              %label Clue Answer Type
               = f.select :answer_input_type, options_for_select({ 'Text field' => :text_field, 'Combo lock' => :combo_lock,
                 'Image options' => :image_options, 'Cipher wheel' => :cipher_wheel, 'Multi questions' => :multi_questions },
                 f.object.answer_input_type), {}, class: 'form-control', data: { input_type: true }
@@ -33,18 +33,18 @@
         .form-row
           .col-6
             .form-group
-              = f.label :image, 'Background'
+              %label Background for the Clue Answer Page
               = f.file_field :image, class: "form-control-file"
             = image_tag f.object.image.url(:thumb), width: '60%'
           .col-md-6
             .form-group
-              = f.label :video
+              %label Video for the Clue Text Page
               = f.file_field :video, class: 'form-control-file'
             = video_tag f.object.video.url, controls: true, size: '500x375'
 
         .solutions
           %fieldset.border.border-primary.rounded.p-4
-            %legend Solutions
+            %legend Clue Solutions
             .sortable-solutions
               = f.fields_for :game_step_solutions do |game_step_solution|
                 - render 'game_step_solution_fields', f: game_step_solution
@@ -53,7 +53,7 @@
 
         .image-options
           %fieldset.border.border-primary.rounded.p-4
-            %legend Image options
+            %legend Clue Image options
             .row
               = f.fields_for :image_response_options do |image_response_option|
                 - render 'image_response_option_fields', f: image_response_option, sf: f
@@ -62,7 +62,7 @@
 
         .hints
           %fieldset.border.border-primary.rounded.p-4
-            %legend Hints
+            %legend Clue Hints
             = f.fields_for :hints do |hint|
               - render 'hint_fields', f: hint
             .links

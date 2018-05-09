@@ -20,7 +20,7 @@
     .card-body
       .form-row
         .form-group.col-10
-          = f.label :name, class: 'required'
+          %label.required Game Name
           = f.text_field :name, class: 'form-control', required: true
         .form-group.col-2
           .form-check.mt-4
@@ -29,25 +29,25 @@
               Publish Game
       .form-row
         .form-group.col-6
-          = f.label :description
+          %label Game Description for the Game Page
           = f.text_area :description, class: 'form-control', rows: 3
         .form-group.col-6
-          = f.label :short_description
+          %label Game Description for the Game List
           = f.text_area :short_description, class: 'form-control', rows: 3
       .form-row
         .form-group.col-12
-          = f.label :instructions
+          %label Game Instructions & Setup Details
           = f.text_area :instructions, class: 'form-control', rows: 3
       .form-row
         .form-group.col-4
-          = f.label :difficulty
+          %label Game Difficulty
           = f.select :difficulty, Game.difficulties.to_a.map { |w| [w[0], w[0]] }, {}, class: 'form-control'
         .form-group.col-4
-          %label.required Time allotted to complete the game
+          %label.required Minutes allowed to complete the game
           = f.text_field :time_length, class: 'form-control', required: true
         .form-group.col-4
           %div
-            = f.label :grade_ids, 'Grades', class: 'mb-0'
+            %label.mb-0 Available to Grades:
           = f.collection_check_boxes :grade_ids, Grade.all, :id, :name do |b|
             .form-check.form-check-inline
               = b.label(class: 'form-check-label') { b.check_box(class: 'form-check-input mr-2') + b.text }
@@ -55,12 +55,12 @@
       .form-row
         .col-6
           .form-group
-            %label Game List Banner
+            %label Background image that shows on the Games List
             = f.file_field :banner
           = image_tag @game.banner.url :thumb
         .col-6
           .form-group
-            %label Game Page Background
+            %label Background image that shows on the Game Page
             = f.file_field :background
           = image_tag @game.background.url :thumb
 
@@ -81,14 +81,14 @@
     .card-header
       .row
         .col-md-12
-          %h3.card-title Game Steps
+          %h3.card-title Clues
     .card-body
       #game_steps{ role: 'tablist' }
         #sortable
           = f.fields_for :game_steps do |game_step|
             = render 'game_step_fields', f: game_step
           .links
-            = link_to_add_association 'add game step', f, :game_steps, class: 'btn btn-primary mt-3'
+            = link_to_add_association 'add clue', f, :game_steps, class: 'btn btn-primary mt-3'
 
   .actions.py-4
     = f.submit 'Save', class: 'btn btn-primary'
