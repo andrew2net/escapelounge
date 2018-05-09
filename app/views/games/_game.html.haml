@@ -3,12 +3,16 @@
 .col-md-6.col-xs-12
   .card{ class: (available ? 'available-game' : '') }
     .card-header{ style: "background-image: url(#{image_url(game.banner.url)})" }
+      - if !available
+        .unavailable-game-overlay
+          %h3 Game Not Available
+          = link_to 'Upgrade Subscription', '#', class: "btn btn-default btn-sm"
     .card-body
       %h4
-        - if available
-          %i.fa.fa-check-circle
-        - else
-          %i.fa.fa-times-circle
+        -# - if available
+        -#   %i.fa.fa-check-circle
+        -# - else
+        -#   %i.fa.fa-times-circle
         = game.name
       %hr
       .card-body-content

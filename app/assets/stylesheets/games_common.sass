@@ -177,33 +177,55 @@
 		position: relative
 		overflow-x: hidden
 		#clue
-			left: 90px
+			left: 100px
 			z-index: 100
 			&.colapse-step-screen
-				left: calc(100vw - 45px)
+				left: calc(100vw - 50px)
 		#hint
-			left: 45px
+			left: 50px
 			z-index: 50
 			&.colapse-step-screen
-				left: calc(100vw - 90px)
+				left: calc(100vw - 100px)
 		.card
 			position: absolute
 			transition: left 1s
+			border: none
+			border-radius: 0
 		.card-header
 			padding-left: 0
 			padding-right: 0
-			width: 45px
+			border-radius: 0
+			width: 50px
 			background: linear-gradient(to right, gray, white, gray)
+			cursor: pointer
+			display: flex
+			flex-direction: column
+			justify-content: center
+			&#headingOne, &#headingTwo, &#headingThree
+			&#headingOne
+				background: #e145ff
+			&#headingTwo
+				background: #f97748
+			&#headingThree
+				background: #33d271
 			h5
-				transform: rotateZ(-90deg)
-				display: inline-block
+				// transform: rotateZ(-90deg)
+				writing-mode: vertical-rl
+				text-orientation: upright
+				display: block
 				position: relative
-				top: 20px
-				transform-origin: 30px 20px
+				text-transform: uppercase
+				font-weight: bold
+				// transform-origin: 30px 20px
+				color: white
+				margin: auto
 		.card-body
 			width: calc(100vw - 135px)
 			height: calc(100vh - 56px)
 			overflow-y: scroll
+			display: flex
+			flex-direction: column
+			justify-content: center
 		// display: flex
 		// flex-wrap: wrap
 		// height: 100%
@@ -504,12 +526,12 @@
 			border: none
 			margin-bottom: 2em
 
-			&.available-game
-				.card-body
-					h4, h4 i.fa-check-circle
-						color: $lightblue
-				.card-footer
-					background: $lightblue
+			// &.available-game
+			// 	.card-body
+			// 		h4, h4 i.fa-check-circle
+			// 			color: $lightblue
+			// 	.card-footer
+			// 		background: $lightblue
 
 			.card-header
 				min-height: 225px
@@ -518,6 +540,28 @@
 				background-repeat: no-repeat
 				padding: 0
 				border-radius: 10px 10px 0 0
+				position: relative
+
+				.unavailable-game-overlay
+					position: absolute
+					top: 0
+					bottom: 0
+					left: 0
+					right: 0
+					background: rgba(0,0,0,0.7)
+					min-height: 225px
+					display: flex
+					flex-direction: column
+					justify-content: center
+					align-items: center
+					border-radius: 10px 10px 0 0
+
+					h3
+						color: #e2e2e2
+						margin-bottom: 0.5em
+						text-transform: uppercase
+						font-weight: bold
+						font-size: 1.5em
 
 				.card-header-content
 					background: rgba(0,0,0,0.5)
@@ -536,7 +580,7 @@
 
 			.card-body
 				padding: 0
-				h4, p, span
+				p, span
 					color: #333
 				h4
 					font-weight: bold
@@ -546,6 +590,7 @@
 					font-family: $font-family-cursive
 					font-weight: 400
 					letter-spacing: 1px
+					color: $lightblue
 					i.fa
 						margin-right: 0.5em
 				hr
@@ -559,7 +604,7 @@
 						margin-bottom: 1.5em
 
 			.card-footer
-				background: #333
+				background: $lightblue
 				border-radius: 0 0 10px 10px
 				ul
 					list-style: none
