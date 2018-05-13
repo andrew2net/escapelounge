@@ -32,3 +32,4 @@
 .DS_Store
 .vscode/
 erd.pdf
+.erdconfig

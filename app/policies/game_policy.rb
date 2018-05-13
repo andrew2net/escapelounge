@@ -1,20 +1,23 @@
+# frozen_string_literal: true
+
+# Games access policies.
 class GamePolicy < ApplicationPolicy
   def index?
-    user && user.admin?
+    user&.admin?
   end
 
   def create?
-    user.admin?
+    user&.admin?
   end
 
   def update?
-    user.admin?
+    user&.admin?
   end
 
   def start?
-    user.period_end && user.period_end > DateTime.now &&
+    user.period_end && user.period_end > Time.now &&
       record.grades.joins(:subscription_plans)
-      .where(subscription_plans: {id: user.subscription_plan_id}).any?
+            .where(subscription_plans: { id: user.subscription_plan_id }).any?
   end
 
   def destroy?

@@ -47,8 +47,10 @@ class Admin::GamesController < ApplicationController
     authorize @game
     respond_to do |format|
       if @game.update(game_params)
-        # @game.game_steps.where(answer_input_type: :image_options).each { |step| step.update_image_option_solution }
-        format.html { redirect_to edit_admin_game_url(@game), notice: 'Game was successfully updated.' }
+        format.html do
+          redirect_to game_path(@game),
+                      notice: 'Game was successfully updated.'
+        end
         format.json { render :show, status: :ok, location: @game }
       else
         format.html { render :edit }

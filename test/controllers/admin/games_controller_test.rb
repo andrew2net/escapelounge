@@ -26,9 +26,13 @@ class Admin::GamesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should update game" do
-    patch admin_game_url(@game), params: { game: { grade_ids: @game.grades.ids, description: @game.description, difficulty: @game.difficulty, name: @game.name, status: @game.status, time_length: @game.time_length } }
-    assert_redirected_to game_url(@game)
+  test 'should update game' do
+    patch admin_game_url(@game), params: { game: {
+      grade_ids: @game.grades.ids, description: @game.description,
+      difficulty: @game.difficulty, name: @game.name, status: @game.status,
+      time_length: @game.time_length
+    } }
+    assert_redirected_to game_path(@game)
   end
 
   test "should destroy game" do

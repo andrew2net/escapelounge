@@ -28,9 +28,10 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "should show running game" do
-    @user.update subscription_plan: subscription_plans(:two), period_end: (DateTime.now + 1.day)
-    get game_url(@game)
+  test 'should show running game' do
+    @user.update subscription_plan: subscription_plans(:two),
+                 period_end: (Time.now + 1.day)
+    get game_path(@game)
     assert_response :success
     assert_select '#container-timer[style=""]'
     assert_select '#pause-game-btn[style=""]', 1

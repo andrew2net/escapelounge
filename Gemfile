@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 ruby '2.4.1'
 gem 'rails', '~> 5.1', '>= 5.1.2'
 
 git_source(:github) do |repo_name|
-  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
+  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
   "https://github.com/#{repo_name}.git"
 end
 
@@ -37,7 +39,7 @@ gem 'jquery-turbolinks'
 # Use font awesome for icons
 gem 'font-awesome-sass'
 # Use paperclip for image cropping
-gem "paperclip", "~> 5.0.0"
+gem 'paperclip', '~> 5.0.0'
 # Use AWS S3 service as storage
 gem 'aws-sdk', '~> 2.3.0'
 # Use friendlyID for custom profile URLs
@@ -45,7 +47,7 @@ gem 'friendly_id', '~> 5.1.0'
 # Use cocoon for nested forms
 gem 'cocoon', '~> 1.2', '>= 1.2.10'
 
-gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
+gem 'stripe', git: 'https://github.com/stripe/stripe-ruby'
 
 gem 'ckeditor'
 
@@ -68,17 +70,16 @@ gem 'figaro'
 
 gem 'kaminari'
 
-
 group :doc do
   # bundle exec rake doc:rails to generate the API under doc/api.
   gem 'sdoc', '~> 0.4.0'
 end
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'pry-rails'
   gem 'pry-byebug'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'pry-rails'
+  # Spring speeds up development by keeping your application running in the
+  # background. Read more: https://github.com/rails/spring
   gem 'railroady'
   # Use letter opener to preview mail in the browser
   gem 'letter_opener'
@@ -89,5 +90,6 @@ group :production do
   gem 'sendgrid-ruby'
 end
 
+gem 'rails-erd', group: :development
 # Access an IRB console on exception pages or by using <%= console %> in views
 gem 'web-console', '~> 3.5', '>= 3.5.1', group: :development

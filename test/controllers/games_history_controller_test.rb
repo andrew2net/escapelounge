@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class GamesHistoryControllerTest < ActionDispatch::IntegrationTest
@@ -8,9 +10,8 @@ class GamesHistoryControllerTest < ActionDispatch::IntegrationTest
     sign_in @user
   end
 
-  test "should get index" do
-    get games_history_url
+  test 'should get index' do
+    get games_history_path
     assert_response :success
   end
-
 end

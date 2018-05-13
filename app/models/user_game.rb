@@ -1,4 +1,6 @@
-# If result 0 then game ended, if greater 0 then finished, if nil then timeouted.
+# frozen_string_literal: true
+
+# If result 0 then game ended, if greater 0 then finished, if nil then timeouted
 class UserGame < ApplicationRecord
   after_find :check_started_game
 
@@ -10,19 +12,20 @@ class UserGame < ApplicationRecord
 
   scope :running, -> { where(paused_at: nil, finished_at: nil) }
   scope :paused, -> { where.not(paused_at: nil).where(finished_at: nil) }
+  scope :running_or_paused, -> { where(finished_at: nil) }
 
   # Return percent of answered steps and steps of total
   def progress
     total_steps = game.game_steps.count
     answered_steps = passed_game_steps.count
     percent = answered_steps.to_f / total_steps.to_f * 100
-    [ "#{percent}%", "#{answered_steps} of #{total_steps}"]
+    ["#{percent}%", "#{answered_steps} of #{total_steps}"]
   end
 
   def progress_deg
     total_steps = game.game_steps.count
     answered_steps = passed_game_steps.count
-    if total_steps > 0
+    if total_steps.positive?
       (180 * answered_steps / total_steps).round
     else
       0
@@ -36,44 +39,41 @@ class UserGame < ApplicationRecord
 
   # Returen result in "hh:MM:ss" format.
   def formated_result
-    if result == 0
-      "Ended"
+    if result&.zero?
+      'Ended'
     elsif result
-      Time.at(result).utc.strftime("%M:%S !")
+      Time.at(result).utc.strftime('%M:%S !')
     else
-      "Time expired"
+      'Time expired'
     end
   end
 
   # Mark the hint as used and reduce remaining time
   def use_hint(hint_id)
     # Don't add hint if the game is finished or the hint is already added
-    unless self.finished_at || hints.exists?(hint_id)
-      hint = Hint.find hint_id
-      self.hints << hint
-      self.started_at -= hint.value.seconds if hint.value
-      save
-    end
+    return if finished_at || hints.exists?(hint_id)
+    hint = Hint.find hint_id
+    hints << hint
+    self.started_at -= hint.value.seconds if hint.value
+    save
   end
 
   # Finish the user game.
-  def finish(result = nil)
-    unless finished_at
-      self.finished_at = DateTime.now
-      self.result = result ||
-        ((finished_at.to_datetime - started_at.to_datetime) * 24 * 3600).to_i
-      save
-    end
+  def finish(reslt = nil)
+    # return if finished_at
+    self.finished_at ||= Time.now
+    self.result = reslt || ((finished_at.to_datetime - started_at.to_datetime)\
+                              * 24 * 3600).to_i
+    save
   end
 
   private
 
   # Check if stared game is expired.
   def check_started_game
-    if !finished_at && !paused_at
-      time = DateTime.now
-      minutes = ((time - started_at.to_datetime) * 24 * 60).to_i
-      self.update finished_at: time if minutes >= game.time_length
-    end
+    return if finished_at || paused_at
+    time = Time.zone.now
+    minutes = ((time - started_at) / 1.minute).to_i
+    update finished_at: time if minutes >= game.time_length
   end
 end
