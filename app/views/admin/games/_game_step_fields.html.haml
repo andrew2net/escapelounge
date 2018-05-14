@@ -7,7 +7,9 @@
       .form-row
         .col-md-7
           .form-group
-            %label Clue
+            %label
+              Clue
+              %span.clue-num= f.object.position
             = f.text_field :name, class: 'form-control', required: true
         .col-md-5.game-step-actions
           = link_to "#collapse-#{f.object.id}", class: 'btn btn-sm btn-primary align-middle', data: { parent: '#game_steps', toggle: 'collapse' } do

@@ -3,7 +3,10 @@ $ ->
 
   setPositions = ->
     $('#sortable > .nested-fields').each (i, step) ->
-      $(step).children('input[hidden]').val i + 1
+      pos = i + 1
+      $step = $ step
+      $step.children('input[hidden]').val pos
+      $step.find('span.clue-num').html pos
     $('.sortable-solutions').each (i, solutions) ->
       $(solutions).children('.nested-fields').each (n, solution) ->
         $(solution).children('input[hidden]').val n + 1
@@ -73,7 +76,7 @@ $ ->
     else
       $parent.find('.solutions').show()
       $parent.find('.image-options').hide()
-    
+
       if $select.val() == 'multi_questions'
         $parent.find('div[data-question]').show().find('input').attr('required', true)
       else
