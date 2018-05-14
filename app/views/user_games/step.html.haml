@@ -80,7 +80,7 @@
                 = render 'eye_in_keyhole_animation', hint: @step.hints.first, user_game: @user_game,
                   step: @step, color: 'yellow', height: 600, width: 800, view_box: "-150 -25 450 200"
 
-            .hint-body
+            .hint-body.d-none
               #hints-carousel.carousel.slide{ data: { interval: 'false' } }
                 = render 'hints', user_game: @user_game, step: @step, hints: hints
 

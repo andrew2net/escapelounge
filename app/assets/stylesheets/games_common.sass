@@ -224,11 +224,17 @@
 		.card-body
 			width: calc(100vw - 135px)
 			height: calc(100vh - 56px)
+			min-height: 610px
 			overflow-y: scroll
 			display: flex
 			flex-direction: column
 			justify-content: center
-			padding: 150px 0 0 0
+
+			#hint-open-animation
+				position: relative
+				right: 15px
+
+			// padding: 150px 0 0 0
 			// need top padding so that the timer doesn't overlap the content
 		// display: flex
 		// flex-wrap: wrap
