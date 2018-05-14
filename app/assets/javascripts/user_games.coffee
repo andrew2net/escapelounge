@@ -119,17 +119,22 @@ $ ->
   #   $hintBar.toggleClass('hint-bar-hidden').removeClass('hint-bar-animate')
   #   $hintBarCaret.toggleClass('fa-caret-down')
 
-  $clue = $ '#clue'
-  $hint = $ '#hint'
+  $clue   = $ '#clue'
+  $hint   = $ '#hint'
+  $answer = $ '#answer-section'
   $clue.find('.card-header').click ->
-    $clue.toggleClass 'colapse-step-screen'
-    unless $clue.hasClass 'colapse-step-screen'
-      $hint.removeClass 'colapse-step-screen'
+    $clue.removeClass 'colapse-step-screen'
+    # unless $clue.hasClass 'colapse-step-screen'
+    $hint.removeClass 'colapse-step-screen'
 
   $hint.find('.card-header').click ->
-    $hint.toggleClass 'colapse-step-screen'
-    if $hint.hasClass 'colapse-step-screen'
-      $clue.addClass 'colapse-step-screen'
+    $hint.removeClass 'colapse-step-screen'
+    # if $hint.hasClass 'colapse-step-screen'
+    $clue.addClass 'colapse-step-screen'
+
+  $answer.find('.card-header').click ->
+    $clue.addClass 'colapse-step-screen'
+    $hint.addClass 'colapse-step-screen'
 
   # Submit form
   $answerBtn.click submit
