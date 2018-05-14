@@ -124,12 +124,10 @@ $ ->
   $answer = $ '#answer-section'
   $clue.find('.card-header').click ->
     $clue.removeClass 'colapse-step-screen'
-    # unless $clue.hasClass 'colapse-step-screen'
     $hint.removeClass 'colapse-step-screen'
 
   $hint.find('.card-header').click ->
     $hint.removeClass 'colapse-step-screen'
-    # if $hint.hasClass 'colapse-step-screen'
     $clue.addClass 'colapse-step-screen'
 
   $answer.find('.card-header').click ->
