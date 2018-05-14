@@ -26,6 +26,7 @@ class GamesController < ApplicationController
   # GET /games/:id
   def show
     @display_pause_buttons = true
+    @user_game = current_user.user_games.running_or_paused.where(game_id: @game.id).first
   end
 
   # POST /games/:game_id/start

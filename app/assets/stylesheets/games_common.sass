@@ -181,6 +181,9 @@
 			z-index: 100
 			&.colapse-step-screen
 				left: calc(100vw - 50px)
+			article
+				margin-top: 55px
+				right: 85px
 		#hint
 			left: 50px
 			z-index: 50
@@ -188,6 +191,12 @@
 				left: calc(100vw - 100px)
 			.card-body
 				background-color: rgba(249,119,72, 0.8)
+		#answer-section article
+			width: 100%
+			padding-top: 75px
+			padding-bottom: 20px
+			padding-left: 30px
+			background-size: cover
 		.card
 			position: absolute
 			transition: left 1s
@@ -224,15 +233,15 @@
 		.card-body
 			width: calc(100vw - 135px)
 			height: calc(100vh - 56px)
-			min-height: 610px
 			overflow-y: scroll
 			display: flex
-			flex-direction: column
+			flex-direction: row
 			justify-content: center
+			align-items: flex-start
 
 			#hint-open-animation
 				position: relative
-				right: 15px
+				right: 12px
 
 			// padding: 150px 0 0 0
 			// need top padding so that the timer doesn't overlap the content

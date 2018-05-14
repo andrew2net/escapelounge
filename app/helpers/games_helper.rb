@@ -9,7 +9,8 @@ module GamesHelper
     # True if there is running game.
     @running = current_user && current_user.user_games.running.any?
     # If the game running or paused read UserGame.
-    user_game = current_user && current_user.user_games.find_by(game_id: @game.id, finished_at: nil)
+    user_game = current_user&.user_games&.find_by(game_id: @game.id,
+                                                  finished_at: nil)
     show_timer = !user_game.nil?
     if show_timer
       # Time when the game should stop.
@@ -19,9 +20,12 @@ module GamesHelper
 
     # elem_class = 'col-md-12' # inline ? "col-md-2" : "col-md-12"
 
-    content_tag :span, id: "container-timer", style: "#{show_timer ? "" : "display:none"}" do
-      html = content_tag :span, '', id: "display-timer", style: bar ? '' : 'display:none',
-        data: { stop_at: "#{stop_at}", paused_at: "#{@paused_at}" }
+    content_tag(:span, id: 'container-timer',
+                       style: show_timer ? '' : 'display:none') do
+      html = content_tag(
+        :span, '', id: 'display-timer', style: bar ? '' : 'display:none',
+                   data: { stop_at: stop_at, paused_at: @paused_at }
+      )
 
       return html if bar
 

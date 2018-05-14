@@ -110,6 +110,9 @@ $ ->
     event.preventDefault()
     # timer.stop()
     # $.post event.target.href
-    form = $ """<form method="post" action="#{event.target.href}"></form>"""
+    $('#end-game-modal').modal()
+
+  $('button[data-end-game]').click ->
+    form = $ """<form method="post" action="#{@dataset.endGame}"></form>"""
     form.hide().append(formMetadata()).appendTo 'body'
     form.submit()

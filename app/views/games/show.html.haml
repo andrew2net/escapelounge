@@ -50,6 +50,16 @@
       -#   = link_to 'Start game', game_start_url(@game), class: 'btn btn-primary',
       -#     id: 'start-game-btn'
 
+- if @user_game
+  #end-game-modal.modal.fade
+    .modal-dialog
+      .modal-content
+        .modal-body
+          %h2 ENDING THE GAME!
+          %p The game will be ended. Are you sure?
+        .modal-footer
+          = button_tag 'Cancel', class: 'btn btn-primary', data: { dismiss: 'modal' }
+          = button_tag 'End the game', class: 'btn btn-danger', data: { end_game: user_game_end_path(@user_game) }
 
 #game-show
   .container
@@ -74,8 +84,8 @@
                 - elsif current_user.user_games.running_or_paused.none?
                   = link_to 'Start game', game_start_url(@game), class: "btn btn-default btn-sm ml-1", style: "#{@running || @paused_at ? 'display:none' : ''}", data: { start_game: true }
 
-                - if user_game = current_user.user_games.running_or_paused.where(game_id: @game.id).first
-                  = link_to 'Go to game steps', user_game_step_url(user_game, user_game.last_allowed_step), id: 'link-to-steps', class: "btn btn-default btn-sm ml-1"
+                - if @user_game
+                  = link_to 'Go to game steps', user_game_step_url(@user_game, @user_game.last_allowed_step), id: 'link-to-steps', class: "btn btn-default btn-sm ml-1"
                 = link_to 'Download Instructions', @game.instructions_pdf.url, class: "btn btn-default btn-sm", target: "_blank"
 
             - else

@@ -39,10 +39,10 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
     assert_select 'button[data-target="#start-game-modal"][style*="display:none"]', 'Start game'
   end
 
-  test "should show paused game" do
+  test 'should show paused game' do
     @user.user_games.find_by(game_id: @game.id).update(paused_at: 1)
-    @user.update subscription_plan: subscription_plans(:two), period_end: (DateTime.now + 1.day)
-    get game_url @game
+    @user.update subscription_plan: subscription_plans(:two), period_end: (Time.now + 1.day)
+    get game_path @game
     assert_response :success
     assert_select '#container-timer[style=""]'
     assert_select '#pause-game-btn[style*="display:none"]'
@@ -50,10 +50,10 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
     assert_select 'button[data-target="#start-game-modal"][style*="display:none"]', 'Start game'
   end
 
-  test "should show stoped game" do
-    @user.user_games.find_by(game_id: @game.id).update(finished_at: DateTime.now)
-    @user.update subscription_plan: subscription_plans(:two), period_end: (DateTime.now + 1.day)
-    get game_url @game
+  test 'should show stoped game' do
+    @user.user_games.find_by(game_id: @game.id).update(finished_at: Time.now)
+    @user.update subscription_plan: subscription_plans(:two), period_end: (Time.now + 1.day)
+    get game_path @game
     assert_response :success
     assert_select '#container-timer[style*="display:none"]'
     assert_select 'button[data-target="#start-game-modal"][style=""]', 'Start game'

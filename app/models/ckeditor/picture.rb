@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Ckeditor picture model.
 class Ckeditor::Picture < Ckeditor::Asset
   include Attachable
 

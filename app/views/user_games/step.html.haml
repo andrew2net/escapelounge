@@ -92,7 +92,7 @@
                 %a.carousel-control-next{ href: '#hints-carousel', role: 'button', data: { slide: 'next' } }
                   %span.fa.fa-chevron-right{ aria: { hidden: true } }
                   %span.sr-only Previous
-                  
+
     #answer-section.card.d-flex.flex-row
       #headingThree.card-header
         %h5
@@ -100,7 +100,7 @@
           Answer
       -# #collapseThree.collapse{"aria-labelledby" => "headingThree", "data-parent" => "#accordion"}
       .card-body
-        %article.game-content-right{ style: "background-image: url(#{image_url(@step.image.file? ? @step.image.url : @game.background.url)});background-size:cover" }
+        %article.game-content-right{ style: "background-image: url(#{image_url(@step.image.file? ? @step.image.url : @game.background.url)})" }
 
           = form_tag user_game_step_url(@user_game, @step), id: 'step-form' do
             %p
