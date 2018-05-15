@@ -1,3 +1,7 @@
+= audio_tag @game.success_sound.url, data: { sound: 'success' }
+= audio_tag @game.fail_sound.url, data: { sound: 'fail' }
+= audio_tag @game.hint_sound.url, data: { sound: 'hint' }
+
 = content_for :title do
   = @game.name
 .position-absolute{ style: 'z-index:-100' }
@@ -66,7 +70,7 @@
             show_next_hint = !@answered && !@user_game.finished_at && next_hint
 
           -# #hint-bar.hint-bar-hidden{ class: show_next_hint ? 'hint-bar-animate' : '' }
-          .container
+          -# .container
             -#.hint-title
               %i.fa.fa-arrow-alt-circle-right
               &nbsp;&nbsp;&nbsp;
@@ -75,23 +79,23 @@
               %i.fa.fa-arrow-alt-circle-left
 
             -# Show animation if there aren't opened hints
-            - if hints.blank? && @step.hints.any?
-              #hint-open-animation
-                = render 'eye_in_keyhole_animation', hint: @step.hints.first, user_game: @user_game,
-                  step: @step, color: 'yellow', height: 600, width: 800, view_box: "-150 -25 450 200"
+          - if hints.blank? && @step.hints.any?
+            #hint-open-animation
+              = render 'eye_in_keyhole_animation', hint: @step.hints.first, user_game: @user_game,
+                step: @step, color: 'yellow', height: 590, width: 500, view_box: "0 -45 300 250"
 
-            .hint-body.d-none
-              #hints-carousel.carousel.slide{ data: { interval: 'false' } }
-                = render 'hints', user_game: @user_game, step: @step, hints: hints
+          .hint-body{ class: hints.blank? ? 'd-none' : '' }
+            #hints-carousel.carousel.slide{ data: { interval: 'false' } }
+              = render 'hints', user_game: @user_game, step: @step, hints: hints
 
-              - if @step.hints.size > 1
-                -# Show navigation buttons
-                %a.carousel-control-prev{ href: '#hints-carousel', role: 'button', data: { slide: 'prev' } }
-                  %span.fa.fa-chevron-left{ aria: { hidden: true } }
-                  %span.sr-only Previous
-                %a.carousel-control-next{ href: '#hints-carousel', role: 'button', data: { slide: 'next' } }
-                  %span.fa.fa-chevron-right{ aria: { hidden: true } }
-                  %span.sr-only Previous
+            - if @step.hints.size > 1
+              -# Show navigation buttons
+              %a.carousel-control-prev{ href: '#hints-carousel', role: 'button', data: { slide: 'prev' } }
+                %span.fa.fa-chevron-left{ aria: { hidden: true } }
+                %span.sr-only Previous
+              %a.carousel-control-next{ href: '#hints-carousel', role: 'button', data: { slide: 'next' } }
+                %span.fa.fa-chevron-right{ aria: { hidden: true } }
+                %span.sr-only Previous
 
     #answer-section.card.d-flex.flex-row
       #headingThree.card-header

@@ -9,6 +9,9 @@ $ ->
   $hintBarCaret   = $hintBarTitle.find('.fa')
   $eyeInKeyhole   = $ '#hint-open-animation .eye-in-keyhole'
   $keyInKeyhole   = $ '#hint-open-animation .key-in-keyhole'
+  $soundSuccess   = $ 'audio[data-sound="success"]'
+  $soundFail      = $ 'audio[data-sound="fail"]'
+  $soundHint      = $ 'audio[data-sound="hint"]'
 
   loadHint = ($showHintBtn) ->
     hint_id = $showHintBtn.data 'hint-id'
@@ -16,6 +19,7 @@ $ ->
     window.timer.secondsRemain -= value
     url = $showHintBtn.data 'url'
     $hintsContainer.load url, { hint_id: hint_id }, ->
+      $soundHint[0].play()
       $items = $hintsContainer.find '.carousel-item'
       # Display slide with last hint
       n = if $items.last().find('#show-hint-btn').length
@@ -26,9 +30,15 @@ $ ->
 
   $('#hint-open-animation .eyelid').click ->
     $keyInKeyhole.addClass 'translate-up-40'
-    $('#hint-open-animation').addClass 'hint-open'
+    $hintOpenAnimation = $ '#hint-open-animation'
+    $hintOpenAnimation.addClass 'hint-open'
     $('#hint-open-bubble').addClass 'hide-hint-bubble'
-    $('#hint-open-animation .flashlight').addClass 'flashlight-animate'
+    $flashLight = $hintOpenAnimation.find('.flashlight')
+    $flashLight.on 'animationend', (e) ->
+      $hintOpenAnimation.addClass 'd-none'
+      $('.hint-body').removeClass 'd-none'
+
+    $flashLight.addClass 'flashlight-animate'
     loadHint $(@)
 
   # Show hint and reduce remaning time on click the button.
@@ -69,6 +79,7 @@ $ ->
           $('#success-animation').removeClass 'd-none'
           $('#negative-animation').addClass 'd-none'
           $modal.modal 'show'
+          $soundSuccess[0].play()
           modalTimeOut = setTimeout ->
             window.location = resp.redirect
             modalTimeOut = null
@@ -84,6 +95,7 @@ $ ->
           $('#negative-animation').removeClass 'd-none'
           $('#success-animation').addClass 'd-none'
           $modal.modal 'show'
+          $soundFail[0].play()
           modalTimeOut = setTimeout ->
             $modal.modal 'hide'
             modalTimeOut = null

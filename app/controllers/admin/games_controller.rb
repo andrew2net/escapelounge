@@ -75,18 +75,26 @@ class Admin::GamesController < ApplicationController
       @game = Game.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+    # Never trust parameters from the scary internet, only allow the white list
+    # through.
     def game_params
-      params.require(:game).permit(:name, :description, :short_description, :status, :difficulty, {grade_ids: []},
-                                    :time_length, :instructions, :banner, :background, :visible,
-                                    game_assets_attributes: [:id, :name, :file, :_destroy],
-                                    game_steps_attributes: [:id, :name, :description, :game_id, :video,
-                                      :_destroy, :position, :image, :answer_input_type, :image_solution_id,
-                                      image_response_options_attributes: [:id, :image, :image_solution_id, :_destroy],
-                                      hints_attributes: [:id, :description, :value, :game_step_id, :_destroy, :image],
-                                      game_step_solutions_attributes: [:id, :question, :solution, :game_step_id,
-                                        :_destroy, :position],
-                                    ]
-                                    )
+      params.require(:game).permit(
+        :name, :description, :short_description, :status, :difficulty,
+        { grade_ids: [] }, :time_length, :instructions, :banner, :background,
+        :visible, :success_sound, :fail_sound, :hint_sound,
+        game_assets_attributes: %i[id name file _destroy],
+        game_steps_attributes: [
+          :id, :name, :description, :game_id, :video, :_destroy, :position,
+          :image, :answer_input_type, :image_solution_id,
+          image_response_options_attributes: %i[
+            id image image_solution_id _destroy
+          ],
+          hints_attributes: %i[id description value game_step_id
+                               _destroy image],
+          game_step_solutions_attributes: %i[
+            id question solution game_step_id _destroy position
+          ]
+        ]
+      )
     end
 end

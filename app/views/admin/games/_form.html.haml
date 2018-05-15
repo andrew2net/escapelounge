@@ -53,6 +53,20 @@
               = b.label(class: 'form-check-label') { b.check_box(class: 'form-check-input mr-2') + b.text }
 
       .form-row
+        .form-group.col-4
+          %label Success sound
+          = f.file_field :success_sound, data: { audio: true }
+          = audio_tag f.object.success_sound.url, controls: true
+        .form-group.col-4
+          %label Fail sound
+          = f.file_field :fail_sound, data: { audio: true }
+          = audio_tag f.object.fail_sound.url, controls: true
+        .form-group.col-4
+          %label Hint sound
+          = f.file_field :hint_sound, data: { audio: true }
+          = audio_tag f.object.hint_sound.url, controls: true
+
+      .form-row
         .col-6
           .form-group
             %label Background image that shows on the Games List

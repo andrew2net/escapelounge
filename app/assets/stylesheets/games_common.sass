@@ -197,6 +197,7 @@
 			padding-bottom: 20px
 			padding-left: 30px
 			background-size: cover
+			min-height: 100%
 		.card
 			position: absolute
 			transition: left 1s
@@ -241,7 +242,8 @@
 
 			#hint-open-animation
 				position: relative
-				right: 12px
+				height: 600px
+			// 	right: 12px
 
 			// padding: 150px 0 0 0
 			// need top padding so that the timer doesn't overlap the content
@@ -377,9 +379,11 @@
 		#hints-carousel
 			.carousel-inner
 				.carousel-item
-					display: flex
-					flex-direction: column
-					justify-content: center
+					text-align: center
+					padding-right: 60px
+					// display: flex
+					// flex-direction: column
+					// justify-content: center
 					p
 						font-size: 3em
 						line-height: 1.2em
@@ -752,12 +756,18 @@ section
 	// left: 40px
 	// a
 	//   color: $orange
+#hint .card-body
+	padding-right: 65px
 .hint-body
 	font-size: 12px
 	position: relative
 	color: $gray-100
+	width: 100%
+	.carousel-control-prev, .carousel-control-next
+		width: 7%
+		font-size: 24pt
 	#hints-carousel
-		height: 80vh
+		height: calc(100vh - 90px)
 		ol.carousel-indicators
 			bottom: 7px
 			margin: 0
@@ -766,9 +776,12 @@ section
 				&.active
 					background-color: $gray-200
 	.carousel-inner
-		height: 93vh
+		height: calc(100vh - 120px)
+		overflow-y: scroll
+		padding-left: 5%
 		.carousel-item
-			min-height: 80vh
+			// min-height: 80vh
+			top: 70px
 			p
 				padding: 1rem 1rem 0
 				font-family: 'Cormorant Garamond'

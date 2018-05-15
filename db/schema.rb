@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180406093730) do
+ActiveRecord::Schema.define(version: 20180514205929) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,6 +91,18 @@ ActiveRecord::Schema.define(version: 20180406093730) do
     t.string "banner_content_type"
     t.integer "banner_file_size"
     t.datetime "banner_updated_at"
+    t.string "success_sound_file_name"
+    t.string "success_sound_content_type"
+    t.integer "success_sound_file_size"
+    t.datetime "success_sound_updated_at"
+    t.string "fail_sound_file_name"
+    t.string "fail_sound_content_type"
+    t.integer "fail_sound_file_size"
+    t.datetime "fail_sound_updated_at"
+    t.string "hint_sound_file_name"
+    t.string "hint_sound_content_type"
+    t.integer "hint_sound_file_size"
+    t.datetime "hint_sound_updated_at"
   end
 
   create_table "games_grades", id: false, force: :cascade do |t|

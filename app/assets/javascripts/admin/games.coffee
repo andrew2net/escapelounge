@@ -129,3 +129,8 @@ $ ->
 
   $(document).on 'change', '.image-options input[type="radio"]', ->
     setImageOptionSolution $(@)
+
+  $('input[data-audio]').change ->
+    $sound = $(@).next()
+    $sound.attr 'src', URL.createObjectURL(@files[0])
+    $sound[0].onend = (e) -> URL.revokeObjectURL @src

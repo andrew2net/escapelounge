@@ -42,6 +42,21 @@ class Game < ApplicationRecord
   validates_attachment :banner,
                        content_type: { content_type: %r{\Aimage\/.*\z} }
 
+  has_attached_file :success_sound,
+                    attachment_opts(default_url: '/sounds/success.mp3')
+  validates_attachment :success_sound,
+                       content_type: { content_type: %r{\Aaudio\/.*\z} }
+
+  has_attached_file :fail_sound,
+                    attachment_opts(default_url: '/sounds/fail.mp3')
+  validates_attachment :success_sound,
+                       content_type: { content_type: %r{\Aaudio\/.*\z} }
+
+  has_attached_file :hint_sound,
+                    attachment_opts(default_url: '/sounds/hint.mp3')
+  validates_attachment :success_sound,
+                       content_type: { content_type: %r{\Aaudio\/.*\z} }
+
   scope :visible, -> { where(visible: true) }
 
   scope :allowed, ->(user) do
