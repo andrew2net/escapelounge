@@ -26,6 +26,11 @@ class GameStep < ApplicationRecord
   has_attached_file :image, attachment_opts(styles: { thumb: '260x260#' })
   validates_attachment :image, content_type: { content_type: %r{\Aimage\/.*\z} }
 
+  has_attached_file :clue_background,
+                    attachment_opts(styles: { thumb: '260x260#' })
+  validates_attachment :clue_background,
+                       content_type: { content_type: %r{\Aimage\/.*\z} }
+
   has_attached_file :video, attachment_opts
   validates_attachment :video, content_type: { content_type: %r{\Avideo\/.*\z} }
 

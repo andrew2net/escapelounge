@@ -33,16 +33,20 @@
                 f.object.answer_input_type), {}, class: 'form-control', data: { input_type: true }
 
         .form-row
-          .col-6
-            .form-group
-              %label Background for the Clue Answer Page
-              = f.file_field :image, class: "form-control-file"
+          .form-group.col-6
+            %label Background for the Clue Answer Page
+            = f.file_field :image, class: "form-control-file"
             = image_tag f.object.image.url(:thumb), width: '60%'
+          .form-group.col-6
+            %label Background for the Clue Page
+            = f.file_field :clue_background, class: "form-control-file"
+            = image_tag f.object.clue_background.url(:thumb), width: '60%'
+        .form-row
           .col-md-6
             .form-group
               %label Video for the Clue Text Page
               = f.file_field :video, class: 'form-control-file'
-            = video_tag f.object.video.url, controls: true, size: '500x375'
+              = video_tag f.object.video.url, controls: true, size: '500x375'
 
         .solutions
           %fieldset.border.border-primary.rounded.p-4

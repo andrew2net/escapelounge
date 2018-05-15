@@ -85,7 +85,7 @@ class Admin::GamesController < ApplicationController
         game_assets_attributes: %i[id name file _destroy],
         game_steps_attributes: [
           :id, :name, :description, :game_id, :video, :_destroy, :position,
-          :image, :answer_input_type, :image_solution_id,
+          :image, :answer_input_type, :image_solution_id, :clue_background,
           image_response_options_attributes: %i[
             id image image_solution_id _destroy
           ],

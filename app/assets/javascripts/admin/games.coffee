@@ -11,7 +11,6 @@ $ ->
       $(solutions).children('.nested-fields').each (n, solution) ->
         $(solution).children('input[hidden]').val n + 1
 
-
   setPositions()
 
   # Set id for new step
