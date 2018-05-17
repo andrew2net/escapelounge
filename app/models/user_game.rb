@@ -43,6 +43,10 @@ class UserGame < ApplicationRecord
       'Ended'
     elsif result
       Time.at(result).utc.strftime('%M:%S !')
+    elsif paused_at.nil? && finished_at.nil?
+      'Running'
+    elsif !paused_at.nil? && finished_at.nil?
+      'Paused'
     else
       'Time expired'
     end
