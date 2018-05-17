@@ -15,7 +15,7 @@
               = UserGame.count
               %b In progress:
               = UserGame.running_or_paused.count
-              %b Cmpleted:
+              %b Completed:
               = UserGame.finished.count
             .col-md-3.text-right
               = link_to 'New Game', new_admin_game_path, class: 'btn btn-sm btn-primary'
