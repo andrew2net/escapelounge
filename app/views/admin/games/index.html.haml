@@ -8,9 +8,16 @@
       .card
         .card-header
           .row
-            .col-md-8
+            .col-md-3
               %h3.card-title All Games
-            .col-md-4
+            .col-md-6
+              %b Started:
+              = UserGame.count
+              %b In progress:
+              = UserGame.running_or_paused.count
+              %b Cmpleted:
+              = UserGame.finished.count
+            .col-md-3.text-right
               = link_to 'New Game', new_admin_game_path, class: 'btn btn-sm btn-primary'
         .card-body
 

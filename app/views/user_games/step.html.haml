@@ -103,8 +103,8 @@
           -# %button.btn.btn-link.collapsed{"aria-controls" => "collapseThree", "aria-expanded" => "false", "data-target" => "#collapseThree", "data-toggle" => "collapse", :type => "button"}
           Answer
       -# #collapseThree.collapse{"aria-labelledby" => "headingThree", "data-parent" => "#accordion"}
-      .card-body
-        %article.game-content-right{ style: "background-image: url(#{image_url(@step.image.file? ? @step.image.url : @game.background.url)})" }
+      .card-body{ style: "background-image: url(#{image_url(@step.image.file? ? @step.image.url : @game.background.url)})" }
+        %article.game-content-right
 
           = form_tag user_game_step_url(@user_game, @step), id: 'step-form' do
             %p

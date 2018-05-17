@@ -13,6 +13,7 @@ class UserGame < ApplicationRecord
   scope :running, -> { where(paused_at: nil, finished_at: nil) }
   scope :paused, -> { where.not(paused_at: nil).where(finished_at: nil) }
   scope :running_or_paused, -> { where(finished_at: nil) }
+  scope :finished, -> { where.not(finished_at: nil) }
 
   # Return percent of answered steps and steps of total
   def progress
