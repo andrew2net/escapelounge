@@ -15,6 +15,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def after_sign_in_path_for(resource)
+    games_path
+  end
+
   def configure_permitted_parameters
     added_attrs = %i[:name :email :password :password_confirmation :admin]
     devise_parameter_sanitizer.permit :sign_up, keys: added_attrs

@@ -80,9 +80,9 @@
                 = display_timer
               .col-12.mt-3.text-center
                 - if current_user.start_popup
-                  = button_tag 'Start game', data: { target: '#start-game-modal', toggle: 'modal' }, class: "btn btn-default btn-sm ml-1", style: "#{@running || @paused_at ? 'display:none' : ''}"
+                  = button_tag 'Start new game', data: { target: '#start-game-modal', toggle: 'modal' }, class: "btn btn-default btn-sm ml-1", style: "#{@running || @paused_at ? 'display:none' : ''}"
                 - elsif current_user.user_games.running_or_paused.none?
-                  = link_to 'Start game', game_start_url(@game), class: "btn btn-default btn-sm ml-1", style: "#{@running || @paused_at ? 'display:none' : ''}", data: { start_game: true }
+                  = link_to 'Start new game', game_start_url(@game), class: "btn btn-default btn-sm ml-1", style: "#{@running || @paused_at ? 'display:none' : ''}", data: { start_game: true }
 
                 - if @user_game
                   = link_to 'Go to game steps', user_game_step_url(@user_game, @user_game.last_allowed_step), id: 'link-to-steps', class: "btn btn-default btn-sm ml-1"
