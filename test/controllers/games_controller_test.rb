@@ -36,7 +36,7 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
     assert_select '#container-timer[style=""]'
     assert_select '#pause-game-btn[style=""]', 1
     assert_select '#resume-game-btn[style*="display:none"]'
-    assert_select 'button[data-target="#start-game-modal"][style*="display:none"]', 'Start game'
+    assert_select 'button[data-target="#start-game-modal"][style*="display:none"]', 'Start new game'
   end
 
   test 'should show paused game' do
@@ -47,7 +47,7 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
     assert_select '#container-timer[style=""]'
     assert_select '#pause-game-btn[style*="display:none"]'
     assert_select '#resume-game-btn[style*=""]'
-    assert_select 'button[data-target="#start-game-modal"][style*="display:none"]', 'Start game'
+    assert_select 'button[data-target="#start-game-modal"][style*="display:none"]', 'Start new game'
   end
 
   test 'should show stoped game' do
@@ -56,7 +56,7 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
     get game_path @game
     assert_response :success
     assert_select '#container-timer[style*="display:none"]'
-    assert_select 'button[data-target="#start-game-modal"][style=""]', 'Start game'
+    assert_select 'button[data-target="#start-game-modal"][style=""]', 'Start new game'
   end
 
   test "should not show start button" do

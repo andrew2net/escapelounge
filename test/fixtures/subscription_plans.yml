@@ -3,11 +3,11 @@
 one:
   name: Base plan
   stripe_id: base
-  price:
+  price: 11.11
   period: 0
 
 two:
   name: Advance plan
   stripe_id: advance
-  price:
+  price: 22.33
   period: 0
