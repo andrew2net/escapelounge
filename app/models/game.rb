@@ -9,7 +9,7 @@ class Game < ApplicationRecord
   has_many :user_games, dependent: :destroy
   has_many :users, through: :user_games
 
-  has_many :game_assets
+  has_many :game_assets, dependent: :destroy
   accepts_nested_attributes_for :game_assets, reject_if: :all_blank,
                                               allow_destroy: true
 
