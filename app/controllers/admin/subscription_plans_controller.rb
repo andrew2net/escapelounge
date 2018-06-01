@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
+# Admin subscription plan controller.
 class Admin::SubscriptionPlansController < ApplicationController
-  before_action :set_subscription_plan, only: [:edit, :update, :destroy]
+  before_action :set_subscription_plan, only: %i[edit update destroy]
 
   # GET /admin/subscription_plans
   def index
@@ -19,7 +22,10 @@ class Admin::SubscriptionPlansController < ApplicationController
     @subscription_plan = SubscriptionPlan.new subscription_plan_params
     respond_to do |format|
       if @subscription_plan.save
-        format.html { redirect_to admin_subscription_plans_path, notice: "Subscription plan was successfully created."}
+        format.html do
+          redirect_to admin_subscription_plans_path,
+                      notice: 'Subscription plan was successfully created.'
+        end
       else
         format.html { render :edit }
       end
@@ -35,8 +41,11 @@ class Admin::SubscriptionPlansController < ApplicationController
   def update
     authorize @subscription_plan
     respond_to do |format|
-      if @subscription_plan.update subscription_plan_params
-        format.html { redirect_to admin_subscription_plans_path, notice: "Subscription plan was successfully updated."}
+      if @subscription_plan.update params.require(:subscription_plan).permit(:name, grade_ids: [])
+        format.html do
+          redirect_to admin_subscription_plans_path,
+                      notice: 'Subscription plan was successfully updated.'
+        end
       else
         format.html { render :edit }
       end
@@ -48,14 +57,18 @@ class Admin::SubscriptionPlansController < ApplicationController
     authorize @subscription_plan
     @subscription_plan.destroy
     respond_to do |format|
-      format.html { redirect_to admin_subscription_plans_path, notice: "Subscription plan was successfully destroyed."}
+      format.html do
+        redirect_to admin_subscription_plans_path,
+                    notice: 'Subscription plan was successfully destroyed.'
+      end
     end
   end
 
   private
 
   def subscription_plan_params
-    params.require(:subscription_plan).permit(:name, :stripe_id, :period, :price, grade_ids: [])
+    params.require(:subscription_plan)
+          .permit(:name, :stripe_id, :period, :price, grade_ids: [])
   end
 
   def set_subscription_plan

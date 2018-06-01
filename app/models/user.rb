@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# User model.
 class User < ApplicationRecord
   before_destroy :unsubscribe
 
@@ -22,14 +25,12 @@ class User < ApplicationRecord
   private
 
   def unsubscribe
-    Stripe.api_key = ENV["STRIPE_API_KEY"]
-    if subscription_id && period_end && period_end > DateTime.now
+    Stripe.api_key = ENV['STRIPE_API_KEY']
+    if subscription_id && period_end && period_end > Time.now
       sub = Stripe::Subscription.retrieve(subscription_id)
       sub.delete
     end
-    if stripe_id
-      Stripe::Customer.retrieve(stripe_id).delete
-    end
+    return unless stripe_id
+    Stripe::Customer.retrieve(stripe_id).delete
   end
-
 end
