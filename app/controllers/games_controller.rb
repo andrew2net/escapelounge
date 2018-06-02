@@ -20,7 +20,11 @@ class GamesController < ApplicationController
     else
       @games = []
     end
-    render @games
+    if @games.any?
+      render @games
+    else
+      render html: helpers.content_tag(:div, 'No games are available.', class: 'col-12 h2 mt-5 text-center')
+    end
   end
 
   # GET /games/:id
