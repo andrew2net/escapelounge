@@ -6,7 +6,7 @@
       - if !available
         .unavailable-game-overlay
           %h3 Game Not Available
-          = link_to 'Upgrade Subscription', '#', class: "btn btn-default btn-sm"
+          = link_to 'Upgrade Subscription', billing_subscriptions_path, class: "btn btn-default btn-sm"
     .card-body
       %h4
         -# - if available
