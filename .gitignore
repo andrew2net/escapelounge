@@ -35,3 +35,5 @@ erd.pdf
 .erdconfig
 
 *.dump
+
+/public/assets/
