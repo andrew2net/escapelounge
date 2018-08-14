@@ -72,7 +72,8 @@ class GamesController < ApplicationController
     if user_game && current_user.user_games.running.none?
       passed_seconds = user_game.game.time_length.to_i * 60 -
                        user_game.paused_at
-      started_at = Time.parse(params[:start_at]) - passed_seconds.seconds
+      # started_at = Time.parse(params[:start_at]) - passed_seconds.seconds
+      started_at = Time.now - passed_seconds.seconds
       user_game.update started_at: started_at, paused_at: nil
     end
     # head :ok
