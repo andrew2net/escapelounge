@@ -3,8 +3,8 @@ require "test_helper"
 class StripeWebhooksControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = users :two
-    ENV["STRIPE_API_KEY"] = "sk_test_OE0hxBr7ol1bp1TkCQzDNFnA"
-    ENV["STRIPE_WH_SECRET"] = "whsec_S3LvCSEJogTJPj7Vxi55J3HOQJOmPMK3"
+    ENV["STRIPE_API_KEY"] = ""
+    ENV["STRIPE_WH_SECRET"] = ""
   end
 
   test "should receive invoice.payment_succeeded event" do

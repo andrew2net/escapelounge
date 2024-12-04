@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-ruby '2.4.1'
-gem 'rails', '~> 5.1', '>= 5.1.2'
+ruby '3.3.3'
+gem 'rails', '~> 8.0'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
@@ -12,8 +12,8 @@ end
 #### Front End Gems
 
 # Use HAML for HTML preprocessor
-gem 'haml', '~> 5.0', '>= 5.0.1'
-gem 'haml-rails', '~> 1.0'
+gem 'haml', '~> 6.3'
+gem 'haml-rails', '~> 2.1'
 # Use SASS for stylesheets
 gem 'sass-rails', '~> 5.0', '>= 5.0.6'
 # Use bootstrap for front-end framework
@@ -41,7 +41,7 @@ gem 'font-awesome-sass'
 # Use paperclip for image cropping
 gem 'paperclip', '~> 5.0.0'
 # Use AWS S3 service as storage
-gem 'aws-sdk', '~> 2.3.0'
+gem 'aws-sdk', '~> 3.2.0'
 # Use friendlyID for custom profile URLs
 gem 'friendly_id', '~> 5.1.0'
 # Use cocoon for nested forms
@@ -60,7 +60,7 @@ gem 'devise', '~> 4.3'
 # Use pundit for user authorization
 gem 'pundit'
 # Use postgreSQL for the database
-gem 'pg', '~> 0.21.0'
+gem 'pg', '~> 1.5.9'
 
 # A PDF generation plugin for Ruby on Rails
 gem 'wicked_pdf'
@@ -72,7 +72,7 @@ gem 'kaminari'
 
 group :doc do
   # bundle exec rake doc:rails to generate the API under doc/api.
-  gem 'sdoc', '~> 0.4.0'
+  gem 'sdoc', '~> 2.6.1'
 end
 
 group :development, :test do
